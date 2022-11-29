@@ -10,8 +10,6 @@ public interface IAggregate
 
     IEnumerable<Event> GetPendingEvents();
 
-    void ClearPendingEvents();
-
     void InitWith(IEnumerable<Event> events);
 }
 

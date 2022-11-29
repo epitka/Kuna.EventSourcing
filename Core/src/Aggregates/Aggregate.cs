@@ -7,29 +7,25 @@ public abstract class Aggregate<TState>
     : IAggregate<TState>
     where TState : AggregateState, new()
 {
-    private readonly List<Event> pendingEvents = new();
+    private readonly Queue<Event> pendingEvents = new();
 
-    public long Version => this.MyState.Version;
+    public long Version => this.CurrentState.Version;
 
-    public Guid Id => this.MyState.Id;
+    public Guid Id => this.CurrentState.Id;
 
-    protected TState MyState { get; private set; } = default!;
-
-    protected Aggregate()
-    {
-    }
+    protected TState CurrentState { get; private set; } = new();
 
     void IAggregate<TState>.InitWithState(TState state)
     {
         _ = state ?? throw new InvalidOperationException("Cannot initialize aggreate with null state.");
 
-        if (this.MyState != null)
+        if (this.CurrentState != null)
         {
             throw new InvalidOperationException("State is already initialized");
         }
 
-        this.MyState = state;
-        this.MyState.SetId(state.Id);
+        this.CurrentState = state;
+        this.CurrentState.SetId(state.Id);
     }
 
     public void InitWith(IEnumerable<Event> events)
@@ -41,11 +37,9 @@ public abstract class Aggregate<TState>
             throw new InvalidOperationException("State is already initialized");
         }
 
-        this.EnsureStateInitialized();
-
         foreach (var @event in events)
         {
-            this.MyState.ApplyEvent(@event);
+            this.CurrentState.ApplyEvent(@event);
         }
     }
 
@@ -58,9 +52,7 @@ public abstract class Aggregate<TState>
     /// <returns></returns>
     public TState GetState()
     {
-        this.EnsureStateInitialized();
-
-        return this.MyState.DeepClone();
+        return this.CurrentState.DeepClone();
     }
 
     public IEnumerable<Event> GetPendingEvents()
@@ -68,24 +60,12 @@ public abstract class Aggregate<TState>
         return this.pendingEvents.ToArray();
     }
 
-    public void ClearPendingEvents()
-    {
-        this.pendingEvents.Clear();
-    }
-
     protected void RaiseEvent(Event @event)
     {
-        this.EnsureStateInitialized();
-
         @event.Version = this.Version + 1;
 
-        this.MyState.ApplyEvent(@event);
+        this.CurrentState.ApplyEvent(@event);
 
-        this.pendingEvents.Add(@event);
-    }
-
-    private void EnsureStateInitialized()
-    {
-        this.MyState ??= new TState();
+        this.pendingEvents.Enqueue(@event);
     }
 }
