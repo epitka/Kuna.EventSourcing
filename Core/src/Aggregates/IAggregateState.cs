@@ -1,6 +1,4 @@
-﻿using Senf.EventSourcing.Core.Events;
-
-namespace Senf.EventSourcing.Core.Aggregates;
+﻿namespace Senf.EventSourcing.Core.Aggregates;
 
 public interface IAggregateState
 {
@@ -10,5 +8,5 @@ public interface IAggregateState
 
     public long Version { get; set; }
 
-    public void ApplyEvent(Event @event);
+    // public void ApplyEvent(IEvent @event);
 }
