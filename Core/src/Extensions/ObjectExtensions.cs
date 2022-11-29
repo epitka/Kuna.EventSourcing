@@ -41,6 +41,8 @@ namespace Senf.EventSourcing.Core.Extensions
             }
         }
 
+        // TODO: see if this can done faster using
+        // https://www.codeproject.com/Articles/1111658/Fast-Deep-Copy-by-Expression-Trees-C-Sharp
         public static T DeepClone<T>(this T source)
             where T : class
         {
