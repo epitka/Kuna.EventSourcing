@@ -1,9 +1,8 @@
-﻿namespace Senf.EventSourcing.Core.Exceptions
+﻿namespace Senf.EventSourcing.Core.Exceptions;
+
+public class InvalidExpectedVersionException : Exception
 {
-    public class InvalidExpectedVersionException : Exception
+    public InvalidExpectedVersionException (string message, Exception innerException) : base(message, innerException)
     {
-        public InvalidExpectedVersionException (string message, Exception innerException) : base(message, innerException)
-        {
-        }
     }
 }

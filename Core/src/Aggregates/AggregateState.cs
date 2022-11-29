@@ -2,15 +2,14 @@
 
 namespace Senf.EventSourcing.Core.Aggregates;
 
-
-
 public abstract class AggregateState : IAggregateState
 {
     public Guid Id { get; private set; } = Guid.Empty;
 
     public void SetId(Guid aggregateId)
     {
-        if (this.Id != default && this.Id != aggregateId)
+        if (this.Id != default
+            && this.Id != aggregateId)
         {
             throw new InvalidOperationException("Id already set, cannot change identity of the aggreate");
         }

@@ -1,25 +1,24 @@
 using Senf.EventSourcing.Core.Events;
 
-namespace Senf.EventSourcing.Core.Aggregates
+namespace Senf.EventSourcing.Core.Aggregates;
+
+public interface IAggregate
 {
-    public interface IAggregate
-    {
-        long Version { get; }
+    long Version { get; }
 
-        Guid Id { get; }
+    Guid Id { get; }
 
-        IEnumerable<Event> GetPendingEvents();
+    IEnumerable<Event> GetPendingEvents();
 
-        void ClearPendingEvents();
+    void ClearPendingEvents();
 
-        void InitWith(IEnumerable<Event> events);
-    }
+    void InitWith(IEnumerable<Event> events);
+}
 
-    public interface IAggregate<TState> : IAggregate
-        where TState : IAggregateState, new()
-    {
-        TState GetState();
+public interface IAggregate<TState> : IAggregate
+    where TState : IAggregateState, new()
+{
+    TState GetState();
 
-        void InitWithState(TState state);
-    }
+    void InitWithState(TState state);
 }
