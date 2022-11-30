@@ -14,7 +14,7 @@ public interface IEventSerializer
 
 public class JsonEventSerializer : IEventSerializer
 {
-    private static readonly JsonSerializerSettings SerializerSettings = new()
+    public static readonly JsonSerializerSettings SerializerSettings = new()
     {
         TypeNameHandling = TypeNameHandling.None,
         Formatting = Formatting.None,
@@ -34,7 +34,7 @@ public class JsonEventSerializer : IEventSerializer
 
         if (eventType == null)
         {
-            return null;
+            throw new InvalidOperationException($"Missing event type definition for {resolvedEvent.Event?.EventType} in stream {resolvedEvent.OriginalStreamId}");
         }
 
         if (resolvedEvent.Event == null)
