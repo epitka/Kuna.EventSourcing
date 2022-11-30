@@ -1,9 +1,9 @@
 namespace Senf.EventSourcing.Core.Events
 {
+    /// <summary>
+    /// marker interface
+    /// </summary>
     public interface IEvent
     {
-        // TODO: do we need version at all ?
-        // TODO: should we populate each event with timestamp from server converted to node instance ?
-        long? Version { get; set; }
     }
 }

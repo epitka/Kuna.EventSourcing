@@ -8,11 +8,11 @@ public interface IAggregate
 
     Guid Id { get; }
 
-    IEnumerable<Event> GetPendingEvents();
+    IEnumerable<IEvent> GetPendingEvents();
 
-    Event[] DequeuePendingEvents();
+    IEvent[] DequeuePendingEvents();
 
-    void InitWith(IEnumerable<Event> events);
+    void InitWith(IEnumerable<IEvent> events);
 }
 
 public interface IAggregate<TState> : IAggregate

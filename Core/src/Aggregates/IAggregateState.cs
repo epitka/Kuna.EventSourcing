@@ -6,5 +6,5 @@ public interface IAggregateState
 
     public void SetId(Guid aggregateId);
 
-    public long? Version { get; set; }
+    public long Version { get; set; }
 }

@@ -62,7 +62,7 @@ public class RaiseEvent
         // Act
         var aggregate = new TestAggregate();
 
-        var events = new List<Event>()
+        var events = new List<IEvent>()
         {
             new TestAggregateCreated(Id: aggregateId, Name: name),
             new TestAggregateChanged(Id: aggregateId, ChangedValue: "Value1"),
@@ -80,17 +80,14 @@ public class RaiseEvent
             pendingEvents,
             item =>
             {
-                item.Version.Should().Be(0);
                 item.Should().Be(events[0]);
             },
             item =>
             {
-                item.Version.Should().Be(1);
                 item.Should().Be(events[1]);
             },
             item =>
             {
-                item.Version.Should().Be(2);
                 item.Should().Be(events[2]);
             });
     }

@@ -14,7 +14,7 @@ public class EventTypeMapper : IEventTypeMapper
 
     public EventTypeMapper(IEnumerable<Assembly> assemblies)
     {
-        var eventType = typeof(Event);
+        var eventType = typeof(IEvent);
 
         this.typeMap = assemblies
                        .SelectMany(i => i.GetExportedTypes())
