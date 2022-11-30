@@ -6,7 +6,7 @@ namespace Senf.EventSourcing.Core.Tests.AggregateTests;
 public class GetPendingEvents
 {
     [Fact]
-    public void Should_Return_Number_Of_Events_Raised()
+    public void Should_Return_Copy_Of_Events_Raised()
     {
         var aggregate = new TestAggregate();
         var aggregateId = Guid.NewGuid();

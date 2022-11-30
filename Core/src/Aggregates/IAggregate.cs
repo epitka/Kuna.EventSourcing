@@ -4,11 +4,13 @@ namespace Senf.EventSourcing.Core.Aggregates;
 
 public interface IAggregate
 {
-    long Version { get; }
+    long? Version { get; }
 
     Guid Id { get; }
 
     IEnumerable<Event> GetPendingEvents();
+
+    Event[] DequeuePendingEvents();
 
     void InitWith(IEnumerable<Event> events);
 }

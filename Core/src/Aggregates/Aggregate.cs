@@ -9,7 +9,7 @@ public abstract class Aggregate<TState>
 {
     private readonly Queue<Event> pendingEvents = new();
 
-    public long Version => this.CurrentState.Version;
+    public long? Version => this.CurrentState.Version;
 
     public Guid Id => this.CurrentState.Id;
 
@@ -32,7 +32,7 @@ public abstract class Aggregate<TState>
     {
         _ = events ?? throw new InvalidOperationException("Cannot initialize aggreate with null events.");
 
-        if (this.Version > -1)
+        if (this.Version.HasValue)
         {
             throw new InvalidOperationException("State is already initialized");
         }
@@ -55,9 +55,22 @@ public abstract class Aggregate<TState>
         return this.CurrentState.DeepClone();
     }
 
+    /// <summary>
+    /// returns copy of the pending events in internal queue
+    /// </summary>
+    /// <returns></returns>
     public IEnumerable<Event> GetPendingEvents()
     {
         return this.pendingEvents.ToArray();
+    }
+
+    public Event[] DequeuePendingEvents()
+    {
+        var toReturn = this.pendingEvents.ToArray();
+
+        this.pendingEvents.Clear();
+
+        return toReturn;
     }
 
     protected void RaiseEvent(Event @event)
