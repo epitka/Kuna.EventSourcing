@@ -8,7 +8,7 @@ namespace Senf.EventSourcing.Core.EventStore;
 public interface IEventDataFactory
 {
     public EventData From(
-        Event @event);
+        IEvent @event);
 }
 
 public class EventDataFactory : IEventDataFactory
@@ -25,7 +25,7 @@ public class EventDataFactory : IEventDataFactory
     }
 
     public EventData From(
-        Event @event)
+        IEvent @event)
     {
         var eventId = Uuid.NewUuid();
 

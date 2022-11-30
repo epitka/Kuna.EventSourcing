@@ -7,7 +7,7 @@ public abstract class Aggregate<TState>
     : IAggregate<TState>
     where TState : AggregateState, new()
 {
-    private readonly Queue<Event> pendingEvents = new();
+    private readonly Queue<IEvent> pendingEvents = new();
 
     public long? Version => this.CurrentState.Version;
 
@@ -28,7 +28,7 @@ public abstract class Aggregate<TState>
         this.CurrentState.SetId(state.Id);
     }
 
-    public void InitWith(IEnumerable<Event> events)
+    public void InitWith(IEnumerable<IEvent> events)
     {
         _ = events ?? throw new InvalidOperationException("Cannot initialize aggreate with null events.");
 
@@ -59,12 +59,12 @@ public abstract class Aggregate<TState>
     /// returns copy of the pending events in internal queue
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Event> GetPendingEvents()
+    public IEnumerable<IEvent> GetPendingEvents()
     {
         return this.pendingEvents.ToArray();
     }
 
-    public Event[] DequeuePendingEvents()
+    public IEvent[] DequeuePendingEvents()
     {
         var toReturn = this.pendingEvents.ToArray();
 
@@ -73,10 +73,8 @@ public abstract class Aggregate<TState>
         return toReturn;
     }
 
-    protected void RaiseEvent(Event @event)
+    protected void RaiseEvent(IEvent @event)
     {
-        @event.Version = this.Version + 1;
-
         this.CurrentState.ApplyEvent(@event);
 
         this.pendingEvents.Enqueue(@event);

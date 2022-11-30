@@ -12,15 +12,9 @@ public class GetState
 
         var aggregateId = Id.Create();
 
-        var created = new TestAggregateCreated(Id: aggregateId, Name: "Name1")
-        {
-            Version = 0,
-        };
+        var created = new TestAggregateCreated(Id: aggregateId, Name: "Name1");
 
-        var changed = new TestAggregateChanged(Id: aggregateId, ChangedValue: "changed1")
-        {
-            Version = 1,
-        };
+        var changed = new TestAggregateChanged(Id: aggregateId, ChangedValue: "changed1");
 
         aggregate.RaiseEvent(created);
         aggregate.RaiseEvent(changed);

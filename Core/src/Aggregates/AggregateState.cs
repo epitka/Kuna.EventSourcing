@@ -18,21 +18,15 @@ public abstract class AggregateState : IAggregateState
         this.Id = aggregateId;
     }
 
-    public long? Version { get; set; }
+    public long Version { get; set; } = -1;
 
     /// <summary>
     /// By convention, methods that mutate state must be named Apply
     /// </summary>
     /// <param name="event"></param>
     /// <exception cref="InvalidOperationException"></exception>
-    public void ApplyEvent(Event @event)
+    public void ApplyEvent(IEvent @event)
     {
-        if (@event.Version != this.Version + 1)
-        {
-            throw new InvalidExpectedVersionException(
-                $"{@event.GetType().Name} Event v{@event.Version} cannot be applied to Aggregate state {this.GetType().Name} : {this.Id} v{this.Version}");
-        }
-
         ((dynamic)this).Apply((dynamic)@event);
 
         this.Version++;

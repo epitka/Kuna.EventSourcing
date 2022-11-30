@@ -7,7 +7,7 @@ namespace Senf.EventSourcing.Core.EventStore;
 
 public interface IEventSerializer
 {
-    Event? Deserialize(ResolvedEvent @event);
+    IEvent? Deserialize(ResolvedEvent @event);
 
     byte[] Serialize(object obj);
 }
@@ -28,7 +28,7 @@ public class JsonEventSerializer : IEventSerializer
         this.eventTypeMapper = eventTypeMapper;
     }
 
-    public Event? Deserialize(ResolvedEvent resolvedEvent)
+    public IEvent? Deserialize(ResolvedEvent resolvedEvent)
     {
         var eventType = this.eventTypeMapper.MapFrom(resolvedEvent.Event?.EventType ?? string.Empty);
 
@@ -46,12 +46,10 @@ public class JsonEventSerializer : IEventSerializer
                 Encoding.UTF8.GetString(resolvedEvent.Event.Data.Span),
                 eventType,
                 SerializerSettings
-            ) is not Event @event)
+            ) is not IEvent @event)
         {
             return null;
         }
-
-        @event.Version = Convert.ToInt64(resolvedEvent.Event.EventNumber);
 
         return @event;
     }

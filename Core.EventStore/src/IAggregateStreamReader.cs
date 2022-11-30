@@ -12,7 +12,7 @@ public interface IAggregateStreamReader
     /// <param name="streamId">Id of the stream, such as {streamPrefix}-{aggregateId}, order-57e1e0fc8cb1407694a752ac014ba27a</param>
     /// <param name="ct"></param>
     /// <exception cref="ArgumentException"></exception>
-    Task<IEnumerable<Event>> GetEvents(string streamId, CancellationToken ct);
+    Task<IEnumerable<IEvent>> GetEvents(string streamId, CancellationToken ct);
 }
 
 public sealed class AggregateStreamReader
@@ -36,7 +36,7 @@ public sealed class AggregateStreamReader
     /// <param name="streamId">Id of the stream, such as {streamPrefix}-{aggregateId}, order-57e1e0fc8cb1407694a752ac014ba27a</param>
     /// <param name="ct"></param>
     /// <exception cref="ArgumentException"></exception>
-    public async Task<IEnumerable<Event>> GetEvents(string streamId, CancellationToken ct)
+    public async Task<IEnumerable<IEvent>> GetEvents(string streamId, CancellationToken ct)
     {
         ct.ThrowIfCancellationRequested();
 
@@ -49,10 +49,10 @@ public sealed class AggregateStreamReader
 
         if (events.ReadState.Result == ReadState.StreamNotFound)
         {
-            return Enumerable.Empty<Event>();
+            return Enumerable.Empty<IEvent>();
         }
 
-        var toReturn = new List<Event>();
+        var toReturn = new List<IEvent>();
 
         await foreach (var resolvedEvent in events)
         {
