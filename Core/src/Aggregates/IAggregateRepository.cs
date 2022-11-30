@@ -14,7 +14,7 @@ public interface IAggregateRepository<TAggregate>
     ///<summary>Save instance of the aggregate to persistent storage.
     /// Throws <see cref="AggregateConcurrencyException"/> in case of concurrency errors</summary>
     /// <exception cref="AggregateConcurrencyException"> Should be thrown by implementer </exception>
-    /*Task<long> Save(
+    Task Save(
         TAggregate aggregate,
-        params KeyValuePair<string, string>[] metaData);*/
+        CancellationToken ct);
 }

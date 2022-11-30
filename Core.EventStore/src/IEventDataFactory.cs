@@ -14,14 +14,14 @@ public interface IEventDataFactory
 public class EventDataFactory : IEventDataFactory
 {
     private readonly IEventSerializer serializer;
-    private readonly IEventMetaDataFactory metaDataFactory;
+    private readonly IEventMetadataFactory metadataFactory;
 
     public EventDataFactory(
         IEventSerializer serializer,
-        IEventMetaDataFactory metaDataFactory)
+        IEventMetadataFactory metadataFactory)
     {
         this.serializer = serializer;
-        this.metaDataFactory = metaDataFactory;
+        this.metadataFactory = metadataFactory;
     }
 
     public EventData From(
@@ -33,7 +33,7 @@ public class EventDataFactory : IEventDataFactory
         var eventType = @event.GetType();
 
         var data = this.serializer.Serialize(@event);
-        var metadata = this.serializer.Serialize(this.metaDataFactory.Get());
+        var metadata = this.serializer.Serialize(this.metadataFactory.Get());
 
         return new EventData(eventId, eventType.Name, data, metadata);
     }

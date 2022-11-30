@@ -1,12 +1,12 @@
 ﻿using System.Diagnostics;
 namespace Senf.EventSourcing.Core.EventStore;
 
-public interface IEventMetaDataFactory
+public interface IEventMetadataFactory
 {
     Dictionary<string, string> Get();
 }
 
-public class EventMetaDataFactory
+public class EventMetadataFactory
 {
     public IDictionary<string, string> Get()
     {
