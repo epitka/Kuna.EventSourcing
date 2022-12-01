@@ -1,6 +1,5 @@
 ﻿using DotNet.Testcontainers.Containers;
 using FluentAssertions;
-using Org.BouncyCastle.Tls;
 
 namespace Senf.EventSourcing.Core.EventStore.Tests;
 

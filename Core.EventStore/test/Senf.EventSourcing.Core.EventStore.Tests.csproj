@@ -28,4 +28,8 @@
       <ProjectReference Include="..\src\Senf.EventSourcing.Core.EventStore.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="XUnitHelpers" />
+    </ItemGroup>
+
 </Project>
