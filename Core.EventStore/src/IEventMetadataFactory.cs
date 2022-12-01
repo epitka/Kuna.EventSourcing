@@ -3,10 +3,10 @@ namespace Senf.EventSourcing.Core.EventStore;
 
 public interface IEventMetadataFactory
 {
-    Dictionary<string, string> Get();
+    IDictionary<string, string> Get();
 }
 
-public class EventMetadataFactory
+public class EventMetadataFactory : IEventMetadataFactory
 {
     public IDictionary<string, string> Get()
     {
