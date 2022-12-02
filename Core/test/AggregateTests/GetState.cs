@@ -24,6 +24,7 @@ public class GetState
             Name = created.Name,
             ChangedValue = changed.ChangedValue,
             Version = 1,
+            OriginalVersion = -1,
         };
         expectedState.SetId(aggregateId);
 

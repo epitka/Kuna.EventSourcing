@@ -8,7 +8,7 @@ public interface IAggregateStreamWriter
 {
     Task Write(
         string streamId,
-        long expectedVersion,
+        StreamRevision expectedVersion,
         IEnumerable<IEvent> events,
         CancellationToken ct);
 }
@@ -29,7 +29,7 @@ public class AggregateStreamWriter
 
     public async Task Write(
         string streamId,
-        long expectedVersion,
+        StreamRevision expectedVersion,
         IEnumerable<IEvent> events,
         CancellationToken ct)
     {
@@ -38,16 +38,12 @@ public class AggregateStreamWriter
         try
         {
             await this.client
-                      .AppendToStreamAsync(
-                          streamId,
-                          StreamRevision.FromInt64(expectedVersion),
-                          eventData,
-                          cancellationToken: ct);
+                      .AppendToStreamAsync(streamId, expectedVersion, eventData, cancellationToken: ct);
         }
         catch (WrongExpectedVersionException ex)
         {
             throw new InvalidExpectedVersionException(
-                $"Invalid version,stream: {streamId}, expected: {expectedVersion}, actual: {ex.ActualVersion} ",
+                $"Invalid version, stream: {streamId}, expected: {expectedVersion}, actual: {ex.ActualVersion} ",
                 ex);
         }
     }

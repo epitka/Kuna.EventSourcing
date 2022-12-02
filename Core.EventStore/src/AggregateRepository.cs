@@ -13,9 +13,7 @@ public abstract class AggregateRepository<TAggregate> : IAggregateRepository<TAg
     /// <summary>
     /// name of the aggregate following camel case notation, such as "order"
     /// </summary>
-    public abstract string StreamPrefix { get; }
-
-    protected Type AggregateType => typeof(TAggregate);
+    protected abstract string StreamPrefix { get; }
 
     protected AggregateRepository(
         IAggregateStreamReader streamReader,
@@ -60,9 +58,9 @@ public abstract class AggregateRepository<TAggregate> : IAggregateRepository<TAg
             return;
         }
 
-        var expectedVersion = aggregate.Version - pendingEvents.Length;
+        var expectedVersion = aggregate.Version;
 
-        await this.streamWriter.Write(streamId, expectedVersion!.Value, pendingEvents, ct);
+        await this.streamWriter.Write(streamId, expectedVersion.ToStreamRevision(), pendingEvents, ct);
     }
 
     private string GetStreamId(Guid aggregateId)
