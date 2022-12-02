@@ -9,7 +9,7 @@ public abstract class Aggregate<TState>
 {
     private readonly Queue<IEvent> pendingEvents = new();
 
-    public long? Version => this.CurrentState.Version;
+    public int Version => this.CurrentState.Version;
 
     public Guid Id => this.CurrentState.Id;
 
@@ -32,7 +32,7 @@ public abstract class Aggregate<TState>
     {
         _ = events ?? throw new InvalidOperationException("Cannot initialize aggreate with null events.");
 
-        if (this.Version.HasValue)
+        if (this.Version > -1)
         {
             throw new InvalidOperationException("State is already initialized");
         }

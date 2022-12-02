@@ -8,7 +8,7 @@ public interface IAggregateStreamWriter
 {
     Task Write(
         string streamId,
-        long expectedVersion,
+        StreamRevision expectedVersion,
         IEnumerable<IEvent> events,
         CancellationToken ct);
 }
@@ -29,7 +29,7 @@ public class AggregateStreamWriter
 
     public async Task Write(
         string streamId,
-        long expectedVersion,
+        StreamRevision expectedVersion,
         IEnumerable<IEvent> events,
         CancellationToken ct)
     {
@@ -40,7 +40,7 @@ public class AggregateStreamWriter
             await this.client
                       .AppendToStreamAsync(
                           streamId,
-                          StreamRevision.FromInt64(expectedVersion),
+                          expectedVersion,
                           eventData,
                           cancellationToken: ct);
         }

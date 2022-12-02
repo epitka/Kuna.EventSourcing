@@ -62,7 +62,7 @@ public abstract class AggregateRepository<TAggregate> : IAggregateRepository<TAg
 
         var expectedVersion = aggregate.Version - pendingEvents.Length;
 
-        await this.streamWriter.Write(streamId, expectedVersion!.Value, pendingEvents, ct);
+        await this.streamWriter.Write(streamId, expectedVersion.ToStreamRevision(), pendingEvents, ct);
     }
 
     private string GetStreamId(Guid aggregateId)
