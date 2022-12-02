@@ -1,6 +1,6 @@
 ﻿namespace Senf.EventSourcing.Core.Tests.AggregateTests;
 
-public class InitWithState
+public class DequeueEvents
 {
     [Fact]
     public void Test()
