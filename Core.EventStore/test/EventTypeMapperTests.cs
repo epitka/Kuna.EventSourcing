@@ -1,17 +1,13 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Utilities;
 using Senf.EventSourcing.Core.Events;
+using Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers;
 
 namespace Senf.EventSourcing.Core.EventStore.Tests;
 
 public class EventTypeMapperTests
 {
     private readonly EventTypeMapper mapper;
-
-    public class DummyEvent : IEvent
-    {
-
-    }
 
     public EventTypeMapperTests()
     {
@@ -31,12 +27,12 @@ public class EventTypeMapperTests
     [Fact]
     public void Should_Return_Type()
     {
-        var testEventName = nameof(DummyEvent);
+        var testEventName = nameof(TestEvent);
 
         var eventType = this.mapper.MapFrom(testEventName);
 
         eventType.Should().NotBeNull();
 
-        eventType.Should().Be(typeof(DummyEvent));
+        eventType.Should().Be(typeof(TestEvent));
     }
 }

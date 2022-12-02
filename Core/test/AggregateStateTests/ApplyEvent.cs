@@ -6,7 +6,6 @@ namespace Senf.EventSourcing.Core.Tests.AggregateStateTests;
 
 public class ApplyEvent
 {
-
     [Fact]
     public void Should_Invoke_Correct_State_Mutation_Apply_Method()
     {
@@ -20,14 +19,9 @@ public class ApplyEvent
 
         var expectedState = new TestAggregate.State();
         expectedState.SetId(aggregateId);
-        expectedState.Version = 0;
         expectedState.Name = name;
+        expectedState.Version = 0;
 
         expectedState.ShouldDeepEqual(state);
-    }
-
-    [Fact]
-    public void Should_Increment_Version()
-    {
     }
 }

@@ -16,10 +16,10 @@ public class EventTypeMapper : IEventTypeMapper
     {
         var eventType = typeof(IEvent);
 
-        this.typeMap = assemblies
-                       .SelectMany(i => i.GetExportedTypes())
-                       .Where(x => eventType.IsAssignableFrom(x))
-                       .ToDictionary(x => x.Name);
+        this.typeMap = AppDomain.CurrentDomain.GetAssemblies()
+                                .SelectMany(i => i.GetTypes())
+                                .Where(x => eventType.IsAssignableFrom(x))
+                                .ToDictionary(x => x.Name);
     }
 
     public Type? MapFrom(string name)

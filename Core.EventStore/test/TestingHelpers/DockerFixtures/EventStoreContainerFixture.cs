@@ -4,7 +4,7 @@ using DotNet.Testcontainers.Containers;
 using EventStore.Client;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Senf.EventSourcing.Core.EventStore.Tests;
+namespace Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.DockerFixtures;
 
 public class EventStoreContainerFixture
     : IAsyncLifetime
@@ -13,7 +13,10 @@ public class EventStoreContainerFixture
 
     public EventStoreContainerFixture()
     {
-        this.EventStoreDockerContainer = EventStoreContainer().Build();
+        this.EventStoreDockerContainer = EventStoreContainer()
+                                         .WithAutoRemove(false)
+                                         .WithCleanUp(false)
+                                         .Build();
 
         var services = BootstrapServiceCollection();
         this.ServiceProvider = services.BuildServiceProvider();
@@ -21,7 +24,7 @@ public class EventStoreContainerFixture
 
     public IServiceProvider ServiceProvider { get; }
 
-    public TestcontainersContainer EventStoreDockerContainer { get;}
+    public TestcontainersContainer EventStoreDockerContainer { get; }
 
     public async Task InitializeAsync()
     {
@@ -94,4 +97,3 @@ public class EventStoreContainerFixture
         return sc;
     }
 }
-

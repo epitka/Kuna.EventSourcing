@@ -1,4 +1,4 @@
-﻿namespace Senf.EventSourcing.Core.EventStore.Tests.XUnitHelpers;
+﻿namespace Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.XUnitHelpers;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
 public class TestPriorityAttribute : Attribute
