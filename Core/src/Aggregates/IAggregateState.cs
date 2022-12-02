@@ -7,4 +7,6 @@ public interface IAggregateState
     public void SetId(Guid aggregateId);
 
     public int Version { get; set; }
+
+    public int OriginalVersion { get; set; }
 }

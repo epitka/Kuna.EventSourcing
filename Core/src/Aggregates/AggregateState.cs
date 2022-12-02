@@ -20,6 +20,8 @@ public abstract class AggregateState : IAggregateState
 
     public int Version { get; set; } = -1;
 
+    public int OriginalVersion { get; set; } = -1;
+
     /// <summary>
     /// By convention, methods that mutate state must be named Apply
     /// </summary>

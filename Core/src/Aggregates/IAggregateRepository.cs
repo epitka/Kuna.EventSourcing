@@ -1,7 +1,5 @@
 ﻿
-using Senf.EventSourcing.Core.Aggregates;
-
-namespace Senf.EventSourcing.Core;
+namespace Senf.EventSourcing.Core.Aggregates;
 
 public interface IAggregateRepository<TAggregate>
     where TAggregate : class, IAggregate, new()

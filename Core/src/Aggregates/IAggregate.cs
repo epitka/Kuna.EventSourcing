@@ -4,6 +4,8 @@ namespace Senf.EventSourcing.Core.Aggregates;
 
 public interface IAggregate
 {
+    int OriginalVersion { get; }
+
     int Version { get; }
 
     Guid Id { get; }

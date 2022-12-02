@@ -38,16 +38,12 @@ public class AggregateStreamWriter
         try
         {
             await this.client
-                      .AppendToStreamAsync(
-                          streamId,
-                          expectedVersion,
-                          eventData,
-                          cancellationToken: ct);
+                      .AppendToStreamAsync(streamId, expectedVersion, eventData, cancellationToken: ct);
         }
         catch (WrongExpectedVersionException ex)
         {
             throw new InvalidExpectedVersionException(
-                $"Invalid version,stream: {streamId}, expected: {expectedVersion}, actual: {ex.ActualVersion} ",
+                $"Invalid version, stream: {streamId}, expected: {expectedVersion}, actual: {ex.ActualVersion} ",
                 ex);
         }
     }

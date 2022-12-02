@@ -9,6 +9,8 @@ public abstract class Aggregate<TState>
 {
     private readonly Queue<IEvent> pendingEvents = new();
 
+    public int OriginalVersion => this.CurrentState.OriginalVersion;
+
     public int Version => this.CurrentState.Version;
 
     public Guid Id => this.CurrentState.Id;
@@ -41,6 +43,8 @@ public abstract class Aggregate<TState>
         {
             this.CurrentState.ApplyEvent(@event);
         }
+
+        this.CurrentState.OriginalVersion = this.Version;
     }
 
     /// <summary>
