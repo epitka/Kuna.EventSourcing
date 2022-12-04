@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <PackageReference Include="EventStore.Client.Grpc" Version="22.0.0" />
+      <PackageReference Include="EventStore.Client.Grpc.PersistentSubscriptions" Version="22.0.0" />
       <PackageReference Include="EventStore.Client.Grpc.Streams" Version="22.0.0" />
       <PackageReference Include="NodaTime" Version="3.1.6" />
     </ItemGroup>
