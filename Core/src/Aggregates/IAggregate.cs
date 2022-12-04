@@ -10,7 +10,7 @@ public interface IAggregate
 
     Guid Id { get; }
 
-    IEnumerable<IEvent> GetPendingEvents();
+    IEvent[] GetPendingEvents();
 
     IEvent[] DequeuePendingEvents();
 

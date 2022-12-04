@@ -63,7 +63,7 @@ public abstract class Aggregate<TState>
     /// returns copy of the pending events in internal queue
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<IEvent> GetPendingEvents()
+    public IEvent[] GetPendingEvents()
     {
         return this.pendingEvents.ToArray();
     }
