@@ -77,11 +77,12 @@ public class Save
         var repository = new TestAggregateRepository(A.Fake<IAggregateStreamReader>(), fakeWriter);
         await repository.Save(aggregate, default);
 
-        callArguments.Count.Should().Be(4);
-        var capturedStreamId = (string)callArguments[0];
-        var capturedVersion = (StreamRevision)callArguments[1];
-        var capturedEvents = (IEnumerable<IEvent>)callArguments[2];
-        callArguments[3].Should().BeOfType<CancellationToken>();
+        callArguments.Should().NotBeNull();
+        callArguments!.Count.Should().Be(4);
+        var capturedStreamId = (string)callArguments[0]!;
+        var capturedVersion = (StreamRevision)callArguments[1]!;
+        var capturedEvents = (IEnumerable<IEvent>)callArguments[2]!;
+        callArguments[3]!.Should().BeOfType<CancellationToken>();
 
         capturedStreamId.Should().Be(repository.StreamPrefix + aggregateId);
         capturedVersion.Should().Be(aggregate.OriginalVersion.ToStreamRevision());
