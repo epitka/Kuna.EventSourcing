@@ -12,7 +12,8 @@ using static Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.HelperFunct
 
 namespace Senf.EventSourcing.Core.EventStore.Tests;
 
-public class AggregateStreamReaderTests : IClassFixture<EventStoreContainerFixture>
+[Collection("EventStore collection")]
+public class AggregateStreamReaderTests
 {
     private readonly EventStoreContainerFixture eventStoreDatabaseFixture;
 
@@ -56,7 +57,7 @@ public class AggregateStreamReaderTests : IClassFixture<EventStoreContainerFixtu
     }
 
     [Fact]
-    public async Task When_Aggregate_Stream_Does_Not_Exist_Should_Return_Emtpy_Enumerable()
+    public async Task When_Aggregate_Stream_Does_Not_Exist_Should_Return_Empty_Enumerable()
     {
         using var scope = this.eventStoreDatabaseFixture.ServiceProvider.CreateScope();
         var reader = scope.ServiceProvider.GetRequiredService<IAggregateStreamReader>();

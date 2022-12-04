@@ -21,7 +21,7 @@ public abstract class Aggregate<TState>
     {
         _ = state ?? throw new InvalidOperationException("Cannot initialize aggreate with null state.");
 
-        if (this.CurrentState != null)
+        if (this.Version > -1)
         {
             throw new InvalidOperationException("State is already initialized");
         }
@@ -30,10 +30,8 @@ public abstract class Aggregate<TState>
         this.CurrentState.SetId(state.Id);
     }
 
-    public void InitWith(IEnumerable<IEvent> events)
+    void IAggregate.InitWith(IEnumerable<IEvent> events)
     {
-        _ = events ?? throw new InvalidOperationException("Cannot initialize aggreate with null events.");
-
         if (this.Version > -1)
         {
             throw new InvalidOperationException("State is already initialized");
@@ -63,7 +61,7 @@ public abstract class Aggregate<TState>
     /// returns copy of the pending events in internal queue
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<IEvent> GetPendingEvents()
+    public IEvent[] GetPendingEvents()
     {
         return this.pendingEvents.ToArray();
     }

@@ -11,9 +11,9 @@ public abstract class AggregateRepository<TAggregate> : IAggregateRepository<TAg
     private readonly IAggregateStreamWriter streamWriter;
 
     /// <summary>
-    /// name of the aggregate following camel case notation, such as "order"
+    /// name of the aggregate following camel case notation, such as "order-"
     /// </summary>
-    protected abstract string StreamPrefix { get; }
+    public abstract string StreamPrefix { get; }
 
     protected AggregateRepository(
         IAggregateStreamReader streamReader,
@@ -49,8 +49,6 @@ public abstract class AggregateRepository<TAggregate> : IAggregateRepository<TAg
         TAggregate aggregate,
         CancellationToken ct)
     {
-        var streamId = this.GetStreamId(aggregate.Id);
-
         var pendingEvents = aggregate.DequeuePendingEvents();
 
         if (!pendingEvents.Any())
@@ -58,13 +56,13 @@ public abstract class AggregateRepository<TAggregate> : IAggregateRepository<TAg
             return;
         }
 
-        var expectedVersion = aggregate.Version;
+        var streamId = this.GetStreamId(aggregate.Id);
 
-        await this.streamWriter.Write(streamId, expectedVersion.ToStreamRevision(), pendingEvents, ct);
+        await this.streamWriter.Write(streamId, aggregate.OriginalVersion.ToStreamRevision(), pendingEvents, ct);
     }
 
     private string GetStreamId(Guid aggregateId)
     {
-        return string.Concat(this.StreamPrefix, aggregateId.ToString("N"));
+        return string.Concat(this.StreamPrefix, aggregateId.ToString());
     }
 }

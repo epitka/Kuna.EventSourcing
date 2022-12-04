@@ -2,10 +2,12 @@
 
 public class TestAggregateRepository : AggregateRepository<TestAggregate>
 {
-    public TestAggregateRepository(IAggregateStreamReader streamReader, IAggregateStreamWriter streamWriter)
+    public TestAggregateRepository(
+        IAggregateStreamReader streamReader,
+        IAggregateStreamWriter streamWriter)
         : base(streamReader, streamWriter)
     {
     }
 
-    protected override string StreamPrefix => "test";
+    public override string StreamPrefix => "test-";
 }

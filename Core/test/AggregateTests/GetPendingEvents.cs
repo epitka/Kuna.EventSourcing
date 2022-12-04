@@ -28,5 +28,15 @@ public class GetPendingEvents
 
         aggregate.RaiseEvent(events[2]);
         aggregate.GetPendingEvents().Count().Should().Be(3);
+
+        var pendingEvents = aggregate.GetPendingEvents();
+
+        for (var i = 0; i < pendingEvents.Length; i++)
+        {
+            var pendingEvent = pendingEvents[i];
+            var @event = events[i];
+
+            pendingEvent.Should().Be(@event);
+        }
     }
 }

@@ -7,13 +7,13 @@ using Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers;
 using Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.DockerFixtures;
 using Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.XUnitHelpers;
 using Senf.EventSourcing.Core.Exceptions;
-using static System.String;
 using static Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.HelperFunctions;
 
 namespace Senf.EventSourcing.Core.EventStore.Tests;
 
+[Collection("EventStore collection")]
+[TestCaseOrderer("Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.XUnitHelpers.PriorityOrderer", "Senf.EventSourcing.Core.EventStore.Tests")]
 public class AggregateStreamWriterTests
-    : IClassFixture<EventStoreContainerFixture>
 {
     private readonly EventStoreContainerFixture eventStoreDatabaseFixture;
 
@@ -35,7 +35,7 @@ public class AggregateStreamWriterTests
         using var scope = this.eventStoreDatabaseFixture.ServiceProvider.CreateScope();
         var writer = scope.ServiceProvider.GetRequiredService<IAggregateStreamWriter>();
 
-        var streamId = Concat(streamPrefix, aggregateId);
+        var streamId = GetStreamId(streamPrefix, aggregateId);
         var events = GetEvents(aggregateId, 10);
 
         await writer.Write(streamId, (-1).ToStreamRevision(), events, default);
@@ -91,7 +91,7 @@ public class AggregateStreamWriterTests
     }
 
     [Fact]
-    [TestPriority(3)]
+    [TestPriority(2)]
     public async void When_Invalid_Expected_Version_Is_Supplied_Throws_InvalidExpectedVersionException()
     {
         using var scope = this.eventStoreDatabaseFixture.ServiceProvider.CreateScope();
@@ -110,6 +110,4 @@ public class AggregateStreamWriterTests
         await Assert.ThrowsAsync<InvalidExpectedVersionException>(
             async () => await writer.Write(streamId, (expectedVersion - 1).ToStreamRevision(), events, default));
     }
-
-
 }
