@@ -2,13 +2,13 @@ using Senf.EventSourcing.Core.Events;
 
 namespace Senf.EventSourcing.Core.Aggregates;
 
-public interface IAggregate
+public interface IAggregate<TKey>
 {
+    Id<TKey> Id { get; }
+
     int OriginalVersion { get; }
 
     int Version { get; }
-
-    Guid Id { get; }
 
     IEvent[] GetPendingEvents();
 
@@ -17,8 +17,8 @@ public interface IAggregate
     void InitWith(IEnumerable<IEvent> events);
 }
 
-public interface IAggregate<TState> : IAggregate
-    where TState : IAggregateState, new()
+public interface IAggregate<TKey, TState> : IAggregate<TKey>
+    where TState : IAggregateState<TKey>, new()
 {
     TState GetState();
 

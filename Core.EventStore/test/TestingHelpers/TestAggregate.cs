@@ -3,7 +3,7 @@ using Senf.EventSourcing.Core.Events;
 
 namespace Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers;
 
-public class TestAggregate : Aggregate<TestAggregate.State>
+public class TestAggregate : Aggregate<Guid, TestAggregate.State>
 {
     public static TestAggregate Create(Guid id, string name)
     {
@@ -16,12 +16,12 @@ public class TestAggregate : Aggregate<TestAggregate.State>
 
     public void ChangeName( string newName)
     {
-        this.RaiseEvent(new TestAggregateNameChanged(this.Id, newName));
+        this.RaiseEvent(new TestAggregateNameChanged(this.Id.Value, newName));
     }
 
     #region 'State'
 
-    public class State : AggregateState
+    public class State : AggregateState<Guid>
     {
         public string Name { get; set; } = default!;
 

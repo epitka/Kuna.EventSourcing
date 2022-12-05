@@ -23,7 +23,7 @@ public class InitWithEvents
             new TestAggregateChanged(Id: aggregateId, ChangedValue:lastChangedValue),
         };
 
-        ((IAggregate)aggregate).InitWith(events);
+        aggregate.InitWith(events);
 
         var expectedState = new TestAggregate.State();
         expectedState.SetId(aggregateId);
@@ -61,6 +61,6 @@ public class InitWithEvents
         // check pre-condition
         aggregate.Version.Should().BeGreaterThan(-1);
 
-        Assert.Throws<InvalidOperationException>(() => ((IAggregate)aggregate).InitWith(events));
+        Assert.Throws<InvalidOperationException>(() => aggregate.InitWith(events));
     }
 }

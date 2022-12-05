@@ -1,10 +1,10 @@
 ﻿namespace Senf.EventSourcing.Core.Aggregates;
 
-public interface IAggregateState
+public interface IAggregateState<TKey>
 {
-    public Guid Id { get; }
+    public Id<TKey> Id { get; }
 
-    public void SetId(Guid aggregateId);
+    public void SetId(TKey aggregateId);
 
     public int Version { get; set; }
 

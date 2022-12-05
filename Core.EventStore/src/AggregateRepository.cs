@@ -4,8 +4,9 @@ using Senf.EventSourcing.Core.Exceptions;
 
 namespace Senf.EventSourcing.Core.EventStore;
 
-public abstract class AggregateRepository<TAggregate> : IAggregateRepository<TAggregate>
-    where TAggregate : class, IAggregate, new()
+public abstract class AggregateRepository<TKey, TAggregate> : IAggregateRepository<TKey, TAggregate>
+    where TAggregate : class, IAggregate<TKey>, new()
+    where TKey : IEquatable<TKey>
 {
     private readonly IAggregateStreamReader streamReader;
     private readonly IAggregateStreamWriter streamWriter;
@@ -23,7 +24,7 @@ public abstract class AggregateRepository<TAggregate> : IAggregateRepository<TAg
         this.streamWriter = streamWriter;
     }
 
-    public virtual async Task<TAggregate> Get(Guid aggregateId, CancellationToken ct)
+    public virtual async Task<TAggregate> Get(TKey aggregateId, CancellationToken ct)
     {
         ct.ThrowIfCancellationRequested();
 
@@ -56,12 +57,12 @@ public abstract class AggregateRepository<TAggregate> : IAggregateRepository<TAg
             return;
         }
 
-        var streamId = this.GetStreamId(aggregate.Id);
+        var streamId = this.GetStreamId(aggregate.Id.Value);
 
         await this.streamWriter.Write(streamId, aggregate.OriginalVersion.ToStreamRevision(), pendingEvents, ct);
     }
 
-    private string GetStreamId(Guid aggregateId)
+    private string GetStreamId(TKey aggregateId)
     {
         return string.Concat(this.StreamPrefix, aggregateId.ToString());
     }
