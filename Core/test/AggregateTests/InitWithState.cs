@@ -22,7 +22,7 @@ public class InitWithState
         expectedState.Version = 7;
         expectedState.OriginalVersion = 2;
 
-        ((IAggregate<TestAggregate.State>)aggregate).InitWithState(expectedState);
+        aggregate.InitWithState(expectedState);
 
         var currentState = aggregate.GetState();
 
@@ -48,6 +48,6 @@ public class InitWithState
         // check pre-condition
         aggregate.Version.Should().BeGreaterThan(-1);
 
-        Assert.Throws<InvalidOperationException>(() => ((IAggregate<TestAggregate.State>) aggregate).InitWithState(expectedState));
+        Assert.Throws<InvalidOperationException>(() => aggregate.InitWithState(expectedState));
     }
 }

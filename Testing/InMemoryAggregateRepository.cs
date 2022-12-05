@@ -6,8 +6,8 @@ using Senf.EventSourcing.Core.Exceptions;
 
 namespace Senf.EventSourcing.Testing;
 
-public class InMemoryAggregateRepository<TAggregate> : IAggregateRepository<TAggregate>
-    where TAggregate : class, IAggregate, new()
+public class InMemoryAggregateRepository<Guid, TAggregate> : IAggregateRepository<Guid,TAggregate>
+    where TAggregate : class, IAggregate<Guid>, new()
 {
     private readonly Dictionary<Guid, List<EventInfo>> eventsStream;
 
@@ -22,7 +22,7 @@ public class InMemoryAggregateRepository<TAggregate> : IAggregateRepository<TAgg
 
         if (this.eventsStream.ContainsKey(id) == false)
         {
-            throw new AggregateNotFoundException(id, typeof(TAggregate));
+            throw new AggregateNotFoundException(id!, typeof(TAggregate));
         }
 
         var instanceStream = this.eventsStream[id];
@@ -49,13 +49,13 @@ public class InMemoryAggregateRepository<TAggregate> : IAggregateRepository<TAgg
     }
 
     private Task InternalSave(
-        IAggregate aggregate,
+        IAggregate<Guid> aggregate,
         EventInfo[] pendingEvents)
     {
-        if (this.eventsStream.TryGetValue(aggregate.Id, out var instanceStream) == false)
+        if (this.eventsStream.TryGetValue(aggregate.Id.Value, out var instanceStream) == false)
         {
             instanceStream = new List<EventInfo>(pendingEvents.Length);
-            this.eventsStream.Add(aggregate.Id, instanceStream);
+            this.eventsStream.Add(aggregate.Id.Value, instanceStream);
         }
 
         instanceStream.AddRange(pendingEvents);

@@ -3,19 +3,23 @@ using Senf.EventSourcing.Core.Exceptions;
 
 namespace Senf.EventSourcing.Core.Aggregates;
 
-public abstract class AggregateState : IAggregateState
-{
-    public Guid Id { get; private set; } = Guid.Empty;
+public abstract class AggregateState<TKey> : IAggregateState<TKey>
+where TKey : IEquatable<TKey>
 
-    public void SetId(Guid aggregateId)
+{
+    public Id<TKey> Id { get; private set; } = default!;
+
+    public void SetId(TKey aggregateId)
     {
-        if (this.Id != default
-            && this.Id != aggregateId)
+        var id = new Id<TKey>(aggregateId);
+
+        if (this.Id != null
+            && !this.Id.Equals(id))
         {
             throw new InvalidOperationException("Id already set, cannot change identity of the aggreate");
         }
 
-        this.Id = aggregateId;
+        this.Id = id;
     }
 
     public int Version { get; set; } = -1;
