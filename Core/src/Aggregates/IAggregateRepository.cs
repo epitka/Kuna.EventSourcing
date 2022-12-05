@@ -1,13 +1,13 @@
 ﻿
 namespace Senf.EventSourcing.Core.Aggregates;
 
-public interface IAggregateRepository<TAggregate>
-    where TAggregate : class, IAggregate, new()
+public interface IAggregateRepository<TKey, TAggregate>
+    where TAggregate : class, IAggregate<TKey>, new()
 {
     ///<summary>Fetches aggregate from the persistent store.
     /// Throws <see cref="AggregateNotFoundException"/> if aggregate is not found.
     /// <exception cref="AggregateNotFoundException"> Should be thrown by implementer </exception>
-    Task<TAggregate> Get(Guid id, CancellationToken cancellationToken);
+    Task<TAggregate> Get(TKey id, CancellationToken cancellationToken);
 
     ///<summary>Save instance of the aggregate to persistent storage.
     /// Throws <see cref="AggregateConcurrencyException"/> in case of concurrency errors</summary>

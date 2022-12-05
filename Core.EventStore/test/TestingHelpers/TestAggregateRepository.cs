@@ -1,6 +1,6 @@
 ﻿namespace Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers;
 
-public class TestAggregateRepository : AggregateRepository<TestAggregate>
+public class TestAggregateRepository : AggregateRepository<Guid, TestAggregate>
 {
     public TestAggregateRepository(
         IAggregateStreamReader streamReader,

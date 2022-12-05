@@ -7,7 +7,7 @@ namespace Senf.EventSourcing.Core.Tests;
 public partial class TestAggregate
 {
     public class State
-        : AggregateState
+        : AggregateState<Guid>
     {
         public string Name { get; set; }
 

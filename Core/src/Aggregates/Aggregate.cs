@@ -3,9 +3,10 @@ using Senf.EventSourcing.Core.Extensions;
 
 namespace Senf.EventSourcing.Core.Aggregates;
 
-public abstract class Aggregate<TState>
-    : IAggregate<TState>
-    where TState : AggregateState, new()
+public abstract class Aggregate<TKey, TState>
+    : IAggregate<TKey, TState>
+    where TState : AggregateState<TKey>, new()
+    where TKey : IEquatable<TKey>
 {
     private readonly Queue<IEvent> pendingEvents = new();
 
@@ -13,11 +14,11 @@ public abstract class Aggregate<TState>
 
     public int Version => this.CurrentState.Version;
 
-    public Guid Id => this.CurrentState.Id;
+    public Id<TKey> Id => this.CurrentState.Id;
 
     protected TState CurrentState { get; private set; } = new();
 
-    void IAggregate<TState>.InitWithState(TState state)
+    public void InitWithState(TState state)
     {
         _ = state ?? throw new InvalidOperationException("Cannot initialize aggreate with null state.");
 
@@ -27,10 +28,10 @@ public abstract class Aggregate<TState>
         }
 
         this.CurrentState = state;
-        this.CurrentState.SetId(state.Id);
+        this.CurrentState.SetId(state.Id.Value);
     }
 
-    void IAggregate.InitWith(IEnumerable<IEvent> events)
+    public void InitWith(IEnumerable<IEvent> events)
     {
         if (this.Version > -1)
         {
