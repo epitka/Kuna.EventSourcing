@@ -5,7 +5,7 @@ namespace Senf.EventSourcing.Core.EventStore;
 
 public interface IEventTypeMapper
 {
-    Type? MapFrom(string name);
+    Type MapFrom(string name);
 }
 
 public class EventTypeMapper : IEventTypeMapper
@@ -22,10 +22,10 @@ public class EventTypeMapper : IEventTypeMapper
                                 .ToDictionary(x => x.Name);
     }
 
-    public Type? MapFrom(string name)
+    public Type MapFrom(string name)
     {
         return !this.typeMap.TryGetValue(name.Trim(), out var eventType)
-            ? null
+            ?  throw new InvalidOperationException($"Missing event type definition for event type name {name}")
             : eventType;
     }
 }

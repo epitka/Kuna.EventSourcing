@@ -15,13 +15,12 @@ public class EventTypeMapperTests
     }
 
     [Fact]
-    public void When_Entry_For_Type_Name_Does_Not_Exist_Should_Return_Null()
+    public void When_Entry_For_Type_Name_Does_Not_Exist_Should_Throw()
     {
         var testEventName = Guid.NewGuid().ToString();
 
-        var eventType = this.mapper.MapFrom(testEventName);
+        Assert.Throws<InvalidOperationException>(()=>this.mapper.MapFrom(testEventName));
 
-        eventType.Should().BeNull();
     }
 
     [Fact]

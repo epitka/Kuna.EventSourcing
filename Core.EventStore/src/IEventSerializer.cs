@@ -30,17 +30,12 @@ public class JsonEventSerializer : IEventSerializer
 
     public IEvent? Deserialize(ResolvedEvent resolvedEvent)
     {
-        var eventType = this.eventTypeMapper.MapFrom(resolvedEvent.Event?.EventType ?? string.Empty);
-
-        if (eventType == null)
-        {
-            throw new InvalidOperationException($"Missing event type definition for {resolvedEvent.Event?.EventType} in stream {resolvedEvent.OriginalStreamId}");
-        }
-
         if (resolvedEvent.Event == null)
         {
             return null;
         }
+
+        var eventType = this.eventTypeMapper.MapFrom(resolvedEvent.Event.EventType ?? string.Empty);
 
         if (JsonConvert.DeserializeObject(
                 Encoding.UTF8.GetString(resolvedEvent.Event.Data.Span),
