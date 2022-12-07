@@ -1,76 +1,161 @@
-﻿using System.Diagnostics;
-using System.Reflection;
+﻿using System.Reflection;
 using EventStore.Client;
+using Grpc.Core;
 using Microsoft.Extensions.Logging;
 using Senf.EventSourcing.Core.Events;
+using Senf.EventSourcing.Core.Exceptions;
 
 namespace Senf.EventSourcing.Core.EventStore.Subscriptions;
 
-public class EventStreamListener
+public record StreamSubscriptionSettings(string streamName);
+
+public class StreamListener
 {
-    private readonly IEventBus bus;
-    private readonly EventStoreClient client;
-    private readonly IEventSerializer serializer;
+    private readonly EventStorePersistentSubscriptionsClient client;
+    private readonly IEventBus eventBus;
+    private readonly IEventSerializer eventSerializer;
+    private readonly Func<ResolvedEvent, Task> eventHandler;
     private readonly ILogger logger;
+    private StreamSubscriptionSettings streamSettings = default!;
+    private PersistentSubscriptionSettings subscriptionSettings = default!;
+    private CancellationToken cancellationToken;
 
-    public EventStreamListener(IEventBus bus)
-    {
-        this.bus = bus;
-    }
+    private string SubscriptionGroupName { get; }
 
-    public string Group { get; }
-
-    public EventStreamListener(
-        EventStoreClient client,
-        IEventSerializer serializer,
-        ILogger<EventStreamListener> logger)
+    public StreamListener(
+        EventStorePersistentSubscriptionsClient client,
+        IEventBus eventBus,
+        IEventSerializer eventSerializer,
+        Func<ResolvedEvent, Task> eventHandler,
+        ILogger logger)
     {
         this.client = client;
-        this.serializer = serializer;
+        this.eventBus = eventBus;
+        this.eventSerializer = eventSerializer;
+        this.eventHandler = eventHandler;
         this.logger = logger;
 
-        this.Group = Assembly.GetEntryAssembly().GetName().Name;
+        // each microservice will be a separate subscription group
+        this.SubscriptionGroupName = Assembly.GetEntryAssembly()!.GetName()!.Name!;
     }
 
-    public async Task SubscribeToAllStream(
-        SubscriptionFilterOptions subscriptionFilterOptions,
+    public async Task Start(
+        StreamSubscriptionSettings streamSettings,
+        PersistentSubscriptionSettings subscriptionSettings,
         CancellationToken ct)
     {
-        await this.StartSubscription(subscriptionFilterOptions, ct);
+        this.cancellationToken = ct;
+
+        this.subscriptionSettings = subscriptionSettings;
+        this.streamSettings = streamSettings;
+        await this.EnsureSubscriptionGroupExists(streamSettings, subscriptionSettings, ct);
+
+        await this.StartSubscription(ct);
     }
 
-    private async Task StartSubscription(
-        SubscriptionFilterOptions subscriptionFilterOptions,
+    private async Task EnsureSubscriptionGroupExists(
+        StreamSubscriptionSettings streamSubscriptionSettings,
+        PersistentSubscriptionSettings settings,
         CancellationToken ct)
     {
-        await client.SubscribeToAllAsync(
-            FromAll.End,
+        try
+        {
+            await this.client.CreateAsync(
+                streamSubscriptionSettings.streamName,
+                this.SubscriptionGroupName,
+                settings,
+                cancellationToken: ct);
+        }
+        catch (Exception e)
+        {
+            this.logger.LogError("Could not create subscription group", e);
+            throw;
+        }
+
+        this.logger.LogTrace(
+            "Persistent Subsription group {SubscrptionGrou} created",
+            this.SubscriptionGroupName);
+    }
+
+    private async Task StartSubscription(CancellationToken ct)
+    {
+        await this.client.SubscribeToStreamAsync(
+            this.streamSettings.streamName,
+            this.SubscriptionGroupName,
             this.OnEventAppeared,
-            false,
             this.OnSubscriptionDropped,
-            subscriptionFilterOptions,
-            cancellationToken:ct);
+            cancellationToken: ct);
+
+        this.logger.LogTrace(
+            "Persistent subscription to stream {StreamName} created",
+            this.streamSettings.streamName);
+    }
+
+    private async Task OnEventAppeared(
+        PersistentSubscription subscription,
+        ResolvedEvent resolvedEvent,
+        int? retryCount,
+        CancellationToken ct)
+    {
+        ct.ThrowIfCancellationRequested();
+
+        try
+        {
+            var @event = this.eventSerializer.Deserialize(resolvedEvent);
+
+            if (@event == null)
+            {
+                await subscription.Ack(resolvedEvent);
+                return;
+            }
+
+            await this.eventBus.Publish(@event, ct);
+
+            await subscription.Ack(resolvedEvent);
+        }
+        catch (InvalidOperationException ex)
+        {
+            await subscription.Nack(PersistentSubscriptionNakEventAction.Park, ex.Message, resolvedEvent);
+        }
+        catch (UnrecoverableException ex)
+        {
+            await subscription.Nack(PersistentSubscriptionNakEventAction.Park, ex.Message, resolvedEvent);
+        }
+        catch (Exception ex)
+        {
+            if (retryCount == this.subscriptionSettings.MaxRetryCount)
+            {
+                await subscription.Nack(PersistentSubscriptionNakEventAction.Park, ex.Message, resolvedEvent);
+            }
+            else
+            {
+                await subscription.Nack(PersistentSubscriptionNakEventAction.Retry, ex.Message, resolvedEvent);
+            }
+        }
     }
 
     private void OnSubscriptionDropped(
-        StreamSubscription subscription,
+        PersistentSubscription subscription,
         SubscriptionDroppedReason dropReason,
         Exception? exception)
     {
-        throw new NotImplementedException();
+        this.logger.LogWarning(
+            "Subscription dropped. Reason: {DropReason}, Exception: {@Exception}",
+            dropReason,
+            exception
+        );
+
+        if (exception is RpcException { StatusCode: StatusCode.Cancelled })
+        {
+            return;
+        }
+
+        this.Resubscribe();
     }
 
-    private Task OnEventAppeared(
-        StreamSubscription subscription,
-        ResolvedEvent resolvedEvent,
-        CancellationToken ct)
+
+    private void Resubscribe()
     {
-        IEvent @event;
-
-        // deserialize event
-        @event = this.serializer.Deserialize(resolvedEvent);
-
-        this.bus.Publish(@event, ct);
+        throw new NotImplementedException("Finish resubscribe");
     }
-
 }
