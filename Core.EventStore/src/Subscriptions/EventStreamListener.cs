@@ -9,12 +9,16 @@ namespace Senf.EventSourcing.Core.EventStore.Subscriptions;
 
 public record StreamSubscriptionSettings(string streamName);
 
-public class StreamListener
+public interface IEventStreamListener
 {
+
+}
+public class EventStreamListener : IEventStreamListener
+{
+    private readonly IServiceProvider serviceProvider;
     private readonly EventStorePersistentSubscriptionsClient client;
-    private readonly IEventBus eventBus;
     private readonly IEventSerializer eventSerializer;
-    private readonly Func<ResolvedEvent, Task> eventHandler;
+    private readonly IEventDispatcher eventDispatcher;
     private readonly ILogger logger;
     private StreamSubscriptionSettings streamSettings = default!;
     private PersistentSubscriptionSettings subscriptionSettings = default!;
@@ -22,17 +26,17 @@ public class StreamListener
 
     private string SubscriptionGroupName { get; }
 
-    public StreamListener(
+    public EventStreamListener(
+        IServiceProvider serviceProvider,
         EventStorePersistentSubscriptionsClient client,
-        IEventBus eventBus,
         IEventSerializer eventSerializer,
-        Func<ResolvedEvent, Task> eventHandler,
+        IEventDispatcher eventDispatcher,
         ILogger logger)
     {
+        this.serviceProvider = serviceProvider;
         this.client = client;
-        this.eventBus = eventBus;
         this.eventSerializer = eventSerializer;
-        this.eventHandler = eventHandler;
+        this.eventDispatcher = eventDispatcher;
         this.logger = logger;
 
         // each microservice will be a separate subscription group
@@ -103,13 +107,18 @@ public class StreamListener
         {
             var @event = this.eventSerializer.Deserialize(resolvedEvent);
 
+            // TODO: Add OpenTelemetry tracing here
+            // Propagate CorrelationId and set CausationId using EventId
+            // Use OpenTelemetry api instead of Activity
+            //var metaData = this.eventSerializer.DeserializeMetaData(resolvedEvent);
+
             if (@event == null)
             {
                 await subscription.Ack(resolvedEvent);
                 return;
             }
 
-            await this.eventBus.Publish(@event, ct);
+            await this.eventDispatcher.Publish(@event, ct);
 
             await subscription.Ack(resolvedEvent);
         }
@@ -152,7 +161,6 @@ public class StreamListener
 
         this.Resubscribe();
     }
-
 
     private void Resubscribe()
     {

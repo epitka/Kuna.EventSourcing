@@ -9,6 +9,8 @@ public interface IEventSerializer
 {
     IEvent? Deserialize(ResolvedEvent @event);
 
+    IDictionary<string, string> DeserializeMetaData(ResolvedEvent resolvedEvent);
+
     byte[] Serialize(object obj);
 }
 
@@ -47,6 +49,14 @@ public class JsonEventSerializer : IEventSerializer
         }
 
         return @event;
+    }
+
+    public IDictionary<string, string> DeserializeMetaData(ResolvedEvent resolvedEvent)
+    {
+        return JsonConvert.DeserializeObject<Dictionary<string, string>>(
+                   Encoding.UTF8.GetString(resolvedEvent.Event.Metadata.Span),
+                   SerializerSettings)
+               ?? new Dictionary<string, string>();
     }
 
     public byte[] Serialize(object obj)
