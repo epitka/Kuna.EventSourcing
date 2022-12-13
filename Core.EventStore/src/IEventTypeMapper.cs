@@ -12,8 +12,14 @@ public class EventTypeMapper : IEventTypeMapper
 {
     private readonly IDictionary<string, Type> typeMap;
 
-    public EventTypeMapper(IEnumerable<Assembly> assemblies)
+    public EventTypeMapper(IEnumerable<Assembly> assembliesToScan)
     {
+        /*if (assembliesToScan == null
+            || assembliesToScan.Any() == false)
+        {
+            throw new ArgumentNullException()
+        }*/
+
         var eventType = typeof(IEvent);
 
         this.typeMap = AppDomain.CurrentDomain.GetAssemblies()
