@@ -8,6 +8,7 @@ namespace Senf.EventSourcing.Testing;
 
 public class InMemoryAggregateRepository<Guid, TAggregate> : IAggregateRepository<Guid,TAggregate>
     where TAggregate : class, IAggregate<Guid>, new()
+    where Guid : notnull
 {
     private readonly Dictionary<Guid, List<EventInfo>> eventsStream;
 
@@ -18,6 +19,8 @@ public class InMemoryAggregateRepository<Guid, TAggregate> : IAggregateRepositor
 
     public Task<TAggregate> Get(Guid id, CancellationToken ct)
     {
+        var _ = id ?? throw new ArgumentNullException("id cannot be null");
+
         var aggregate = new TAggregate();
 
         if (this.eventsStream.ContainsKey(id) == false)

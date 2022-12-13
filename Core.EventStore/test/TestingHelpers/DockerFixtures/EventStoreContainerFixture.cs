@@ -2,6 +2,7 @@
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
 using EventStore.Client;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.DockerFixtures;
@@ -9,7 +10,7 @@ namespace Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.DockerFixtures
 public class EventStoreContainerFixture
     : IAsyncLifetime
 {
-    private static string EventStoreConnectionString { get; set; } = "esdb+discover://localhost:2113?tls=false&keepAliveTimeout=10000&keepAliveInterval=10000";
+    public string EventStoreConnectionString { get; set; } = "esdb+discover://localhost:2113?tls=false&keepAliveTimeout=10000&keepAliveInterval=10000";
 
     public EventStoreContainerFixture()
     {
@@ -18,11 +19,25 @@ public class EventStoreContainerFixture
                                          .WithCleanUp(false)
                                          .Build();
 
-        var services = BootstrapServiceCollection();
-        this.ServiceProvider = services.BuildServiceProvider();
+        this.Services = this.BootstrapServiceCollection();
     }
 
-    public IServiceProvider ServiceProvider { get; }
+    public IServiceCollection Services { get; }
+
+    private IServiceProvider? serviceProvider;
+
+    public IServiceProvider ServiceProvider
+    {
+        get
+        {
+            if (this.serviceProvider == null)
+            {
+                this.serviceProvider = this.Services.BuildServiceProvider();
+            }
+
+            return this.serviceProvider;
+        }
+    }
 
     public TestcontainersContainer EventStoreDockerContainer { get; }
 
@@ -36,7 +51,6 @@ public class EventStoreContainerFixture
         await this.EventStoreDockerContainer.CleanUpAsync();
         await this.EventStoreDockerContainer.DisposeAsync();
     }
-
 
     /// <summary>
     /// Configures EventStore container with latest version of EventStore, that will have docker container and resources automatically
@@ -68,7 +82,11 @@ public class EventStoreContainerFixture
         return builder;
     }
 
-    private static ServiceCollection BootstrapServiceCollection()
+    public IConfigurationBuilder Configuration =>
+        new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json", false);
+
+    private IServiceCollection BootstrapServiceCollection()
     {
         var sc = new ServiceCollection();
 
@@ -85,7 +103,7 @@ public class EventStoreContainerFixture
             sp =>
             {
                 var settings = EventStoreClientSettings
-                    .Create(EventStoreConnectionString);
+                    .Create(this.EventStoreConnectionString);
 
                 settings.DefaultCredentials = new UserCredentials("admin", "changeit");
 

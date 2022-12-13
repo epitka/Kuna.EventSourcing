@@ -2,62 +2,19 @@
 using FakeItEasy.Configuration;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
+using Senf.EventSourcing.Core.Events;
 using Senf.EventSourcing.Core.EventStore.Subscriptions;
 
 namespace Senf.EventSourcing.Core.EventStore.Tests;
 
 public class EventDispatcherTest
 {
-    public record Created(Guid Id);
+    public record Created(Guid Id) : IEvent;
 
-    public record Updated(Guid Id);
 
-    public record Deleted(Guid Id);
+    public record Updated(Guid Id) : IEvent;
 
-    public class CreatedHandler : IHandleEvent<Created>
-    {
-        public async Task Handle(Created message, CancellationToken ct)
-        {
-            await Task.Delay(5000, ct);
-        }
-    }
-
-    public class UpdatedHandler : IHandleEvent<Updated>
-    {
-        public Task Handle(Updated message, CancellationToken ct)
-        {
-            return Task.CompletedTask;
-        }
-    }
-
-    public class DeletedHandler : IHandleEvent<Deleted>
-    {
-        public Task Handle(Deleted message, CancellationToken ct)
-        {
-            return Task.CompletedTask;
-        }
-    }
-
-    public class SagaHandler
-        : IHandleEvent<Created>,
-          IHandleEvent<Updated>,
-          IHandleEvent<Deleted>
-    {
-        public Task Handle(Created message, CancellationToken ct)
-        {
-            return Task.CompletedTask;
-        }
-
-        public Task Handle(Updated message, CancellationToken ct)
-        {
-            return Task.CompletedTask;
-        }
-
-        public Task Handle(Deleted message, CancellationToken ct)
-        {
-            return Task.CompletedTask;
-        }
-    }
+    public record Deleted(Guid Id) : IEvent;
 
     [Fact]
     public async Task Should_Invoke_Correct_Handler()
@@ -144,7 +101,6 @@ public class EventDispatcherTest
                                                     .ToArray();
 
         // let's make some throw;
-
         createdCallConfigs[0].Returns(Task.FromException<InvalidOperationException>(new InvalidOperationException("operation")));
         createdCallConfigs[1].Returns(Task.FromException<ArgumentException>(new ArgumentException("argument")));
 
