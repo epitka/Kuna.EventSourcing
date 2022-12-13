@@ -8,7 +8,7 @@ namespace Senf.EventSourcing.Core.EventStore.Tests.JsonEventSerializerTests;
 
 public class Deserialize
 {
-    private sealed record Deserialized(Guid Id, string Name) : IEvent
+    private sealed record Deserialized(Guid Id, string Name) : IAggregateEvent
     {
     }
 
@@ -26,7 +26,7 @@ public class Deserialize
         A.CallTo(() => fakeEventTypeMapper.MapFrom(nameof(Deserialized)))
          .Returns(typeof(Deserialized));
 
-        var serializer = new JsonEventSerializer(fakeEventTypeMapper);
+        var serializer = new JsonEventStoreSerializer(fakeEventTypeMapper);
         var data = serializer.Serialize(@event);
 
         // here we are pretending that this came from EventStore

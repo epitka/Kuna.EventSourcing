@@ -26,12 +26,12 @@ public class EventTypeMapperTests
     [Fact]
     public void Should_Return_Type()
     {
-        var testEventName = nameof(TestEvent);
+        var testEventName = nameof(TestAggregateEvent);
 
         var eventType = this.mapper.MapFrom(testEventName);
 
         eventType.Should().NotBeNull();
 
-        eventType.Should().Be(typeof(TestEvent));
+        eventType.Should().Be(typeof(TestAggregateEvent));
     }
 }

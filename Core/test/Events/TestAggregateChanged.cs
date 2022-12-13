@@ -6,7 +6,7 @@ namespace Senf.EventSourcing.Core.Tests.Events
 {
     public sealed record TestAggregateChanged(
         Guid Id,
-        string ChangedValue) : IEvent
+        string ChangedValue) : IAggregateEvent
     {
     }
 }

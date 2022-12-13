@@ -32,7 +32,7 @@ public abstract class AggregateRepository<TKey, TAggregate> : IAggregateReposito
 
         var events = await this.streamReader.GetEvents(streamId, ct);
 
-        if (events == Enumerable.Empty<IEvent>())
+        if (events == Enumerable.Empty<IAggregateEvent>())
         {
             throw new AggregateNotFoundException(aggregateId, typeof(TAggregate));
         }

@@ -10,6 +10,6 @@ namespace Senf.EventSourcing.Core.Tests.Events
     /// <param name="Name"></param>
     public sealed record TestAggregateCreated(
         Guid Id,
-        string Name) : IEvent {}
+        string Name) : IAggregateEvent {}
 
 }

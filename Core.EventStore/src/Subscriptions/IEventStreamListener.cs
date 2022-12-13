@@ -19,7 +19,7 @@ public interface IEventStreamListener
 public class EventStreamListener : IEventStreamListener
 {
     private readonly EventStorePersistentSubscriptionsClient client;
-    private readonly IEventSerializer eventSerializer;
+    private readonly IEventStoreSerializer eventStoreSerializer;
     private readonly IEventDispatcher eventDispatcher;
     private readonly ILogger logger;
     private StreamSubscriptionSettings subscriptionSettings = default!;
@@ -31,12 +31,12 @@ public class EventStreamListener : IEventStreamListener
 
     public EventStreamListener(
         EventStorePersistentSubscriptionsClient client,
-        IEventSerializer eventSerializer,
+        IEventStoreSerializer eventStoreSerializer,
         IEventDispatcher eventDispatcher,
         ILogger logger)
     {
         this.client = client;
-        this.eventSerializer = eventSerializer;
+        this.eventStoreSerializer = eventStoreSerializer;
         this.eventDispatcher = eventDispatcher;
         this.logger = logger;
 
@@ -138,7 +138,7 @@ public class EventStreamListener : IEventStreamListener
 
         try
         {
-            var @event = this.eventSerializer.Deserialize(resolvedEvent);
+            var @event = this.eventStoreSerializer.Deserialize(resolvedEvent);
             // TODO: Add OpenTelemetry tracing here
             // Propagate CorrelationId and set CausationId using EventId
             // Use OpenTelemetry api instead of Activity

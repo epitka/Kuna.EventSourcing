@@ -49,17 +49,17 @@ public class AggregateStreamWriterTests
 
         fetchedEvents.Length.Should().Be(events.Length);
 
-        var serializer = this.ServiceProvider.GetRequiredService<IEventSerializer>();
+        var serializer = this.ServiceProvider.GetRequiredService<IEventStoreSerializer>();
 
         foreach (var resolvedEvent in fetchedEvents)
         {
             var @event = serializer.Deserialize(resolvedEvent);
-            @event.Should().BeAssignableTo<TestEvent>();
+            @event.Should().BeAssignableTo<TestAggregateEvent>();
 
             var metaData = JsonConvert.DeserializeObject(
                 Encoding.UTF8.GetString(resolvedEvent.Event.Metadata.Span),
                 typeof(Dictionary<string, string>),
-                JsonEventSerializer.SerializerSettings);
+                JsonEventStoreSerializer.SerializerSettings);
 
             metaData.Should().NotBeNull();
         }

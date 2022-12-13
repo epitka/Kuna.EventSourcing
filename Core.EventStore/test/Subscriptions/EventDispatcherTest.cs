@@ -9,12 +9,12 @@ namespace Senf.EventSourcing.Core.EventStore.Tests;
 
 public class EventDispatcherTest
 {
-    public record Created(Guid Id) : IEvent;
+    public record Created(Guid Id) : IAggregateEvent;
 
 
-    public record Updated(Guid Id) : IEvent;
+    public record Updated(Guid Id) : IAggregateEvent;
 
-    public record Deleted(Guid Id) : IEvent;
+    public record Deleted(Guid Id) : IAggregateEvent;
 
     [Fact]
     public async Task Should_Invoke_Correct_Handler()

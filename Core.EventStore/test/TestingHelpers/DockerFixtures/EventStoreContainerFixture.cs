@@ -91,7 +91,7 @@ public class EventStoreContainerFixture
         var sc = new ServiceCollection();
 
         sc.AddSingleton<IEventTypeMapper, EventTypeMapper>()
-          .AddSingleton<IEventSerializer, JsonEventSerializer>()
+          .AddSingleton<IEventStoreSerializer, JsonEventStoreSerializer>()
           .AddSingleton<IEventMetadataFactory, EventMetadataFactory>()
           .AddSingleton<IEventDataFactory, EventDataFactory>()
           .AddSingleton<IAggregateStreamWriter, AggregateStreamWriter>()

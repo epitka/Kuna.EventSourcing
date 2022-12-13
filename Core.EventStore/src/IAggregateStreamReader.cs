@@ -12,21 +12,21 @@ public interface IAggregateStreamReader
     /// <param name="streamId">Id of the stream, such as {streamPrefix}-{aggregateId}, order-57e1e0fc8cb1407694a752ac014ba27a</param>
     /// <param name="ct"></param>
     /// <exception cref="ArgumentException"></exception>
-    Task<IEnumerable<IEvent>> GetEvents(string streamId, CancellationToken ct);
+    Task<IEnumerable<IAggregateEvent>> GetEvents(string streamId, CancellationToken ct);
 }
 
 public sealed class AggregateStreamReader
     : IAggregateStreamReader
 {
     private readonly EventStoreClient client;
-    private readonly IEventSerializer eventSerializer;
+    private readonly IEventStoreSerializer eventStoreSerializer;
 
     public AggregateStreamReader(
         EventStoreClient client,
-        IEventSerializer eventSerializer)
+        IEventStoreSerializer eventStoreSerializer)
     {
         this.client = client;
-        this.eventSerializer = eventSerializer;
+        this.eventStoreSerializer = eventStoreSerializer;
     }
 
     /// <summary>
@@ -36,7 +36,7 @@ public sealed class AggregateStreamReader
     /// <param name="streamId">Id of the stream, such as {streamPrefix}-{aggregateId}, order-57e1e0fc8cb1407694a752ac014ba27a</param>
     /// <param name="ct"></param>
     /// <exception cref="ArgumentException"></exception>
-    public async Task<IEnumerable<IEvent>> GetEvents(string streamId, CancellationToken ct)
+    public async Task<IEnumerable<IAggregateEvent>> GetEvents(string streamId, CancellationToken ct)
     {
         ct.ThrowIfCancellationRequested();
 
@@ -49,14 +49,14 @@ public sealed class AggregateStreamReader
 
         if (events.ReadState.Result == ReadState.StreamNotFound)
         {
-            return Enumerable.Empty<IEvent>();
+            return Enumerable.Empty<IAggregateEvent>();
         }
 
-        var toReturn = new List<IEvent>();
+        var toReturn = new List<IAggregateEvent>();
 
         await foreach (var resolvedEvent in events)
         {
-            var @event = this.eventSerializer.Deserialize(resolvedEvent);
+            var @event = this.eventStoreSerializer.Deserialize(resolvedEvent);
 
             if (@event == null)
             {

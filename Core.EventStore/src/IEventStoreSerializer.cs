@@ -5,16 +5,16 @@ using Senf.EventSourcing.Core.Events;
 
 namespace Senf.EventSourcing.Core.EventStore;
 
-public interface IEventSerializer
+public interface IEventStoreSerializer
 {
-    IEvent? Deserialize(ResolvedEvent @event);
+    IAggregateEvent? Deserialize(ResolvedEvent @event);
 
     IDictionary<string, string> DeserializeMetaData(ResolvedEvent resolvedEvent);
 
     byte[] Serialize(object obj);
 }
 
-public class JsonEventSerializer : IEventSerializer
+public class JsonEventStoreSerializer : IEventStoreSerializer
 {
     public static readonly JsonSerializerSettings SerializerSettings = new()
     {
@@ -25,12 +25,12 @@ public class JsonEventSerializer : IEventSerializer
 
     private readonly IEventTypeMapper eventTypeMapper;
 
-    public JsonEventSerializer(IEventTypeMapper eventTypeMapper)
+    public JsonEventStoreSerializer(IEventTypeMapper eventTypeMapper)
     {
         this.eventTypeMapper = eventTypeMapper;
     }
 
-    public IEvent? Deserialize(ResolvedEvent resolvedEvent)
+    public IAggregateEvent? Deserialize(ResolvedEvent resolvedEvent)
     {
         if (resolvedEvent.Event == null)
         {
@@ -43,7 +43,7 @@ public class JsonEventSerializer : IEventSerializer
                 Encoding.UTF8.GetString(resolvedEvent.Event.Data.Span),
                 eventType,
                 SerializerSettings
-            ) is not IEvent @event)
+            ) is not IAggregateEvent @event)
         {
             return null;
         }

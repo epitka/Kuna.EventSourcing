@@ -4,12 +4,12 @@ namespace Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers;
 
 public static class HelperFunctions
 {
-    public static TestEvent[] GetEvents(Guid aggregateId, int count)
+    public static TestAggregateEvent[] GetEvents(Guid aggregateId, int count)
     {
-        var toReturn = new TestEvent[count];
+        var toReturn = new TestAggregateEvent[count];
         for (var i = 0; i < count; i++)
         {
-            toReturn[i] = new TestEvent(aggregateId, i.ToString());
+            toReturn[i] = new TestAggregateEvent(aggregateId, i.ToString());
         }
         return toReturn;
     }

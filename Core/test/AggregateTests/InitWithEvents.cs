@@ -15,7 +15,7 @@ public class InitWithEvents
         var lastChangedValue = "Last";
         var name = "name";
 
-        var events = new List<IEvent>()
+        var events = new List<IAggregateEvent>()
         {
             new TestAggregateCreated(Id: aggregateId, Name: "name"),
             new TestAggregateChanged(Id: aggregateId, ChangedValue: "Value1"),
@@ -48,7 +48,7 @@ public class InitWithEvents
         var aggregate = new TestAggregate();
         var aggregateId = Guid.NewGuid();
 
-        var events = new List<IEvent>()
+        var events = new List<IAggregateEvent>()
         {
             new TestAggregateCreated(Id: aggregateId, Name: "name"),
             new TestAggregateChanged(Id: aggregateId, ChangedValue: "Value1"),

@@ -81,7 +81,7 @@ public class Save
         callArguments!.Count.Should().Be(4);
         var capturedStreamId = (string)callArguments[0]!;
         var capturedVersion = (StreamRevision)callArguments[1]!;
-        var capturedEvents = (IEnumerable<IEvent>)callArguments[2]!;
+        var capturedEvents = (IEnumerable<IAggregateEvent>)callArguments[2]!;
         callArguments[3]!.Should().BeOfType<CancellationToken>();
 
         capturedStreamId.Should().Be(repository.StreamPrefix + aggregateId);

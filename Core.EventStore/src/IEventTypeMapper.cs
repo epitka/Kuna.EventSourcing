@@ -20,7 +20,7 @@ public class EventTypeMapper : IEventTypeMapper
             throw new ArgumentNullException()
         }*/
 
-        var eventType = typeof(IEvent);
+        var eventType = typeof(IAggregateEvent);
 
         this.typeMap = AppDomain.CurrentDomain.GetAssemblies()
                                 .SelectMany(i => i.GetTypes())

@@ -8,7 +8,7 @@ public abstract class Aggregate<TKey, TState>
     where TState : AggregateState<TKey>, new()
     where TKey : IEquatable<TKey>
 {
-    private readonly Queue<IEvent> pendingEvents = new();
+    private readonly Queue<IAggregateEvent> pendingEvents = new();
 
     public int OriginalVersion => this.CurrentState.OriginalVersion;
 
@@ -31,7 +31,7 @@ public abstract class Aggregate<TKey, TState>
         this.CurrentState.SetId(state.Id.Value);
     }
 
-    public void InitWith(IEnumerable<IEvent> events)
+    public void InitWith(IEnumerable<IAggregateEvent> events)
     {
         if (this.Version > -1)
         {
@@ -62,12 +62,12 @@ public abstract class Aggregate<TKey, TState>
     /// returns copy of the pending events in internal queue
     /// </summary>
     /// <returns></returns>
-    public IEvent[] GetPendingEvents()
+    public IAggregateEvent[] GetPendingEvents()
     {
         return this.pendingEvents.ToArray();
     }
 
-    public IEvent[] DequeuePendingEvents()
+    public IAggregateEvent[] DequeuePendingEvents()
     {
         var toReturn = this.pendingEvents.ToArray();
 
@@ -76,10 +76,10 @@ public abstract class Aggregate<TKey, TState>
         return toReturn;
     }
 
-    protected void RaiseEvent(IEvent @event)
+    protected void RaiseEvent(IAggregateEvent aggregateEvent)
     {
-        this.CurrentState.ApplyEvent(@event);
+        this.CurrentState.ApplyEvent(aggregateEvent);
 
-        this.pendingEvents.Enqueue(@event);
+        this.pendingEvents.Enqueue(aggregateEvent);
     }
 }
