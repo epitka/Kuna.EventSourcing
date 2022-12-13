@@ -13,14 +13,14 @@ public interface IEventDataFactory
 
 public class EventDataFactory : IEventDataFactory
 {
-    private readonly IEventSerializer serializer;
+    private readonly IEventStoreSerializer storeSerializer;
     private readonly IEventMetadataFactory metadataFactory;
 
     public EventDataFactory(
-        IEventSerializer serializer,
+        IEventStoreSerializer storeSerializer,
         IEventMetadataFactory metadataFactory)
     {
-        this.serializer = serializer;
+        this.storeSerializer = storeSerializer;
         this.metadataFactory = metadataFactory;
     }
 
@@ -32,8 +32,8 @@ public class EventDataFactory : IEventDataFactory
         // TODO: can we avoid constant reflection here ???
         var eventType = aggregateEvent.GetType();
 
-        var data = this.serializer.Serialize(aggregateEvent);
-        var metadata = this.serializer.Serialize(this.metadataFactory.Get());
+        var data = this.storeSerializer.Serialize(aggregateEvent);
+        var metadata = this.storeSerializer.Serialize(this.metadataFactory.Get());
 
         return new EventData(eventId, eventType.Name, data, metadata);
     }

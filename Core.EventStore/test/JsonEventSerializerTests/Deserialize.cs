@@ -26,7 +26,7 @@ public class Deserialize
         A.CallTo(() => fakeEventTypeMapper.MapFrom(nameof(Deserialized)))
          .Returns(typeof(Deserialized));
 
-        var serializer = new JsonEventSerializer(fakeEventTypeMapper);
+        var serializer = new JsonEventStoreSerializer(fakeEventTypeMapper);
         var data = serializer.Serialize(@event);
 
         // here we are pretending that this came from EventStore

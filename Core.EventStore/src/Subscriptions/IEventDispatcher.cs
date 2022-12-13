@@ -23,6 +23,7 @@ public class EventDispatcher : IEventDispatcher
 
     public async Task Publish(IAggregateEvent aggregateEvent, CancellationToken ct)
     {
+        // TODO: EventTypeMapper already looks up eventType, need to reduce overhead of looking up event type
         var eventType = aggregateEvent.GetType();
 
         var methodInfo = GetGenericPublishFor(eventType);

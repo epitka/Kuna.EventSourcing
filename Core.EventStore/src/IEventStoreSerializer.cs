@@ -5,7 +5,7 @@ using Senf.EventSourcing.Core.Events;
 
 namespace Senf.EventSourcing.Core.EventStore;
 
-public interface IEventSerializer
+public interface IEventStoreSerializer
 {
     IAggregateEvent? Deserialize(ResolvedEvent @event);
 
@@ -14,7 +14,7 @@ public interface IEventSerializer
     byte[] Serialize(object obj);
 }
 
-public class JsonEventSerializer : IEventSerializer
+public class JsonEventStoreSerializer : IEventStoreSerializer
 {
     public static readonly JsonSerializerSettings SerializerSettings = new()
     {
@@ -25,7 +25,7 @@ public class JsonEventSerializer : IEventSerializer
 
     private readonly IEventTypeMapper eventTypeMapper;
 
-    public JsonEventSerializer(IEventTypeMapper eventTypeMapper)
+    public JsonEventStoreSerializer(IEventTypeMapper eventTypeMapper)
     {
         this.eventTypeMapper = eventTypeMapper;
     }

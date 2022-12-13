@@ -19,14 +19,14 @@ public sealed class AggregateStreamReader
     : IAggregateStreamReader
 {
     private readonly EventStoreClient client;
-    private readonly IEventSerializer eventSerializer;
+    private readonly IEventStoreSerializer eventStoreSerializer;
 
     public AggregateStreamReader(
         EventStoreClient client,
-        IEventSerializer eventSerializer)
+        IEventStoreSerializer eventStoreSerializer)
     {
         this.client = client;
-        this.eventSerializer = eventSerializer;
+        this.eventStoreSerializer = eventStoreSerializer;
     }
 
     /// <summary>
@@ -56,7 +56,7 @@ public sealed class AggregateStreamReader
 
         await foreach (var resolvedEvent in events)
         {
-            var @event = this.eventSerializer.Deserialize(resolvedEvent);
+            var @event = this.eventStoreSerializer.Deserialize(resolvedEvent);
 
             if (@event == null)
             {

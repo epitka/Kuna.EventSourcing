@@ -27,7 +27,7 @@ public class EventDataFactoryTests
         A.CallTo(() => fakeMetaDataFactory.Get())
          .Returns(new Dictionary<string, string>() { { "test", "test" } });
 
-        var serializer = new JsonEventSerializer(fakeEventTypeMapper);
+        var serializer = new JsonEventStoreSerializer(fakeEventTypeMapper);
         var eventDataFactory = new EventDataFactory(serializer, fakeMetaDataFactory);
 
         var result = eventDataFactory.From(@event);
@@ -37,14 +37,14 @@ public class EventDataFactoryTests
         var deserializedEvent = JsonConvert.DeserializeObject(
             Encoding.UTF8.GetString(result.Data.Span),
             typeof(DummyAggregateEvent),
-            JsonEventSerializer.SerializerSettings);
+            JsonEventStoreSerializer.SerializerSettings);
 
         deserializedEvent.Should().Be(@event);
 
         var deserializedMetadata = JsonConvert.DeserializeObject(
             Encoding.UTF8.GetString(result.Metadata.Span),
             typeof(Dictionary<string,string>),
-            JsonEventSerializer.SerializerSettings) as Dictionary<string,string>;
+            JsonEventStoreSerializer.SerializerSettings) as Dictionary<string,string>;
 
         deserializedMetadata.Should().NotBeNull();
         deserializedMetadata!.ContainsKey("test").Should().Be(true);

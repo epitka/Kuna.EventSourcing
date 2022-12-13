@@ -19,14 +19,14 @@ public class Serialize
 
         var fakeEventTypeMapper = A.Fake<IEventTypeMapper>(opt => opt.Strict());
 
-        var serializer = new JsonEventSerializer(fakeEventTypeMapper);
+        var serializer = new JsonEventStoreSerializer(fakeEventTypeMapper);
 
         var serialized = serializer.Serialize(@event);
 
         var deserialized = JsonConvert.DeserializeObject(
             Encoding.UTF8.GetString(serialized),
             typeof(Serialized),
-            JsonEventSerializer.SerializerSettings);
+            JsonEventStoreSerializer.SerializerSettings);
 
         deserialized.Should().Be(@event);
     }
