@@ -31,7 +31,7 @@ public abstract class Aggregate<TKey, TState>
         this.CurrentState.SetId(state.Id.Value);
     }
 
-    public void InitWith(IEnumerable<IAggregateEvent> events)
+    public void InitWith(IEnumerable<object> events)
     {
         if (this.Version > -1)
         {

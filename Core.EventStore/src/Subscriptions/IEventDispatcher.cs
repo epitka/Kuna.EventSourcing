@@ -7,7 +7,7 @@ namespace Senf.EventSourcing.Core.EventStore.Subscriptions;
 
 public interface IEventDispatcher
 {
-    Task Publish(IAggregateEvent aggregateEvent, CancellationToken ct);
+    Task Publish(object aggregateEvent, CancellationToken ct);
 }
 
 public class EventDispatcher : IEventDispatcher
@@ -21,7 +21,7 @@ public class EventDispatcher : IEventDispatcher
         this.serviceProvider = serviceProvider;
     }
 
-    public async Task Publish(IAggregateEvent aggregateEvent, CancellationToken ct)
+    public async Task Publish(object aggregateEvent, CancellationToken ct)
     {
         // TODO: EventTypeMapper already looks up eventType, need to reduce overhead of looking up event type
         var eventType = aggregateEvent.GetType();

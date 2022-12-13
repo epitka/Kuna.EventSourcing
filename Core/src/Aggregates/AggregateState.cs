@@ -31,7 +31,7 @@ where TKey : IEquatable<TKey>
     /// </summary>
     /// <param name="aggregateEvent"></param>
     /// <exception cref="InvalidOperationException"></exception>
-    public void ApplyEvent(IAggregateEvent aggregateEvent)
+    public void ApplyEvent(object aggregateEvent)
     {
         ((dynamic)this).Apply((dynamic)aggregateEvent);
 
