@@ -32,7 +32,7 @@ public class EventDispatcher : IEventDispatcher
     }
 
     private async Task InternalPublish<TEvent>(TEvent @event, CancellationToken ct)
-        where TEvent : class
+        where TEvent : class, IAggregateEvent
     {
         var handlers = this.serviceProvider.GetServices<IHandleEvent<TEvent>>();
 
