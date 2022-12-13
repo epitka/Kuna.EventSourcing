@@ -8,7 +8,7 @@ namespace Senf.EventSourcing.Core.EventStore.Tests.JsonEventSerializerTests;
 
 public class Deserialize
 {
-    private sealed record Deserialized(Guid Id, string Name) : IEvent
+    private sealed record Deserialized(Guid Id, string Name) : IAggregateEvent
     {
     }
 

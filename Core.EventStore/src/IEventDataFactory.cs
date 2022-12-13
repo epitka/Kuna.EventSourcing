@@ -8,7 +8,7 @@ namespace Senf.EventSourcing.Core.EventStore;
 public interface IEventDataFactory
 {
     public EventData From(
-        IEvent @event);
+        IAggregateEvent aggregateEvent);
 }
 
 public class EventDataFactory : IEventDataFactory
@@ -25,14 +25,14 @@ public class EventDataFactory : IEventDataFactory
     }
 
     public EventData From(
-        IEvent @event)
+        IAggregateEvent aggregateEvent)
     {
         var eventId = Uuid.NewUuid();
 
         // TODO: can we avoid constant reflection here ???
-        var eventType = @event.GetType();
+        var eventType = aggregateEvent.GetType();
 
-        var data = this.serializer.Serialize(@event);
+        var data = this.serializer.Serialize(aggregateEvent);
         var metadata = this.serializer.Serialize(this.metadataFactory.Get());
 
         return new EventData(eventId, eventType.Name, data, metadata);

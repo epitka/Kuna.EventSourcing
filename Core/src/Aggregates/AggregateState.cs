@@ -29,11 +29,11 @@ where TKey : IEquatable<TKey>
     /// <summary>
     /// By convention, methods that mutate state must be named Apply
     /// </summary>
-    /// <param name="event"></param>
+    /// <param name="aggregateEvent"></param>
     /// <exception cref="InvalidOperationException"></exception>
-    public void ApplyEvent(IEvent @event)
+    public void ApplyEvent(IAggregateEvent aggregateEvent)
     {
-        ((dynamic)this).Apply((dynamic)@event);
+        ((dynamic)this).Apply((dynamic)aggregateEvent);
 
         this.Version++;
     }

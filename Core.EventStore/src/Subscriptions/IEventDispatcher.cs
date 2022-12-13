@@ -7,7 +7,7 @@ namespace Senf.EventSourcing.Core.EventStore.Subscriptions;
 
 public interface IEventDispatcher
 {
-    Task Publish(IEvent @event, CancellationToken ct);
+    Task Publish(IAggregateEvent aggregateEvent, CancellationToken ct);
 }
 
 public class EventDispatcher : IEventDispatcher
@@ -21,13 +21,13 @@ public class EventDispatcher : IEventDispatcher
         this.serviceProvider = serviceProvider;
     }
 
-    public async Task Publish(IEvent @event, CancellationToken ct)
+    public async Task Publish(IAggregateEvent aggregateEvent, CancellationToken ct)
     {
-        var eventType = @event.GetType();
+        var eventType = aggregateEvent.GetType();
 
         var methodInfo = GetGenericPublishFor(eventType);
 
-       await (Task)methodInfo.Invoke(this, new object[] { @event, ct })!;
+       await (Task)methodInfo.Invoke(this, new object[] { aggregateEvent, ct })!;
     }
 
     private async Task InternalPublish<TEvent>(TEvent @event, CancellationToken ct)

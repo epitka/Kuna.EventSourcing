@@ -2,6 +2,6 @@
 
 namespace Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers;
 
-public record TestEvent(Guid Id, string Value) : IEvent
+public record TestAggregateEvent(Guid Id, string Value) : IAggregateEvent
 {
 }

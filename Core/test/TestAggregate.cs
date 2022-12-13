@@ -5,8 +5,8 @@ namespace Senf.EventSourcing.Core.Tests;
 
 public partial class TestAggregate : Aggregate<Guid, TestAggregate.State>
 {
-    public new void RaiseEvent(IEvent @event)
+    public new void RaiseEvent(IAggregateEvent aggregateEvent)
     {
-        base.RaiseEvent(@event);
+        base.RaiseEvent(aggregateEvent);
     }
 }

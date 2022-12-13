@@ -7,7 +7,7 @@ namespace Senf.EventSourcing.Core.EventStore;
 
 public interface IEventSerializer
 {
-    IEvent? Deserialize(ResolvedEvent @event);
+    IAggregateEvent? Deserialize(ResolvedEvent @event);
 
     IDictionary<string, string> DeserializeMetaData(ResolvedEvent resolvedEvent);
 
@@ -30,7 +30,7 @@ public class JsonEventSerializer : IEventSerializer
         this.eventTypeMapper = eventTypeMapper;
     }
 
-    public IEvent? Deserialize(ResolvedEvent resolvedEvent)
+    public IAggregateEvent? Deserialize(ResolvedEvent resolvedEvent)
     {
         if (resolvedEvent.Event == null)
         {
@@ -43,7 +43,7 @@ public class JsonEventSerializer : IEventSerializer
                 Encoding.UTF8.GetString(resolvedEvent.Event.Data.Span),
                 eventType,
                 SerializerSettings
-            ) is not IEvent @event)
+            ) is not IAggregateEvent @event)
         {
             return null;
         }

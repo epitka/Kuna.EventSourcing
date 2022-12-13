@@ -34,17 +34,17 @@ public class PersistentSubscriptionTests
         this.AddSubscriptionsToStream("$ce-test");
 
         // with fake handler we will collect all values of the events into a list
-        var fakeEventHandler = A.Fake<IHandleEvent<TestEvent>>(opt=> opt.Strict());
-        A.CallTo(() => fakeEventHandler.Handle(A<TestEvent>._, A<CancellationToken>._))
+        var fakeEventHandler = A.Fake<IHandleEvent<TestAggregateEvent>>(opt=> opt.Strict());
+        A.CallTo(() => fakeEventHandler.Handle(A<TestAggregateEvent>._, A<CancellationToken>._))
          .Invokes(
              call =>
              {
-                 var @event = call.Arguments[0] as TestEvent;
+                 var @event = call.Arguments[0] as TestAggregateEvent;
                  control.Add(@event!.Value);
              })
          .Returns(Task.CompletedTask);
 
-        this.eventStoreDatabaseFixture.Services.AddTransient<IHandleEvent<TestEvent>>(sp => fakeEventHandler);
+        this.eventStoreDatabaseFixture.Services.AddTransient<IHandleEvent<TestAggregateEvent>>(sp => fakeEventHandler);
 
         var serviceProvider = this.eventStoreDatabaseFixture.ServiceProvider;
 
@@ -78,7 +78,7 @@ public class PersistentSubscriptionTests
 
         for (int i = 0; i < events.Length; i++)
         {
-            var value = ((TestEvent)events[i]).Value;
+            var value = ((TestAggregateEvent)events[i]).Value;
 
             control[i].Should().Be(value);
         }

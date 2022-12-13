@@ -50,7 +50,7 @@ public class AggregateStreamReaderTests
         for (var i = 0; i < fetchedEvents.Count(); i++)
         {
             var @event = fetchedEvents[i];
-            @event.Should().BeOfType<TestEvent>();
+            @event.Should().BeOfType<TestAggregateEvent>();
 
             @event.Should().Be(events[i]);
         }
