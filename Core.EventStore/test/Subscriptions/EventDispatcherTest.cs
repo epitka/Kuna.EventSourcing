@@ -1,4 +1,5 @@
-﻿using FakeItEasy;
+﻿using EventStore.Client;
+using FakeItEasy;
 using FakeItEasy.Configuration;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,7 +40,7 @@ public class EventDispatcherTest
 
         var dispatcher = scope.ServiceProvider.GetRequiredService<IEventDispatcher>();
 
-        await dispatcher.Publish(@event, CancellationToken.None);
+        await dispatcher.Publish(@event, @event.GetType(), CancellationToken.None);
 
         createdCallConfig.MustHaveHappenedOnceExactly();
 
@@ -79,7 +80,7 @@ public class EventDispatcherTest
 
         var dispatcher = scope.ServiceProvider.GetRequiredService<IEventDispatcher>();
 
-        await dispatcher.Publish(@event, CancellationToken.None);
+        await dispatcher.Publish(@event, @event.GetType(), CancellationToken.None);
 
         foreach (var createdCallConfig in createdCallConfigs)
         {
@@ -124,7 +125,7 @@ public class EventDispatcherTest
 
         var dispatcher = scope.ServiceProvider.GetRequiredService<IEventDispatcher>();
 
-        var result = await Assert.ThrowsAsync<AggregateException>(async () => await dispatcher.Publish(@event, CancellationToken.None));
+        var result = await Assert.ThrowsAsync<AggregateException>(async () => await dispatcher.Publish(@event, @event.GetType(), CancellationToken.None));
 
         result.InnerExceptions.Count().Should().Be(2);
         result.InnerExceptions.First().Should().BeOfType<InvalidOperationException>();

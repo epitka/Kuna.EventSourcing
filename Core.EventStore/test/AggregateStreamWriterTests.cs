@@ -53,7 +53,7 @@ public class AggregateStreamWriterTests
 
         foreach (var resolvedEvent in fetchedEvents)
         {
-            var @event = serializer.Deserialize(resolvedEvent);
+            var @event = serializer.DeserializeData(resolvedEvent);
             @event.Should().BeAssignableTo<TestAggregateEvent>();
 
             var metaData = JsonConvert.DeserializeObject(

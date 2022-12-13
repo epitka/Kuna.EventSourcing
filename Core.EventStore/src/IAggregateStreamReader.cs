@@ -56,7 +56,7 @@ public sealed class AggregateStreamReader
 
         await foreach (var resolvedEvent in events)
         {
-            var @event = this.eventStoreSerializer.Deserialize(resolvedEvent);
+            var @event = this.eventStoreSerializer.DeserializeData(resolvedEvent);
 
             if (@event == null)
             {
