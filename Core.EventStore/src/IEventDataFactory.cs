@@ -30,6 +30,8 @@ public class EventDataFactory : IEventDataFactory
         var eventId = Uuid.NewUuid();
 
         // TODO: can we avoid constant reflection here ???
+        // if we had static field on each event with a name of the event we could
+        // forgo reflection here
         var eventType = aggregateEvent.GetType();
 
         var data = this.storeSerializer.Serialize(aggregateEvent);

@@ -34,7 +34,10 @@ public class AggregateStreamReaderTests
         var sc = new ServiceCollection();
 
         sc.AddLogging();
-        sc.AddEventStore(cfg.Build(), "EventStore");
+        sc.AddEventStore(
+            cfg.Build(),
+            "EventStore",
+            new[] { this.GetType().Assembly });
 
         this.ServiceProvider = sc.BuildServiceProvider();
     }
