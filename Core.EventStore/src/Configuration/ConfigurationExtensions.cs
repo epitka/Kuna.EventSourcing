@@ -9,14 +9,50 @@ namespace Senf.EventSourcing.Core.EventStore.Configuration;
 
 public static class ConfigurationExtensions
 {
+    public static void AddEventStore(
+        this IServiceCollection services,
+        IConfiguration configuration,
+        string eventStoreConnectionStringName,
+        StreamSubscriptionSettings[] subscriptionSettings = null)
+    {
+        services.AddSingleton<IEventTypeMapper, EventTypeMapper>()
+                .AddSingleton<IEventStoreSerializer, JsonEventStoreSerializer>()
+                .AddSingleton<IEventMetadataFactory, EventMetadataFactory>()
+                .AddSingleton<IEventDataFactory, EventDataFactory>()
+                .AddSingleton<IAggregateStreamWriter, AggregateStreamWriter>()
+                .AddSingleton<IAggregateStreamReader, AggregateStreamReader>();
+
+        services.AddSingleton<EventStoreClient>(
+            sp =>
+            {
+                var settings = EventStoreClientSettings
+                    .Create(configuration.GetConnectionString(eventStoreConnectionStringName));
+
+                settings.DefaultCredentials = new UserCredentials("admin", "changeit");
+
+                settings.ConnectionName = "test-" + Guid.NewGuid().ToString();
+
+                return new EventStoreClient(settings);
+            });
+
+        if (subscriptionSettings != null)
+        {
+            services.AddEventStoreSubscriptions(
+                configuration,
+                eventStoreConnectionStringName,
+                subscriptionSettings);
+        }
+    }
+
     /// <summary>
     /// Make sure to register each IHandleEvent<TEvent> manually, or use https://github.com/khellang/Scrutor to auto-wire it up
     /// Call only once
     /// </summary>
-    public static void AddEventStoreSubscriptions(
+    private static void AddEventStoreSubscriptions(
         this IServiceCollection services,
         IConfiguration configuration,
-        params StreamSubscriptionSettings[] settings)
+        string eventStoreConnectionStringName,
+        StreamSubscriptionSettings[] settings)
     {
         services.AddTransient<IEventStreamListener, EventStreamListener>();
         services.AddTransient<IEventDispatcher, EventDispatcher>();
@@ -25,7 +61,7 @@ public static class ConfigurationExtensions
             sp =>
             {
                 var esSettings = EventStoreClientSettings
-                    .Create(configuration.GetConnectionString("EventStore"));
+                    .Create(configuration.GetConnectionString(eventStoreConnectionStringName));
 
                 esSettings.ConnectionName = "persistentSubscriptions-" + Assembly.GetEntryAssembly()!.GetName()!.Name!;
 

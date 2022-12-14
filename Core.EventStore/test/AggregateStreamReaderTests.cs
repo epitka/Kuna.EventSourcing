@@ -1,8 +1,10 @@
 ﻿using System.Text;
 using EventStore.Client;
 using FluentAssertions;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Senf.EventSourcing.Core.EventStore.Configuration;
 using Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers;
 using Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.DockerFixtures;
 using Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.XUnitHelpers;
@@ -20,10 +22,21 @@ public class AggregateStreamReaderTests
     private static readonly string streamPrefix = "readTest-";
     private static readonly Guid aggregateId = Guid.NewGuid();
 
+
     public AggregateStreamReaderTests(EventStoreContainerFixture eventStoreDatabaseFixture)
     {
         this.eventStoreDatabaseFixture = eventStoreDatabaseFixture;
-        this.ServiceProvider = this.eventStoreDatabaseFixture.ServiceProvider;
+
+        var cfg =
+            new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", false);
+
+        var sc = new ServiceCollection();
+
+        sc.AddLogging();
+        sc.AddEventStore(cfg.Build(), "EventStore");
+
+        this.ServiceProvider = sc.BuildServiceProvider();
     }
 
     private IServiceProvider ServiceProvider { get; }
@@ -32,7 +45,7 @@ public class AggregateStreamReaderTests
     [TestPriority(0)]
     public async Task Can_Read_Events()
     {
-        using var scope = this.eventStoreDatabaseFixture.ServiceProvider.CreateScope();
+        using var scope = this.ServiceProvider.CreateScope();
 
         var writer = scope.ServiceProvider.GetRequiredService<IAggregateStreamWriter>();
         var reader = scope.ServiceProvider.GetRequiredService<IAggregateStreamReader>();
@@ -59,7 +72,7 @@ public class AggregateStreamReaderTests
     [Fact]
     public async Task When_Aggregate_Stream_Does_Not_Exist_Should_Return_Empty_Enumerable()
     {
-        using var scope = this.eventStoreDatabaseFixture.ServiceProvider.CreateScope();
+        using var scope = this.ServiceProvider.CreateScope();
         var reader = scope.ServiceProvider.GetRequiredService<IAggregateStreamReader>();
 
         var streamId = Concat(streamPrefix, Guid.NewGuid());

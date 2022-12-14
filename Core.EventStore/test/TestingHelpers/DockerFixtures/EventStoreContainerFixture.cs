@@ -10,35 +10,13 @@ namespace Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.DockerFixtures
 public class EventStoreContainerFixture
     : IAsyncLifetime
 {
-    public string EventStoreConnectionString { get; set; } = "esdb+discover://localhost:2113?tls=false&keepAliveTimeout=10000&keepAliveInterval=10000";
-
     public EventStoreContainerFixture()
     {
         this.EventStoreDockerContainer = EventStoreContainer()
                                          .WithAutoRemove(false)
                                          .WithCleanUp(false)
                                          .Build();
-
-        this.Services = this.BootstrapServiceCollection();
     }
-
-    public IServiceCollection Services { get; }
-
-    private IServiceProvider? serviceProvider;
-
-    public IServiceProvider ServiceProvider
-    {
-        get
-        {
-            if (this.serviceProvider == null)
-            {
-                this.serviceProvider = this.Services.BuildServiceProvider();
-            }
-
-            return this.serviceProvider;
-        }
-    }
-
     public TestcontainersContainer EventStoreDockerContainer { get; }
 
     public async Task InitializeAsync()
@@ -80,38 +58,5 @@ public class EventStoreContainerFixture
                       .WithCleanUp(true);
 
         return builder;
-    }
-
-    public IConfigurationBuilder Configuration =>
-        new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", false);
-
-    private IServiceCollection BootstrapServiceCollection()
-    {
-        var sc = new ServiceCollection();
-
-        sc.AddSingleton<IEventTypeMapper, EventTypeMapper>()
-          .AddSingleton<IEventStoreSerializer, JsonEventStoreSerializer>()
-          .AddSingleton<IEventMetadataFactory, EventMetadataFactory>()
-          .AddSingleton<IEventDataFactory, EventDataFactory>()
-          .AddSingleton<IAggregateStreamWriter, AggregateStreamWriter>()
-          .AddSingleton<IAggregateStreamReader, AggregateStreamReader>();
-
-        sc.AddLogging();
-
-        sc.AddSingleton<EventStoreClient>(
-            sp =>
-            {
-                var settings = EventStoreClientSettings
-                    .Create(this.EventStoreConnectionString);
-
-                settings.DefaultCredentials = new UserCredentials("admin", "changeit");
-
-                settings.ConnectionName = "test-" + Guid.NewGuid().ToString();
-
-                return new EventStoreClient(settings);
-            });
-
-        return sc;
     }
 }
