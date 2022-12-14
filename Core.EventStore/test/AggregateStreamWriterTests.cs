@@ -1,8 +1,10 @@
 ﻿using System.Text;
 using EventStore.Client;
 using FluentAssertions;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Senf.EventSourcing.Core.EventStore.Configuration;
 using Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers;
 using Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.DockerFixtures;
 using Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.XUnitHelpers;
@@ -23,7 +25,16 @@ public class AggregateStreamWriterTests
     public AggregateStreamWriterTests(EventStoreContainerFixture eventStoreDatabaseFixture)
     {
         this.eventStoreDatabaseFixture = eventStoreDatabaseFixture;
-        this.ServiceProvider = this.eventStoreDatabaseFixture.ServiceProvider;
+        var cfg =
+            new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", false);
+
+        var sc = new ServiceCollection();
+
+        sc.AddLogging();
+        sc.AddEventStore(cfg.Build(), "EventStore");
+
+        this.ServiceProvider = sc.BuildServiceProvider();
     }
 
     private IServiceProvider ServiceProvider { get; }
@@ -32,7 +43,7 @@ public class AggregateStreamWriterTests
     [TestPriority(0)]
     public async Task Can_Write_Events_To_New_Stream()
     {
-        using var scope = this.eventStoreDatabaseFixture.ServiceProvider.CreateScope();
+        using var scope = this.ServiceProvider.CreateScope();
         var writer = scope.ServiceProvider.GetRequiredService<IAggregateStreamWriter>();
 
         var streamId = GetStreamId(streamPrefix, aggregateId);
@@ -69,7 +80,7 @@ public class AggregateStreamWriterTests
     [TestPriority(1)]
     public async void Can_Write_Events_To_Existing_Stream()
     {
-        using var scope = this.eventStoreDatabaseFixture.ServiceProvider.CreateScope();
+        using var scope = this.ServiceProvider.CreateScope();
         var writer = scope.ServiceProvider.GetRequiredService<IAggregateStreamWriter>();
         var client = this.ServiceProvider.GetRequiredService<EventStoreClient>();
 
@@ -94,7 +105,7 @@ public class AggregateStreamWriterTests
     [TestPriority(2)]
     public async void When_Invalid_Expected_Version_Is_Supplied_Throws_InvalidExpectedVersionException()
     {
-        using var scope = this.eventStoreDatabaseFixture.ServiceProvider.CreateScope();
+        using var scope = this.ServiceProvider.CreateScope();
         var writer = scope.ServiceProvider.GetRequiredService<IAggregateStreamWriter>();
         var client = this.ServiceProvider.GetRequiredService<EventStoreClient>();
 

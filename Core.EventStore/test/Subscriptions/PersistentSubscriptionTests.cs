@@ -1,6 +1,7 @@
 ﻿using EventStore.Client;
 using FakeItEasy;
 using FluentAssertions;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -19,22 +20,43 @@ public class PersistentSubscriptionTests
 {
     private readonly EventStoreContainerFixture eventStoreDatabaseFixture;
 
+    private IConfigurationBuilder Configuration { get; set; }
+
+    private ServiceCollection Services { get; set; }
+
+    private ServiceProvider ServiceProvider { get; set; } = default!;
+
     public PersistentSubscriptionTests(EventStoreContainerFixture eventStoreDatabaseFixture)
     {
         this.eventStoreDatabaseFixture = eventStoreDatabaseFixture;
+
+        this.Configuration =
+            new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", false);
+
+        this.Services = new ServiceCollection();
+
+        this.Services.AddLogging();
+        this.Services.AddSingleton<ILogger>(sp => NullLogger.Instance);
     }
 
     [Fact]
     public async Task Can_Subscribe_To_Stream()
     {
+        this.Services.AddEventStore(
+            this.Configuration.Build(),
+            "EventStore",
+            new[]
+            {
+                new StreamSubscriptionSettings(
+                    "$ce-test",
+                    StreamPosition.Start),
+            });
+
         var numberOfEvents = 100;
-
         var control = new List<string>(100);
-
-        this.AddSubscriptionsToStream("$ce-test");
-
         // with fake handler we will collect all values of the events into a list
-        var fakeEventHandler = A.Fake<IHandleEvent<TestAggregateEvent>>(opt=> opt.Strict());
+        var fakeEventHandler = A.Fake<IHandleEvent<TestAggregateEvent>>(opt => opt.Strict());
         A.CallTo(() => fakeEventHandler.Handle(A<TestAggregateEvent>._, A<CancellationToken>._))
          .Invokes(
              call =>
@@ -44,9 +66,11 @@ public class PersistentSubscriptionTests
              })
          .Returns(Task.CompletedTask);
 
-        this.eventStoreDatabaseFixture.Services.AddTransient<IHandleEvent<TestAggregateEvent>>(sp => fakeEventHandler);
+        this.Services.AddTransient<IHandleEvent<TestAggregateEvent>>(sp => fakeEventHandler);
 
-        var serviceProvider = this.eventStoreDatabaseFixture.ServiceProvider;
+        this.ServiceProvider = this.Services.BuildServiceProvider();
+
+        var serviceProvider = this.ServiceProvider;
 
         using var scope = serviceProvider.CreateScope();
 
@@ -61,7 +85,8 @@ public class PersistentSubscriptionTests
         await WriteEvents(writer, "test-", aggregateId, numberOfEvents);
 
         await Task.Run(
-            () => { hostedService.StartAsync(ct).ConfigureAwait(false); }, ct);
+            () => { hostedService.StartAsync(ct).ConfigureAwait(false); },
+            ct);
 
         // let's give handlers some time to process
         await Task.Delay(5_000, ct);
@@ -72,11 +97,11 @@ public class PersistentSubscriptionTests
         var reader = scope.ServiceProvider.GetRequiredService<IAggregateStreamReader>();
 
         var events = (await reader.GetEvents("test-" + aggregateId, ct))
-                                 .ToArray();
+            .ToArray();
 
         control.Count.Should().Be(100);
 
-        for (int i = 0; i < events.Length; i++)
+        for (var i = 0; i < events.Length; i++)
         {
             var value = ((TestAggregateEvent)events[i]).Value;
 
@@ -95,21 +120,5 @@ public class PersistentSubscriptionTests
         var streamId = GetStreamId(streamPrefix, aggregateId);
         var events = GetEvents(aggregateId, numberOfEvents);
         await writer.Write(streamId, (-1).ToStreamRevision(), events, default);
-    }
-
-    private void AddSubscriptionsToStream(string streamName)
-    {
-        // let's add additional entries in service collection needed for persistent subscriptions
-        var services = this.eventStoreDatabaseFixture.Services;
-
-        services.AddSingleton<ILogger>(sp => NullLogger.Instance);
-
-        var configuration = this.eventStoreDatabaseFixture.Configuration.Build();
-
-        services.AddEventStoreSubscriptions(
-            configuration,
-            new StreamSubscriptionSettings(
-                streamName,
-                StreamPosition.Start));
     }
 }
