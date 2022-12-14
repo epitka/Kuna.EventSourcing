@@ -12,7 +12,6 @@ public class EventDispatcherTest
 {
     public record Created(Guid Id) : IAggregateEvent;
 
-
     public record Updated(Guid Id) : IAggregateEvent;
 
     public record Deleted(Guid Id) : IAggregateEvent;
@@ -101,11 +100,11 @@ public class EventDispatcherTest
         var createdCallConfigs = fakeCreatedHandlers.Select(fakeCreatedHandler => A.CallTo(() => fakeCreatedHandler.Handle(@event, A<CancellationToken>._)))
                                                     .ToArray();
 
-        // let's make some throw;
+        //// let's make some throw;
         createdCallConfigs[0].Returns(Task.FromException<InvalidOperationException>(new InvalidOperationException("operation")));
         createdCallConfigs[1].Returns(Task.FromException<ArgumentException>(new ArgumentException("argument")));
 
-        for (var i = 2; i < createdCallConfigs.Count(); i++)
+        for (var i = 2; i < createdCallConfigs.Length; i++)
         {
             createdCallConfigs[i].Returns(Task.Delay(1000));
         }
@@ -127,7 +126,7 @@ public class EventDispatcherTest
 
         var result = await Assert.ThrowsAsync<AggregateException>(async () => await dispatcher.Publish(@event, @event.GetType(), CancellationToken.None));
 
-        result.InnerExceptions.Count().Should().Be(2);
+        result.InnerExceptions.Count.Should().Be(2);
         result.InnerExceptions.First().Should().BeOfType<InvalidOperationException>();
         result.InnerExceptions.Last().Should().BeOfType<ArgumentException>();
 

@@ -9,6 +9,6 @@ public class Ctor
         sut.Version.Should().Be(-1);
         sut.OriginalVersion.Should().Be(-1);
         sut.Id.Should().Be(null);
-        sut.GetPendingEvents().Count().Should().Be(0);
+        sut.GetPendingEvents().Length.Should().Be(0);
     }
 }

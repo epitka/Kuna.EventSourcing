@@ -1,12 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
+        <CodeAnalysisRuleSet>../../stylecop.ruleset</CodeAnalysisRuleSet>
         <Nullable>enable</Nullable>
 
         <IsPackable>false</IsPackable>
+
+        <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+
+        <LangVersion>default</LangVersion>
     </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <Optimize>true</Optimize>
+      <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+      <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="../../stylecop.json" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="DeepEqual" Version="4.2.1" />

@@ -17,16 +17,12 @@ namespace Senf.EventSourcing.Core.EventStore.Tests;
 [Collection("EventStore collection")]
 public class AggregateStreamReaderTests
 {
-    private readonly EventStoreContainerFixture eventStoreDatabaseFixture;
-
     private static readonly string streamPrefix = "readTest-";
     private static readonly Guid aggregateId = Guid.NewGuid();
 
 
     public AggregateStreamReaderTests(EventStoreContainerFixture eventStoreDatabaseFixture)
     {
-        this.eventStoreDatabaseFixture = eventStoreDatabaseFixture;
-
         var cfg =
             new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", false);
@@ -61,9 +57,9 @@ public class AggregateStreamReaderTests
         var fetchedEvents = (await reader.GetEvents(streamId, default)).ToArray();
 
         fetchedEvents.Should().NotBeNull();
-        fetchedEvents.Count().Should().Be(events.Length);
+        fetchedEvents.Length.Should().Be(events.Length);
 
-        for (var i = 0; i < fetchedEvents.Count(); i++)
+        for (var i = 0; i < fetchedEvents.Length; i++)
         {
             var @event = fetchedEvents[i];
             @event.Should().BeOfType<TestAggregateEvent>();
