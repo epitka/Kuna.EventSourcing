@@ -32,7 +32,10 @@ public class AggregateStreamWriterTests
         var sc = new ServiceCollection();
 
         sc.AddLogging();
-        sc.AddEventStore(cfg.Build(), "EventStore");
+        sc.AddEventStore(
+            cfg.Build(),
+            "EventStore",
+            new[] { this.GetType().Assembly });
 
         this.ServiceProvider = sc.BuildServiceProvider();
     }
@@ -88,7 +91,7 @@ public class AggregateStreamWriterTests
         var streamId = GetStreamId(streamPrefix, aggregateId);
 
         // let's first fetch events from the stream so we can get the position of last event
-       var expectedVersion = await GetExpectedVersion(client, streamId);
+        var expectedVersion = await GetExpectedVersion(client, streamId);
 
         // now lets write new events
         await writer.Write(streamId, expectedVersion.ToStreamRevision(), events, default);

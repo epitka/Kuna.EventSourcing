@@ -46,6 +46,7 @@ public class PersistentSubscriptionTests
         this.Services.AddEventStore(
             this.Configuration.Build(),
             "EventStore",
+            new[] { this.GetType().Assembly },
             new[]
             {
                 new StreamSubscriptionSettings(

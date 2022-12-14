@@ -13,9 +13,10 @@ public static class ConfigurationExtensions
         this IServiceCollection services,
         IConfiguration configuration,
         string eventStoreConnectionStringName,
-        StreamSubscriptionSettings[] subscriptionSettings = null)
+        Assembly[] assembliesWithAggregateEvents,
+        StreamSubscriptionSettings[]? subscriptionSettings = null)
     {
-        services.AddSingleton<IEventTypeMapper, EventTypeMapper>()
+        services.AddSingleton<IEventTypeMapper>(sp => new EventTypeMapper(assembliesWithAggregateEvents))
                 .AddSingleton<IEventStoreSerializer, JsonEventStoreSerializer>()
                 .AddSingleton<IEventMetadataFactory, EventMetadataFactory>()
                 .AddSingleton<IEventDataFactory, EventDataFactory>()
@@ -28,9 +29,7 @@ public static class ConfigurationExtensions
                 var settings = EventStoreClientSettings
                     .Create(configuration.GetConnectionString(eventStoreConnectionStringName));
 
-                settings.DefaultCredentials = new UserCredentials("admin", "changeit");
-
-                settings.ConnectionName = "test-" + Guid.NewGuid().ToString();
+                settings.ConnectionName = "test-" + Guid.NewGuid();
 
                 return new EventStoreClient(settings);
             });

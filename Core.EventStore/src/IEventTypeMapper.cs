@@ -19,18 +19,17 @@ public class EventTypeMapper : IEventTypeMapper
     /// <param name="assembliesToScan"></param>
     public EventTypeMapper(IEnumerable<Assembly> assembliesToScan)
     {
-        // TODO: uncomment once configuration extension methods have been implemented
-        /*if (assembliesToScan == null
+        if (assembliesToScan == null
             || assembliesToScan.Any() == false)
         {
             throw new ArgumentNullException();
-        }*/
+        }
 
         var interfaceType = typeof(IAggregateEvent);
 
-        var eventTypes = AppDomain.CurrentDomain.GetAssemblies()
-                                  .SelectMany(i => i.GetTypes())
-                                  .Where(x => interfaceType.IsAssignableFrom(x));
+        var eventTypes = assembliesToScan
+                         .SelectMany(i => i.GetTypes())
+                         .Where(x => interfaceType.IsAssignableFrom(x));
 
         foreach (var eventType in eventTypes)
         {
