@@ -138,13 +138,13 @@ public class EventStreamListener : IEventStreamListener
 
         try
         {
-            var @event = this.eventStoreSerializer.Deserialize(resolvedEvent);
+           var result = this.eventStoreSerializer.Deserialize(resolvedEvent);
             // TODO: Add OpenTelemetry tracing here
             // Propagate CorrelationId and set CausationId using EventId
             // Use OpenTelemetry api instead of Activity
             //var metaData = this.eventSerializer.DeserializeMetaData(resolvedEvent);
 
-            if (@event == null)
+            if (result.Event == null)
             {
                 await subscription.Ack(resolvedEvent)
                                   .ConfigureAwait(false);
@@ -152,7 +152,7 @@ public class EventStreamListener : IEventStreamListener
                 return;
             }
 
-            await this.eventDispatcher.Publish(@event, ct)
+            await this.eventDispatcher.Publish(result.Event, result.EventType, ct)
                       .ConfigureAwait(false);
 
             await subscription.Ack(resolvedEvent)

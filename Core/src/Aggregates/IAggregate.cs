@@ -14,7 +14,7 @@ public interface IAggregate<TKey>
 
     IAggregateEvent[] DequeuePendingEvents();
 
-    void InitWith(IEnumerable<IAggregateEvent> events);
+    void InitWith(IEnumerable<object> events);
 }
 
 public interface IAggregate<TKey, TState> : IAggregate<TKey>

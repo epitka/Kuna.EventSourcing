@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections.Concurrent;
+using System.Reflection;
 using Senf.EventSourcing.Core.Events;
 
 namespace Senf.EventSourcing.Core.EventStore;
@@ -10,28 +11,40 @@ public interface IEventTypeMapper
 
 public class EventTypeMapper : IEventTypeMapper
 {
-    private readonly IDictionary<string, Type> typeMap;
+    private static readonly ConcurrentDictionary<string, Type> typeMap = new();
 
+    /// <summary>
+    /// Type registered as singleton that contains map event types
+    /// </summary>
+    /// <param name="assembliesToScan"></param>
     public EventTypeMapper(IEnumerable<Assembly> assembliesToScan)
     {
+        // TODO: uncomment once configuration extension methods have been implemented
         /*if (assembliesToScan == null
             || assembliesToScan.Any() == false)
         {
-            throw new ArgumentNullException()
+            throw new ArgumentNullException();
         }*/
 
-        var eventType = typeof(IAggregateEvent);
+        var interfaceType = typeof(IAggregateEvent);
 
-        this.typeMap = AppDomain.CurrentDomain.GetAssemblies()
-                                .SelectMany(i => i.GetTypes())
-                                .Where(x => eventType.IsAssignableFrom(x))
-                                .ToDictionary(x => x.Name);
+        var eventTypes = AppDomain.CurrentDomain.GetAssemblies()
+                                  .SelectMany(i => i.GetTypes())
+                                  .Where(x => interfaceType.IsAssignableFrom(x));
+
+        foreach (var eventType in eventTypes)
+        {
+            typeMap.TryAdd(eventType.Name, eventType);
+        }
     }
 
     public Type MapFrom(string name)
     {
-        return !this.typeMap.TryGetValue(name.Trim(), out var eventType)
-            ?  throw new InvalidOperationException($"Missing event type definition for event type name {name}")
-            : eventType;
+        if (typeMap!.TryGetValue(name, out var eventType))
+        {
+            return eventType;
+        }
+
+        throw new InvalidOperationException($"Missing event type definition for event type name {name}");
     }
 }

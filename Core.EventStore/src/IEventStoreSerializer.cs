@@ -7,9 +7,11 @@ namespace Senf.EventSourcing.Core.EventStore;
 
 public interface IEventStoreSerializer
 {
-    IAggregateEvent? Deserialize(ResolvedEvent @event);
+    object? DeserializeData(ResolvedEvent @event);
 
     IDictionary<string, string> DeserializeMetaData(ResolvedEvent resolvedEvent);
+
+    (object? @Event, Type EventType) Deserialize(ResolvedEvent resolvedEvent);
 
     byte[] Serialize(object obj);
 }
@@ -30,7 +32,7 @@ public class JsonEventStoreSerializer : IEventStoreSerializer
         this.eventTypeMapper = eventTypeMapper;
     }
 
-    public IAggregateEvent? Deserialize(ResolvedEvent resolvedEvent)
+    public object? DeserializeData(ResolvedEvent resolvedEvent)
     {
         if (resolvedEvent.Event == null)
         {
@@ -39,16 +41,7 @@ public class JsonEventStoreSerializer : IEventStoreSerializer
 
         var eventType = this.eventTypeMapper.MapFrom(resolvedEvent.Event.EventType ?? string.Empty);
 
-        if (JsonConvert.DeserializeObject(
-                Encoding.UTF8.GetString(resolvedEvent.Event.Data.Span),
-                eventType,
-                SerializerSettings
-            ) is not IAggregateEvent @event)
-        {
-            return null;
-        }
-
-        return @event;
+        return DeserializeEvent(resolvedEvent, eventType);
     }
 
     public IDictionary<string, string> DeserializeMetaData(ResolvedEvent resolvedEvent)
@@ -59,9 +52,41 @@ public class JsonEventStoreSerializer : IEventStoreSerializer
                ?? new Dictionary<string, string>();
     }
 
+    /// <summary>
+    /// This method is used by persistent subscriptions to avoid having to look up type of event via reflection
+    /// </summary>
+    /// <param name="resolvedEvent"></param>
+    /// <returns></returns>
+    public (object? @Event, Type EventType) Deserialize(ResolvedEvent resolvedEvent)
+    {
+        if (resolvedEvent.Event == null)
+        {
+            return default;
+        }
+
+        var eventType = this.eventTypeMapper.MapFrom(resolvedEvent.Event.EventType ?? string.Empty);
+        var @event = this.DeserializeEvent(resolvedEvent, eventType);
+
+        return (@Event: @event, EventType: eventType);
+    }
+
     public byte[] Serialize(object obj)
     {
         // TODO: run benchmarks, probably not the fastest way to serialize
         return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(obj, SerializerSettings));
+    }
+
+    private IAggregateEvent? DeserializeEvent(ResolvedEvent resolvedEvent, Type eventType)
+    {
+        if (JsonConvert.DeserializeObject(
+                Encoding.UTF8.GetString(resolvedEvent.Event.Data.Span),
+                eventType,
+                SerializerSettings
+            ) is not IAggregateEvent @event)
+        {
+            return null;
+        }
+
+        return @event;
     }
 }

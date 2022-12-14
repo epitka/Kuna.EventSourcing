@@ -47,7 +47,7 @@ public class Deserialize
 
         var resolvedEvent = new ResolvedEvent(eventRecord, null, null);
 
-        var deserialized = serializer.Deserialize(resolvedEvent) as Deserialized;
+        var deserialized = serializer.DeserializeData(resolvedEvent) as Deserialized;
 
         deserialized.Should().NotBeNull();
 
