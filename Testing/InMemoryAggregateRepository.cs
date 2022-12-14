@@ -6,7 +6,7 @@ using Senf.EventSourcing.Core.Exceptions;
 
 namespace Senf.EventSourcing.Testing;
 
-public class InMemoryAggregateRepository<Guid, TAggregate> : IAggregateRepository<Guid,TAggregate>
+public class InMemoryAggregateRepository<Guid, TAggregate> : IAggregateRepository<Guid, TAggregate>
     where TAggregate : class, IAggregate<Guid>, new()
     where Guid : notnull
 {
@@ -17,13 +17,16 @@ public class InMemoryAggregateRepository<Guid, TAggregate> : IAggregateRepositor
         this.eventsStream = new Dictionary<Guid, List<EventInfo>>();
     }
 
-    public Task<TAggregate> Get(Guid id, CancellationToken ct)
+    public Task<TAggregate> Get(Guid id, CancellationToken cancellationToken)
     {
-        var _ = id ?? throw new ArgumentNullException("id cannot be null");
+        var _ = id
+                ?? throw new ArgumentNullException(
+                    nameof(id),
+                    "id cannot be null");
 
         var aggregate = new TAggregate();
 
-        if (this.eventsStream.ContainsKey(id) == false)
+        if (!this.eventsStream.ContainsKey(id))
         {
             throw new AggregateNotFoundException(id!, typeof(TAggregate));
         }
@@ -42,11 +45,11 @@ public class InMemoryAggregateRepository<Guid, TAggregate> : IAggregateRepositor
     public async Task Save(TAggregate aggregate, CancellationToken ct)
     {
         var events = aggregate.DequeuePendingEvents()
-                             .Select(
-                                      (@event) => new EventInfo(
-                                          type: @event.GetType(),
-                                          data: JsonConvert.SerializeObject(@event)))
-                             .ToArray();
+                              .Select(
+                                  (@event) => new EventInfo(
+                                      type: @event.GetType(),
+                                      data: JsonConvert.SerializeObject(@event)))
+                              .ToArray();
 
         await this.InternalSave(aggregate, events);
     }
@@ -55,7 +58,7 @@ public class InMemoryAggregateRepository<Guid, TAggregate> : IAggregateRepositor
         IAggregate<Guid> aggregate,
         EventInfo[] pendingEvents)
     {
-        if (this.eventsStream.TryGetValue(aggregate.Id.Value, out var instanceStream) == false)
+        if (!this.eventsStream.TryGetValue(aggregate.Id.Value, out var instanceStream))
         {
             instanceStream = new List<EventInfo>(pendingEvents.Length);
             this.eventsStream.Add(aggregate.Id.Value, instanceStream);

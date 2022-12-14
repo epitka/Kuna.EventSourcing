@@ -11,7 +11,7 @@ public interface IEventTypeMapper
 
 public class EventTypeMapper : IEventTypeMapper
 {
-    private static readonly ConcurrentDictionary<string, Type> typeMap = new();
+    private static readonly ConcurrentDictionary<string, Type> TypeMap = new();
 
     /// <summary>
     /// Type registered as singleton that contains map event types
@@ -20,9 +20,11 @@ public class EventTypeMapper : IEventTypeMapper
     public EventTypeMapper(IEnumerable<Assembly> assembliesToScan)
     {
         if (assembliesToScan == null
-            || assembliesToScan.Any() == false)
+            || !assembliesToScan.Any())
         {
-            throw new ArgumentNullException();
+            throw new ArgumentNullException(
+                nameof(assembliesToScan),
+                "No assemblies to scan for IAggregateEvent implmentations found.");
         }
 
         var interfaceType = typeof(IAggregateEvent);
@@ -33,13 +35,13 @@ public class EventTypeMapper : IEventTypeMapper
 
         foreach (var eventType in eventTypes)
         {
-            typeMap.TryAdd(eventType.Name, eventType);
+            TypeMap.TryAdd(eventType.Name, eventType);
         }
     }
 
     public Type MapFrom(string name)
     {
-        if (typeMap!.TryGetValue(name, out var eventType))
+        if (TypeMap.TryGetValue(name, out var eventType))
         {
             return eventType;
         }

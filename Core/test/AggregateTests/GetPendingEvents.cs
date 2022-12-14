@@ -18,16 +18,16 @@ public class GetPendingEvents
             new TestAggregateChanged(Id: aggregateId, ChangedValue: "Value2"),
         };
 
-        aggregate.GetPendingEvents().Count().Should().Be(0);
+        aggregate.GetPendingEvents().Length.Should().Be(0);
 
         aggregate.RaiseEvent(events[0]);
-        aggregate.GetPendingEvents().Count().Should().Be(1);
+        aggregate.GetPendingEvents().Length.Should().Be(1);
 
         aggregate.RaiseEvent(events[1]);
-        aggregate.GetPendingEvents().Count().Should().Be(2);
+        aggregate.GetPendingEvents().Length.Should().Be(2);
 
         aggregate.RaiseEvent(events[2]);
-        aggregate.GetPendingEvents().Count().Should().Be(3);
+        aggregate.GetPendingEvents().Length.Should().Be(3);
 
         var pendingEvents = aggregate.GetPendingEvents();
 
