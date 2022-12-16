@@ -10,7 +10,7 @@ namespace Senf.EventSourcing.Core.EventStore.Subscriptions;
 public interface IEventStreamListener
 {
     Task Start(
-        StreamSubscriptionSettings streamSettings,
+        StreamSubscriptionSettings subscriptionSettings,
         CancellationToken ct);
 
     Task Stop(TimeSpan delay);
@@ -23,7 +23,6 @@ public class EventStreamListener : IEventStreamListener
     private readonly IEventDispatcher eventDispatcher;
     private readonly ILogger logger;
     private StreamSubscriptionSettings subscriptionSettings = default!;
-    private PersistentSubscription subscription = default!;
     private bool started;
     private CancellationTokenSource cts = default!;
 
@@ -96,8 +95,7 @@ public class EventStreamListener : IEventStreamListener
         }
         catch (RpcException e) when (e.StatusCode == StatusCode.AlreadyExists)
         {
-            var s = string.Empty;
-            // is subscription already exists, just skip
+            // if subscription already exists, just skip
         }
 
         this.logger.LogTrace(
@@ -109,7 +107,7 @@ public class EventStreamListener : IEventStreamListener
     {
         ct.ThrowIfCancellationRequested();
 
-        this.subscription = await this.client.SubscribeToStreamAsync(
+        await this.client.SubscribeToStreamAsync(
                                           this.subscriptionSettings.StreamName,
                                           this.SubscriptionGroupName,
                                           this.OnEventAppeared,

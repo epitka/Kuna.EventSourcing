@@ -24,17 +24,17 @@ public abstract class AggregateRepository<TKey, TAggregate> : IAggregateReposito
         this.streamWriter = streamWriter;
     }
 
-    public virtual async Task<TAggregate> Get(TKey aggregateId, CancellationToken ct)
+    public virtual async Task<TAggregate> Get(TKey id, CancellationToken ct)
     {
         ct.ThrowIfCancellationRequested();
 
-        var streamId = this.GetStreamId(aggregateId);
+        var streamId = this.GetStreamId(id);
 
         var events = await this.streamReader.GetEvents(streamId, ct);
 
         if (events == Enumerable.Empty<object>())
         {
-            throw new AggregateNotFoundException(aggregateId, typeof(TAggregate));
+            throw new AggregateNotFoundException(id, typeof(TAggregate));
         }
 
         ct.ThrowIfCancellationRequested();

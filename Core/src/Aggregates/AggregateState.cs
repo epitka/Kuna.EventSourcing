@@ -26,6 +26,16 @@ where TKey : IEquatable<TKey>
 
     public int OriginalVersion { get; set; } = -1;
 
+    public void InitWith(IEnumerable<object> events)
+    {
+        foreach (var @event in events)
+        {
+            this.ApplyEvent(@event);
+        }
+
+        this.OriginalVersion = this.Version;
+    }
+
     /// <summary>
     /// By convention, methods that mutate state must be named Apply
     /// </summary>
