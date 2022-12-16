@@ -1,7 +1,7 @@
 ﻿
 namespace Senf.EventSourcing.Core.Aggregates;
 
-public interface IAggregateRepository<TKey, TAggregate>
+public interface IAggregateRepository<in TKey, TAggregate>
     where TAggregate : class, IAggregate<TKey>, new()
 {
     ///<summary>Fetches aggregate from the persistent store.
