@@ -1,15 +1,18 @@
 ﻿namespace Senf.EventSourcing.Core.Aggregates;
 
-public class Id<T> : IEquatable<T>
+public sealed class Id<T> : IEquatable<T>
 {
     public Id(T value)
     {
         this.Value = value;
     }
 
-    public T Value = default!;
+    public T Value
+    {
+        get;
+    }
 
-    protected bool Equals(Id<T> other)
+    public bool Equals(Id<T> other)
     {
         return EqualityComparer<T>.Default.Equals(this.Value, other.Value);
     }
