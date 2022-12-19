@@ -1,20 +1,22 @@
-namespace Carts.Commands;
+using Carts.Commands;
+
+namespace Carts.CommandHandlers;
 
 internal class RemoveProductHandler: IHandleCommand<RemoveProduct>
 {
-    private readonly ICartRepository cartRepository;
+    private readonly IShoppingCartRepository shoppingCartRepository;
 
-    public RemoveProductHandler(ICartRepository cartRepository)
+    public RemoveProductHandler(IShoppingCartRepository shoppingCartRepository)
     {
-        this.cartRepository = cartRepository;
+        this.shoppingCartRepository = shoppingCartRepository;
     }
 
-    public async Task Handle(RemoveProduct command, CancellationToken cancellationToken)
+    public async Task Handle(RemoveProduct command, CancellationToken ct)
     {
-        var cart = await this.cartRepository.Get(command.CartId, cancellationToken);
+        var cart = await this.shoppingCartRepository.Get(command.CartId, ct);
 
         cart.Process(command);
 
-        await this.cartRepository.Save(cart, cancellationToken);
+        await this.shoppingCartRepository.Save(cart, ct);
     }
 }

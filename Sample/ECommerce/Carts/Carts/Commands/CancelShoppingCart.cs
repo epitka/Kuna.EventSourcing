@@ -1,6 +1,3 @@
-using Carts.ShoppingCarts;
-using MediatR;
-
 namespace Carts.Commands;
 
 public sealed record CancelShoppingCart(GuidId CartId)

@@ -1,12 +1,10 @@
-using System;
 using System.Linq;
 using Carts.Commands;
 using Carts.Events;
-using Carts.Pricing;
-using Carts.ShoppingCarts.Products;
+using Carts.Services.Pricing;
 using Senf.EventSourcing.Core.Aggregates;
 
-namespace Carts.ShoppingCarts;
+namespace Carts;
 
 public partial class ShoppingCart : Aggregate<Guid, ShoppingCart.State>
 {

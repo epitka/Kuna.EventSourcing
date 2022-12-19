@@ -87,10 +87,5 @@ Global
 		{D9C178D9-A8C8-4D3A-9583-27A69F1112C5} = {9B67D0A5-F457-48D1-97E7-F40A6B362D2D}
 	EndGlobalSection
 	GlobalSection(RiderSharedRunConfigurations) = postSolution
-		File = Sample\ECommerce\Carts.run.xml
-		File = Sample\ECommerce\Orders.run.xml
-		File = Sample\ECommerce\Payments.run.xml
-		File = Sample\ECommerce\PracticalEventSourcing.run.xml
-		File = Sample\ECommerce\Shipments.run.xml
 	EndGlobalSection
 EndGlobal

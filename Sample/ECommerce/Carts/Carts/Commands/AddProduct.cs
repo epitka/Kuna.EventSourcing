@@ -1,4 +1,3 @@
-using Carts.ShoppingCarts.Products;
 
 namespace Carts.Commands;
 

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Carts.ShoppingCarts.Products;
 
-namespace Carts.Pricing;
+
+namespace Carts.Services.Pricing;
 
 public interface IProductPriceCalculator
 {

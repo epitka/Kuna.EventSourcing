@@ -1,4 +1,4 @@
-namespace Carts.ShoppingCarts;
+namespace Carts;
 
 public enum ShoppingCartStatus
 {
