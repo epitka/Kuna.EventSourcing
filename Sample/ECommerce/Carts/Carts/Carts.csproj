@@ -21,6 +21,5 @@
 
     <ItemGroup>
       <Folder Include="Domain" />
-      <Folder Include="Queries" />
     </ItemGroup>
 </Project>

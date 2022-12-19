@@ -1,6 +1,4 @@
 
-using Carts.ShoppingCarts.Products;
-
 namespace Carts.Commands;
 
 public sealed record AddProduct(Guid CartId, ProductItem ProductItem) : ICommand
