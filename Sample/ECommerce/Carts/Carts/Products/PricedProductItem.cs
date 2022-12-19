@@ -17,7 +17,7 @@ public sealed record PricedProductItem
         UnitPrice = unitPrice;
     }
 
-    public static PricedProductItem Create(Guid? productId, int? quantity, decimal? unitPrice)
+    public static PricedProductItem Create(GuidId productId, int? quantity, decimal? unitPrice)
     {
         return Create(
             ProductItem.From(productId, quantity),
