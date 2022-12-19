@@ -6,8 +6,8 @@ namespace Senf.EventSourcing.Core;
 /// Marker interface used to identify handlers of events
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public interface IHandleEvent<in TEvent>
+public interface IHandleEvent<TEvent>
 where TEvent : class, IAggregateEvent
 {
-    Task Handle(IAggregateEvent @event, CancellationToken ct);
+    Task Handle(TEvent @event, CancellationToken ct);
 }

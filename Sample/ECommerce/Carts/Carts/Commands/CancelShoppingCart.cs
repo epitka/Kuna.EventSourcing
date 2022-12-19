@@ -1,0 +1,13 @@
+using Carts.ShoppingCarts;
+using MediatR;
+
+namespace Carts.Commands;
+
+public sealed record CancelShoppingCart(GuidId CartId)
+    : ICommand
+{
+    public static CancelShoppingCart Create(Guid cartId)
+    {
+        return new CancelShoppingCart(cartId);
+    }
+}

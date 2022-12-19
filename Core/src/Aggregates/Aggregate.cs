@@ -38,12 +38,7 @@ public abstract class Aggregate<TKey, TState>
             throw new InvalidOperationException("State is already initialized");
         }
 
-        foreach (var @event in events)
-        {
-            this.CurrentState.ApplyEvent(@event);
-        }
-
-        this.CurrentState.OriginalVersion = this.Version;
+        this.CurrentState.InitWith(events);
     }
 
     /// <summary>

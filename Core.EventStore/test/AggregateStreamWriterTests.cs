@@ -17,14 +17,11 @@ namespace Senf.EventSourcing.Core.EventStore.Tests;
 [TestCaseOrderer("Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.XUnitHelpers.PriorityOrderer", "Senf.EventSourcing.Core.EventStore.Tests")]
 public class AggregateStreamWriterTests
 {
-    private readonly EventStoreContainerFixture eventStoreDatabaseFixture;
-
     private static readonly string streamPrefix = "writeTest-";
     private static readonly Guid aggregateId = Guid.NewGuid();
 
     public AggregateStreamWriterTests(EventStoreContainerFixture eventStoreDatabaseFixture)
     {
-        this.eventStoreDatabaseFixture = eventStoreDatabaseFixture;
         var cfg =
             new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", false);
@@ -81,7 +78,7 @@ public class AggregateStreamWriterTests
 
     [Fact]
     [TestPriority(1)]
-    public async void Can_Write_Events_To_Existing_Stream()
+    public async Task Can_Write_Events_To_Existing_Stream()
     {
         using var scope = this.ServiceProvider.CreateScope();
         var writer = scope.ServiceProvider.GetRequiredService<IAggregateStreamWriter>();
@@ -106,7 +103,7 @@ public class AggregateStreamWriterTests
 
     [Fact]
     [TestPriority(2)]
-    public async void When_Invalid_Expected_Version_Is_Supplied_Throws_InvalidExpectedVersionException()
+    public async Task When_Invalid_Expected_Version_Is_Supplied_Throws_InvalidExpectedVersionException()
     {
         using var scope = this.ServiceProvider.CreateScope();
         var writer = scope.ServiceProvider.GetRequiredService<IAggregateStreamWriter>();

@@ -34,16 +34,23 @@ public sealed class Id<T> : IEquatable<T>
             return true;
         }
 
-        if (obj.GetType() != this.GetType())
-        {
-            return false;
-        }
-
-        return Equals((Id<T>)obj);
+        return obj.GetType() == this.GetType() && this.Equals((Id<T>)obj);
     }
 
     public override int GetHashCode()
     {
         return EqualityComparer<T>.Default.GetHashCode(this.Value!);
+    }
+
+    public static implicit operator T(Id<T> obj)
+    {
+        return obj.Value;
+    }
+
+    public static implicit operator Id<T>?(T obj)
+    {
+        return obj == null
+            ? null
+            : new Id<T>(obj);
     }
 }
