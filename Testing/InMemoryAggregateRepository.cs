@@ -1,9 +1,4 @@
-﻿using Newtonsoft.Json;
-using Senf.EventSourcing.Core;
-using Senf.EventSourcing.Core.Aggregates;
-using Senf.EventSourcing.Core.Events;
-using Senf.EventSourcing.Core.Exceptions;
-
+﻿
 namespace Senf.EventSourcing.Testing;
 
 public class InMemoryAggregateRepository<Guid, TAggregate> : IAggregateRepository<Guid, TAggregate>

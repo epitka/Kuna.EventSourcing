@@ -1,14 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Carts.Events;
-using Carts.ShoppingCarts.Products;
-using Marten;
-using Senf.EventSourcing.Core;
-using Senf.EventSourcing.Core.Events;
-using Senf.EventSourcing.Core.EventStore;
-using Senf.EventSourcing.Core.Exceptions;
 
-namespace Carts.ShoppingCarts.FinalizingCart;
+using Senf.EventSourcing.Core;
+using Senf.EventSourcing.Core.EventStore;
+
+namespace Carts.EventHandlers;
 
 public record CartFinalized(
     GuidId CartId,

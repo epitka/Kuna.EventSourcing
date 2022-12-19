@@ -1,24 +1,23 @@
-using Carts.ShoppingCarts;
-using MediatR;
+using Carts.Commands;
 
-namespace Carts.Commands;
+namespace Carts.CommandHandlers;
 
 public class HandleCancelShoppingCart: IHandleCommand<CancelShoppingCart>
 {
-    private readonly ICartRepository cartRepository;
+    private readonly IShoppingCartRepository shoppingCartRepository;
 
-    public HandleCancelShoppingCart(ICartRepository cartRepository)
+    public HandleCancelShoppingCart(IShoppingCartRepository shoppingCartRepository)
     {
-        this.cartRepository = cartRepository;
+        this.shoppingCartRepository = shoppingCartRepository;
     }
 
     public async Task Handle(CancelShoppingCart command, CancellationToken ct)
     {
 
-        var cart = await this.cartRepository.Get(command.CartId, ct);
+        var cart = await this.shoppingCartRepository.Get(command.CartId, ct);
 
         cart.Process(command);
 
-        await this.cartRepository.Save(cart, ct);
+        await this.shoppingCartRepository.Save(cart, ct);
     }
 }

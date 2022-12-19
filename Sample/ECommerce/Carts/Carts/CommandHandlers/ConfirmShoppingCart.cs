@@ -1,24 +1,23 @@
-using Carts.ShoppingCarts;
-using MediatR;
+using Carts.Commands;
 
-namespace Carts.Commands;
+namespace Carts.CommandHandlers;
 
 
 internal class ConfirmShoppingCartHandler: IHandleCommand<ConfirmShoppingCart>
 {
-    private readonly ICartRepository cartRepository;
+    private readonly IShoppingCartRepository shoppingCartRepository;
 
-    public ConfirmShoppingCartHandler(ICartRepository cartRepository)
+    public ConfirmShoppingCartHandler(IShoppingCartRepository shoppingCartRepository)
     {
-        this.cartRepository = cartRepository;
+        this.shoppingCartRepository = shoppingCartRepository;
     }
 
     public async Task Handle(ConfirmShoppingCart command, CancellationToken ct)
     {
-        var cart = await this.cartRepository.Get(command.CartId, ct);
+        var cart = await this.shoppingCartRepository.Get(command.CartId, ct);
 
         cart.Process(command);
 
-        await this.cartRepository.Save(cart, ct);
+        await this.shoppingCartRepository.Save(cart, ct);
     }
 }

@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Carts.Api.Requests;
 using Carts.Commands;
-using Carts.ShoppingCarts.Products;
+using Carts.Queries.Products;
 using Microsoft.AspNetCore.Mvc;
 using Senf.EventSourcing.Core.Commands;
 

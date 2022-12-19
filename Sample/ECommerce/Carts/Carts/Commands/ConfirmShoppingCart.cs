@@ -1,7 +1,3 @@
-using Carts.ShoppingCarts;
-using Marten.Events.CodeGeneration;
-using MediatR;
-
 namespace Carts.Commands;
 
 public record ConfirmShoppingCart(GuidId CartId) : ICommand

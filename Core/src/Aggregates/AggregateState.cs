@@ -28,6 +28,11 @@ where TKey : IEquatable<TKey>
 
     public void InitWith(IEnumerable<object> events)
     {
+        if (this.Version > -1)
+        {
+            throw new InvalidOperationException("State is already initialized");
+        }
+
         foreach (var @event in events)
         {
             this.ApplyEvent(@event);

@@ -1,20 +1,20 @@
-using Carts.ShoppingCarts;
+using Carts.Commands;
 
-namespace Carts.Commands;
+namespace Carts.CommandHandlers;
 
 internal class OpenShoppingCartHandler: IHandleCommand<OpenShoppingCart>
 {
-    private readonly ICartRepository cartRepository;
+    private readonly IShoppingCartRepository shoppingCartRepository;
 
-    public OpenShoppingCartHandler(ICartRepository cartRepository)
+    public OpenShoppingCartHandler(IShoppingCartRepository shoppingCartRepository)
     {
-        this.cartRepository = cartRepository;
+        this.shoppingCartRepository = shoppingCartRepository;
     }
 
     public async Task Handle(OpenShoppingCart command, CancellationToken ct)
     {
         var cart = ShoppingCart.Process(command);
 
-        this.cartRepository.Save(cart, ct);
+        await this.shoppingCartRepository.Save(cart, ct);
     }
 }

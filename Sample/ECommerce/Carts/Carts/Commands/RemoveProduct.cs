@@ -1,5 +1,3 @@
-using Carts.ShoppingCarts.Products;
-
 namespace Carts.Commands;
 
 public record RemoveProduct(

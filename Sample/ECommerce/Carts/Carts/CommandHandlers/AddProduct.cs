@@ -1,26 +1,27 @@
-using Carts.Pricing;
+using Carts.Commands;
+using Carts.Services.Pricing;
 
-namespace Carts.Commands;
+namespace Carts.CommandHandlers;
 
 internal class AddProductHandler : IHandleCommand<AddProduct>
 {
     private readonly IProductPriceCalculator productPriceCalculator;
-    private readonly ICartRepository cartRepository;
+    private readonly IShoppingCartRepository shoppingCartRepository;
 
     public AddProductHandler(
-        ICartRepository cartRepository,
+        IShoppingCartRepository shoppingCartRepository,
         IProductPriceCalculator productPriceCalculator)
     {
-        this.cartRepository = cartRepository;
+        this.shoppingCartRepository = shoppingCartRepository;
         this.productPriceCalculator = productPriceCalculator;
     }
 
     public async Task Handle(AddProduct command, CancellationToken ct)
     {
-        var cart = await this.cartRepository.Get(command.CartId, ct);
+        var cart = await this.shoppingCartRepository.Get(command.CartId, ct);
 
         cart.Process(command, this.productPriceCalculator);
 
-        await this.cartRepository.Save(cart, ct);
+        await this.shoppingCartRepository.Save(cart, ct);
     }
 }

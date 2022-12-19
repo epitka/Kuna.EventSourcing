@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Carts.Events;
-using Carts.ShoppingCarts.Products;
+
 using Senf.EventSourcing.Core.Extensions;
 
-namespace Carts.ShoppingCarts;
+namespace Carts;
 
 public partial class ShoppingCart
 {
@@ -15,7 +14,7 @@ public partial class ShoppingCart
 
         public ShoppingCartStatus Status { get; set; }
 
-        public List<PricedProductItem> ProductItems { get; set; }
+        public List<PricedProductItem> ProductItems { get; set; } = new();
 
         public decimal TotalPrice => this.ProductItems.Sum(pi => pi.TotalPrice);
 

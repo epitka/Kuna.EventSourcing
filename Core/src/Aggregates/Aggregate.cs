@@ -33,11 +33,6 @@ public abstract class Aggregate<TKey, TState>
 
     public void InitWith(IEnumerable<object> events)
     {
-        if (this.Version > -1)
-        {
-            throw new InvalidOperationException("State is already initialized");
-        }
-
         this.CurrentState.InitWith(events);
     }
 

@@ -1,4 +1,4 @@
-using Carts.ShoppingCarts.Products;
+
 using Senf.EventSourcing.Core.Events;
 
 namespace Carts.Events;
