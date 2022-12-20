@@ -122,7 +122,8 @@ public class EventStreamListener : IEventStreamListener
 
     public async Task Stop(TimeSpan delay)
     {
-        await Task.Delay(delay);
+        await Task.Delay(delay)
+                  .ConfigureAwait(false);;
         this.cts.Cancel();
     }
 

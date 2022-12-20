@@ -25,7 +25,10 @@ public class EventDispatcher : IEventDispatcher
     {
         var methodInfo = GetGenericPublishFor(eventType);
 
-        await (Task)methodInfo.Invoke(this, new [] { aggregateEvent, ct })!;
+        if (methodInfo is not null)
+        {
+            await (Task)methodInfo.Invoke(this, new[] { aggregateEvent, ct })!;
+        }
     }
 
     private async Task InternalPublish<TEvent>(TEvent @event, CancellationToken ct)

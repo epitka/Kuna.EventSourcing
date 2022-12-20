@@ -28,7 +28,8 @@ public class BackgroundWorker : BackgroundService
 
                 this.logger.LogInformation("Background worker started");
 
-                await this.perform(stoppingToken);
+                await this.perform(stoppingToken)
+                          .ConfigureAwait(false);
 
                 this.logger.LogInformation("Background worker stopped");
             },

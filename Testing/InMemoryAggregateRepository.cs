@@ -46,7 +46,8 @@ public class InMemoryAggregateRepository<Guid, TAggregate> : IAggregateRepositor
                                       data: JsonConvert.SerializeObject(@event)))
                               .ToArray();
 
-        await this.InternalSave(aggregate, events);
+        await this.InternalSave(aggregate, events)
+                  .ConfigureAwait(false);
     }
 
     private Task InternalSave(
