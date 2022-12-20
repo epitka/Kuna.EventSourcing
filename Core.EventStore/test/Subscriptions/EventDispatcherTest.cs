@@ -1,9 +1,4 @@
-﻿using EventStore.Client;
-using FakeItEasy;
-using FakeItEasy.Configuration;
-using FluentAssertions;
-using Microsoft.Extensions.DependencyInjection;
-using Senf.EventSourcing.Core.Events;
+﻿using Senf.EventSourcing.Core.Events;
 using Senf.EventSourcing.Core.EventStore.Subscriptions;
 
 namespace Senf.EventSourcing.Core.EventStore.Tests;

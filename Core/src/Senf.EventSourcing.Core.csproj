@@ -28,6 +28,7 @@
 
     <ItemGroup>
       <PackageReference Include="AutoFixture.Xunit2" Version="4.17.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     </ItemGroup>
 </Project>
