@@ -38,7 +38,8 @@ public class AggregateStreamWriter
         try
         {
             await this.client
-                      .AppendToStreamAsync(streamId, expectedVersion, eventData, cancellationToken: ct);
+                      .AppendToStreamAsync(streamId, expectedVersion, eventData, cancellationToken: ct)
+                      .ConfigureAwait(false);
         }
         catch (WrongExpectedVersionException ex)
         {

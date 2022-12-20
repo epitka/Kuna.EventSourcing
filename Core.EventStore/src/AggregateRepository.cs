@@ -30,7 +30,8 @@ public abstract class AggregateRepository<TKey, TAggregate> : IAggregateReposito
 
         var streamId = this.GetStreamId(id);
 
-        var events = await this.streamReader.GetEvents(streamId, ct);
+        var events = await this.streamReader.GetEvents(streamId, ct)
+                               .ConfigureAwait(false);
 
         if (events == Enumerable.Empty<object>())
         {
@@ -59,7 +60,9 @@ public abstract class AggregateRepository<TKey, TAggregate> : IAggregateReposito
 
         var streamId = this.GetStreamId(aggregate.Id.Value);
 
-        await this.streamWriter.Write(streamId, aggregate.OriginalVersion.ToStreamRevision(), pendingEvents, ct);
+        await this.streamWriter
+                  .Write(streamId, aggregate.OriginalVersion.ToStreamRevision(), pendingEvents, ct)
+                  .ConfigureAwait(false);
     }
 
     private string GetStreamId(TKey aggregateId)

@@ -88,7 +88,8 @@ public class AggregateBuilder<TAggregate, TState, TKey>
             raiseEvent!.Invoke(aggregate, new[] { @event });
         }
 
-        await repository.Save(aggregate, CancellationToken.None);
+        await repository.Save(aggregate, CancellationToken.None)
+                        .ConfigureAwait(false);
 
         this.queuedEvents.Dequeue();
 

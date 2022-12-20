@@ -89,12 +89,15 @@ public static class ConfigurationExtensions
                     async stoppingToken =>
                     {
                         await Task.WhenAll(
-                            settings.Select(
-                                s =>
-                                {
-                                    var listener = serviceProvider.GetRequiredService<IEventStreamListener>();
-                                    return listener.Start(s, stoppingToken);
-                                }));
+                                      settings.Select(
+                                          s =>
+                                          {
+                                              var listener = serviceProvider.GetRequiredService<IEventStreamListener>();
+                                              return listener.Start(s, stoppingToken);
+                                          }))
+                                  .ConfigureAwait(false);
+
+                        ;
 
                         // keep background worker alive
                         while (!stoppingToken.IsCancellationRequested)
