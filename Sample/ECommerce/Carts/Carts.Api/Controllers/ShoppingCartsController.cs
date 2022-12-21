@@ -1,8 +1,9 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Carts.Api.Requests;
-using Carts.Commands;
-using Carts.Queries.Products;
+using Carts.Domain.Commands;
+using Carts.Domain.Model;
 using Microsoft.AspNetCore.Mvc;
 using Senf.EventSourcing.Core.Commands;
 
@@ -11,24 +12,21 @@ namespace Carts.Api.Controllers;
 [Route("api/[controller]")]
 public class ShoppingCartsController : Controller
 {
-    private readonly ICommandBus commandBus;
+    private readonly ICommandDispatcher commandDispatcher;
 
-    public ShoppingCartsController(ICommandBus commandBus)
+    public ShoppingCartsController(ICommandDispatcher commandDispatcher)
     {
-        this.commandBus = commandBus;
+        this.commandDispatcher = commandDispatcher;
     }
 
     [HttpPost]
-    public async Task<IActionResult> OpenCart([FromBody] OpenShoppingCartRequest request)
+    public async Task<IActionResult> OpenCart([FromBody] OpenShoppingCartRequest request, CancellationToken ct)
     {
         var cartId = Guid.NewGuid();
 
-        var command = OpenShoppingCart.Create(
-            cartId,
-            request.ClientId
-        );
+        var command = new OpenShoppingCart(cartId, request.ClientId);
 
-        await this.commandBus.Send(command);
+        await this.commandDispatcher.Send(command, ct);
 
         return this.Created($"/api/ShoppingCarts/{cartId}", cartId);
     }
@@ -37,9 +35,10 @@ public class ShoppingCartsController : Controller
     public async Task<IActionResult> AddProduct(
         Guid id,
         [FromBody]
-        AddProductRequest? request)
+        AddProductRequest? request,
+        CancellationToken ct)
     {
-        var command = Commands.AddProduct.Create(
+        var command = new AddProduct(
             id,
             ProductItem.From(
                 request?.ProductItem?.ProductId,
@@ -47,8 +46,9 @@ public class ShoppingCartsController : Controller
             )
         );
 
-        await this.commandBus.Send(command);
-        return Ok();
+        await this.commandDispatcher.Send(command, ct);
+
+        return this.Ok();
     }
 
 
@@ -57,10 +57,10 @@ public class ShoppingCartsController : Controller
          Guid id,
          [FromRoute]Guid? productId,
          [FromQuery]int? quantity,
-         [FromQuery]decimal? unitPrice
-     )
+         [FromQuery]decimal? unitPrice,
+         CancellationToken ct)
      {
-         var command = Commands.RemoveProduct.Create(
+         var command = new RemoveProduct(
              id,
              PricedProductItem.Create(
                  productId,
@@ -69,29 +69,27 @@ public class ShoppingCartsController : Controller
              )
          );
 
-         await this.commandBus.Send(command);
+         await this.commandDispatcher.Send(command, ct);
 
          return this.NoContent();
      }
 
      [HttpPut("{id:guid}/confirmation")]
-     public async Task<IActionResult> ConfirmCart(Guid id)
+     public async Task<IActionResult> ConfirmCart(Guid id, CancellationToken ct)
      {
-         var command = ConfirmShoppingCart.Create(
-             id
-         );
+         var command = new ConfirmShoppingCart(id);
 
-         await this.commandBus.Send(command);
+         await this.commandDispatcher.Send(command, ct);
 
          return this.Ok();
      }
 
-    // [HttpDelete("{id}")]
-     public async Task<IActionResult> CancelCart(Guid id)
+    [HttpDelete("{id}")]
+     public async Task<IActionResult> CancelCart(Guid id, CancellationToken ct)
      {
          var command = CancelShoppingCart.Create(id);
 
-         await this.commandBus.Send(command);
+         await this.commandDispatcher.Send(command, ct);
 
          return this.Ok();
      }
