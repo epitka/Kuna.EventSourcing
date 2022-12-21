@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Senf.EventSourcing.Core.Aggregates;
+using Senf.EventSourcing.Core.Events;
 using Senf.EventSourcing.Core.EventStore.Configuration;
 using Senf.EventSourcing.Core.EventStore.Subscriptions;
 using Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers;

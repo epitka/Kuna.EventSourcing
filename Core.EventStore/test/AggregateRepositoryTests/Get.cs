@@ -1,5 +1,6 @@
 ﻿using DeepEqual.Syntax;
 using FakeItEasy;
+using Senf.EventSourcing.Core.Aggregates;
 using Senf.EventSourcing.Core.Events;
 using Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers;
 using Senf.EventSourcing.Core.Exceptions;

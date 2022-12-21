@@ -3,6 +3,7 @@ using EventStore.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Senf.EventSourcing.Core.Aggregates;
 using Senf.EventSourcing.Core.EventStore.Subscriptions;
 
 namespace Senf.EventSourcing.Core.EventStore.Configuration;
