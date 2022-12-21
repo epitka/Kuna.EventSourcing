@@ -75,6 +75,7 @@ public sealed class GuidId
     {
         return other is not null && this.Value.Equals(other.Value);
     }
+
     public override bool Equals(object? obj)
     {
         if (ReferenceEquals(null, obj)) return false;
@@ -85,4 +86,37 @@ public sealed class GuidId
 
     public static bool operator ==(GuidId a, GuidId b) => a.Value.CompareTo(b.Value) == 0;
     public static bool operator !=(GuidId a, GuidId b) => !(a.Value == b.Value);
+
+    class GuidIdJsonConverter : JsonConverter
+    {
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+        {
+            if (value is null)
+            {
+                if (serializer.NullValueHandling == NullValueHandling.Include)
+                {
+                    writer.WriteNull();
+                    return;
+                }
+            }
+
+            if (value is not GuidId id)
+            {
+                return;
+            }
+
+            serializer.Serialize(writer, id.Value);
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+        {
+            var guid = serializer.Deserialize<Guid>(reader);
+            return new GuidId(guid);
+        }
+
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof(GuidId);
+        }
+    }
 }

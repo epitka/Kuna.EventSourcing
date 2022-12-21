@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\..\Core\src\Senf.EventSourcing.Core.csproj" />
+      <ProjectReference Include="..\..\..\..\Testing\Senf.EventSourcing.Testing.csproj" />
+      <ProjectReference Include="..\Carts.Application\Carts.Application.csproj" />
+      <ProjectReference Include="..\Carts.Domain\Carts.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="DeepEqual" Version="4.2.1" />
+    </ItemGroup>
+
+</Project>

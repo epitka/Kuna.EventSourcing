@@ -1,4 +1,6 @@
-﻿namespace Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers;
+﻿using Senf.EventSourcing.Core.Aggregates;
+
+namespace Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers;
 
 public class TestAggregateRepository : AggregateRepository<Guid, TestAggregate>
 {

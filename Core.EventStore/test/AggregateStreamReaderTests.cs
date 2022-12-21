@@ -4,6 +4,7 @@ using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Senf.EventSourcing.Core.Aggregates;
 using Senf.EventSourcing.Core.EventStore.Configuration;
 using Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers;
 using Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.DockerFixtures;
