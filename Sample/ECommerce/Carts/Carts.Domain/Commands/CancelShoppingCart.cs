@@ -1,3 +1,5 @@
+
+
 namespace Carts.Domain.Commands;
 
 public sealed record CancelShoppingCart(GuidId CartId)
