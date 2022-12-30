@@ -1,7 +1,7 @@
 using Carts.Domain.Model;
 using Carts.Domain.Services;
 
-namespace Carts.Tests.Stubs.Products;
+namespace Carts.TestingInfrastructure.Stubs;
 
 internal class FakeProductPriceCalculator: IProductPriceCalculator
 {

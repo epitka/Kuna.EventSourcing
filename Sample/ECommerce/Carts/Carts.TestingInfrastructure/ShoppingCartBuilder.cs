@@ -4,7 +4,7 @@ using Carts.Domain.Model;
 using Senf.EventSourcing.Core.Ids;
 using Senf.EventSourcing.Testing;
 
-namespace Carts.Tests.Builders;
+namespace Carts.TestingInfrastructure;
 
 public class ShoppingCartBuilder : AggregateBuilder<ShoppingCart, ShoppingCart.State, Guid>
 {

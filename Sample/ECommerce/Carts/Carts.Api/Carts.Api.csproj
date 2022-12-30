@@ -15,5 +15,6 @@
       <ProjectReference Include="..\..\..\..\Core\src\Senf.EventSourcing.Core.csproj" />
       <ProjectReference Include="..\Carts.Application\Carts.Application.csproj" />
       <ProjectReference Include="..\Carts.Domain\Carts.Domain.csproj" />
+      <ProjectReference Include="..\Carts.Infrastructure\Carts.Infrastructure.csproj" />
     </ItemGroup> 
 </Project>

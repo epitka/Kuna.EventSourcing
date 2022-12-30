@@ -8,3 +8,7 @@ global using System.Threading.Tasks;
 global using Newtonsoft.Json;
 global using Senf.EventSourcing.Core.Exceptions;
 global using System.Linq;
+global using System.Text;
+global using Microsoft.Extensions.DependencyInjection;
+global using Xunit.Abstractions;
+

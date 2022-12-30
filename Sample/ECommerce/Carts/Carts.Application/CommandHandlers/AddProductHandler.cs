@@ -1,7 +1,4 @@
-using Carts.Domain.Commands;
-using Carts.Domain.Services;
-
-namespace Carts.CommandHandlers;
+namespace Carts.Application.CommandHandlers;
 
 public class AddProductHandler : IHandleCommand<AddProduct>
 {
