@@ -1,109 +1,174 @@
-﻿
+﻿using System.Data.SqlTypes;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
+using Xunit;
+using Xunit.Sdk;
+
 namespace Senf.EventSourcing.Testing;
 
-public class DependencyRegistrationVerifier
+public class DependencyRegistrationVerifier<TProgram>
+    where TProgram : class
 {
-    private readonly IServiceCollection services;
+    public class SuccessException : Exception
+    {
+        public SuccessException(VerificationResult result)
+        {
+            this.Result = result;
+        }
+
+        public VerificationResult Result { get; }
+    }
+
+    public class FailureException : Exception
+    {
+        public FailureException(VerificationResult result)
+        {
+            this.Result = result;
+        }
+
+        public VerificationResult Result { get; }
+    }
+
+    public class VerificationResult : Exception
+    {
+        public HashSet<string> FailureMessages { get; set; } = new();
+
+        public HashSet<Type> FailedTypes { get; set; } = new();
+
+        public Type[] TypesToVerify { get; set; } = Array.Empty<Type>();
+
+        public HashSet<Type> SuccessfullyResolved { get; set; } = new();
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+
+            sb.AppendLine("Total types to verify: " + this.TypesToVerify.Length);
+            sb.AppendLine("");
+
+            if (this.FailureMessages.Any())
+            {
+                sb.AppendLine("Failure messages:");
+                sb.AppendLine(separator);
+
+                foreach (var item in this.FailureMessages)
+                {
+                    sb.AppendLine(item);
+                }
+            }
+
+            sb.AppendLine("");
+
+            if (this.FailedTypes.Any())
+            {
+                sb.AppendLine("Failed to resolve:");
+                sb.AppendLine(separator);
+
+                foreach (var item in this.FailedTypes)
+                {
+                    sb.AppendLine(item.FullName);
+                }
+            }
+
+            sb.AppendLine("");
+            sb.AppendLine("Resolved successfuly:");
+            sb.AppendLine(separator);
+
+            foreach (var item in this.SuccessfullyResolved)
+            {
+                sb.AppendLine(item.FullName);
+            }
+
+            return sb.ToString();
+        }
+    }
+
     private readonly IEnumerable<Assembly> assemblies;
-    private readonly ITestOutputHelper console;
     private const string separator = "-----------------------------------------";
 
     /// <summary>
     ///
     /// </summary>
-    /// <param name="services">Build up services collection, usually exposed by ContainerAwareTest<T>/ContainerBasedTest </param>
     /// <param name="assemblies">assemblies that contain handlers and/or controllers</param>
     /// <param name="console">XUnit logging console</param>
-    public DependencyRegistrationVerifier(
-        IServiceCollection services,
-        IEnumerable<Assembly> assemblies,
-        ITestOutputHelper console)
+    public DependencyRegistrationVerifier(IEnumerable<Assembly> assemblies)
     {
-        this.services = services;
         this.assemblies = assemblies;
-        this.console = console;
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="resolveDelegate">delegate that is used to resolve service. If using ContainerBasedTest use Resolve method for example  .Run*(this.Resolve)</param>
-    /// <param name="typeToVerify"> array of type definitions that you want to verify for, such as IRequestHandler<>, IRequestHandler<,>, INotificationHandler<> if using MediatR,
-    /// if you want to verify controllers pass them in as well.  If using EventSourcing.Core then pass IHandleEvent<>, IHandleCommand<>
-    /// Example of call using ServiceProvider  .Run(this.GetServices, typeof(IHandleEvent<>), typeof(IHandleCommand<>, typeof(Controller)
-    public void Run(Func<Type, object> resolveDelegate, params Type[] typesToVerify)
+    public void Validate(params Type[] typesToVerify)
     {
-        var toVerify = this.GetTypesToVerify(typesToVerify);
+        var app = new WebApplicationFactory<TProgram>()
+            .WithWebHostBuilder(
+                builder =>
+                {
+                    builder.ConfigureTestServices(
+                        sc =>
+                        {
+                            var toVerify = this.GetTypesToVerify(typesToVerify)
+                                               .ToList();
 
-        // let's first register these types so we can try to resolve each one
-        // because they are not registered with ioc, but rather interfaces
-        foreach (var type in toVerify)
+                            // because controllers are not added to service provider
+                            // let's add them so we can try to resolve them
+                            var controllers = toVerify.Where(x => x.IsAssignableTo(typeof(Controller)));
+
+                            foreach (var controller in controllers)
+                            {
+                                sc.AddScoped(controller);
+                            }
+
+                            var sp = sc.BuildServiceProvider();
+
+                            var result = InternalValidate(
+                                sp,
+                                toVerify.ToArray());
+
+                            if (result.FailedTypes.Any())
+                            {
+                                throw new FailureException(result);
+                            }
+
+                            throw new SuccessException(result);
+                        });
+                });
+
+        app.CreateClient();
+    }
+
+    private static VerificationResult InternalValidate(IServiceProvider sp, params Type[] typesToVerify)
+    {
+        var toReturn = new VerificationResult
         {
-            this.services.AddScoped(type);
-        }
+            TypesToVerify = typesToVerify,
+        };
 
-        var pass = true;
-        var notResolvedCnt = 0;
+        using var scope = sp.CreateScope();
 
-        var resolved = new HashSet<string>();
-        var failedMessages = new HashSet<string>();
-        var failed = new HashSet<string>();
-
-        foreach (var item in toVerify)
+        foreach (var item in typesToVerify)
         {
             try
             {
-                var _ = resolveDelegate(item);
-                resolved.Add(item.FullName);
+                var result = scope.ServiceProvider.GetServices(item);
+
+                if (!result.Any())
+                {
+                    throw new Exception($"Could not resolve services for {item.FullName}");
+                }
+
+                toReturn.SuccessfullyResolved.Add(item);
             }
             catch (Exception e)
             {
-                failedMessages.Add(e.Message);
-                failed.Add(item.FullName);
+                toReturn.FailureMessages.Add(e.Message);
+                toReturn.FailedTypes.Add(item);
             }
         }
 
-        var sb = new StringBuilder();
-
-        if (failedMessages.Any())
-        {
-            foreach (var item in failedMessages)
-            {
-                sb.AppendLine(item);
-            }
-        }
-
-        sb.AppendLine(separator);
-        sb.AppendLine("");
-
-        sb.AppendLine("Total types to verify: " + toVerify.Count);
-        sb.AppendLine("");
-
-        sb.AppendLine("Failed to resolve:");
-        sb.AppendLine(separator);
-        foreach (var item in failed)
-        {
-            sb.AppendLine(item);
-        }
-
-        sb.AppendLine("");
-        sb.AppendLine("Resolved successfuly:");
-        sb.AppendLine(separator);
-
-        foreach (var item in resolved)
-        {
-            sb.AppendLine(item);
-        }
-
-        this.console.WriteLine(sb.ToString());
-
-        if (failedMessages.Any())
-        {
-            throw new Exception("Failed to resolve all types");
-        }
+        return toReturn;
     }
 
-    private HashSet<Type> GetTypesToVerify(Type[] typesToVerify)
+    private IEnumerable<Type> GetTypesToVerify(IEnumerable<Type> typesToVerify)
     {
         var toReturn = new HashSet<Type>();
 
@@ -128,7 +193,10 @@ public class DependencyRegistrationVerifier
 
                 foreach (var closedType in closedTypes)
                 {
-                    toReturn.Add(closedType);
+                    var closedInterface = closedType.GetInterfaces()
+                                                    .Single(x => x.GetGenericTypeDefinition() == candidateType);
+
+                    toReturn.Add(closedInterface);
                 }
             }
             else

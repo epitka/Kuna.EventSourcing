@@ -1,7 +1,10 @@
 using Carts.Api;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddJsonFile("appsettings.json");
 
 var servicesConfigurator = new ServicesConfigurator
 {
