@@ -1,4 +1,4 @@
-namespace Carts.CommandHandlers;
+namespace Carts.Application.CommandHandlers;
 
 public class CancelShoppingCartHandler: IHandleCommand<CancelShoppingCart>
 {

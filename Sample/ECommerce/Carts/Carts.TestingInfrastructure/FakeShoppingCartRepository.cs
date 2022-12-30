@@ -1,4 +1,5 @@
-﻿using Carts.Domain.Aggregate;
+﻿using Carts.Application;
+using Carts.Domain.Aggregate;
 using Senf.EventSourcing.Testing;
 
 namespace Carts.TestingInfrastructure;

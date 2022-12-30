@@ -1,10 +1,9 @@
 ﻿using Carts.Domain.Aggregate;
 using Carts.Domain.Commands;
 using Carts.Domain.Model;
-using DeepEqual.Syntax;
 using Senf.EventSourcing.Testing;
 
-namespace Carts.Tests.Builders;
+namespace Carts.TestingInfrastructure;
 
 public static class StateTestingExtensions
 {

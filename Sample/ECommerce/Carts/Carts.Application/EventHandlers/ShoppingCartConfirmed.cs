@@ -6,7 +6,7 @@ using Carts.Domain.Model;
 using Senf.EventSourcing.Core.Aggregates;
 using Senf.EventSourcing.Core.Events;
 
-namespace Carts.EventHandlers;
+namespace Carts.Application.EventHandlers;
 
 public record CartFinalized(
     GuidId CartId,

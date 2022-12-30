@@ -44,6 +44,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carts.Infrastructure.Test",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carts.TestingInfrastructure", "Sample\ECommerce\Carts\Carts.TestingInfrastructure\Carts.TestingInfrastructure.csproj", "{77D0C5DD-A3CF-44DA-B162-69768986D8E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carts.Api.Tests", "Sample\ECommerce\Carts\Carts.Api.Tests\Carts.Api.Tests.csproj", "{13423F1F-7478-40FA-869E-7AA3DC275DDA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,6 +104,10 @@ Global
 		{77D0C5DD-A3CF-44DA-B162-69768986D8E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77D0C5DD-A3CF-44DA-B162-69768986D8E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77D0C5DD-A3CF-44DA-B162-69768986D8E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13423F1F-7478-40FA-869E-7AA3DC275DDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13423F1F-7478-40FA-869E-7AA3DC275DDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13423F1F-7478-40FA-869E-7AA3DC275DDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13423F1F-7478-40FA-869E-7AA3DC275DDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{104BEE7C-F012-46FA-9EFD-98C9A0C081F4} = {65D0BD3E-0ED1-4DED-91B0-366EEECB28C2}
@@ -123,6 +129,7 @@ Global
 		{CC24C023-AA7D-4AB7-AC12-E41E42AB43BB} = {0BE28E66-E10B-4739-A522-322B7C076AFE}
 		{77D0C5DD-A3CF-44DA-B162-69768986D8E8} = {0BE28E66-E10B-4739-A522-322B7C076AFE}
 		{BB53CB64-3B19-4CA4-8DD2-65D6CD3454AF} = {56D265A9-B7C9-49C7-8027-315D0BB7CC3C}
+		{13423F1F-7478-40FA-869E-7AA3DC275DDA} = {0BE28E66-E10B-4739-A522-322B7C076AFE}
 	EndGlobalSection
 	GlobalSection(RiderSharedRunConfigurations) = postSolution
 	EndGlobalSection

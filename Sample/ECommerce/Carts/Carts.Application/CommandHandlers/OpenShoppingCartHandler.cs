@@ -1,6 +1,6 @@
 using Carts.Domain.Aggregate;
 
-namespace Carts.CommandHandlers;
+namespace Carts.Application.CommandHandlers;
 
 public class OpenShoppingCartHandler: IHandleCommand<OpenShoppingCart>
 {

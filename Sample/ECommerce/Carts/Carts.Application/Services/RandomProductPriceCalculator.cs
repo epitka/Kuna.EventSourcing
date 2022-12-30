@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Carts.Domain.Model;
 
-
-namespace Carts.Services.Pricing;
+namespace Carts.Application.Services;
 
 public class RandomProductPriceCalculator: IProductPriceCalculator
 {

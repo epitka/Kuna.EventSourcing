@@ -1,40 +1,34 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Senf.EventSourcing.Core.Configuration;
+﻿namespace Senf.EventSourcing.Testing;
 
-namespace Senf.EventSourcing.Testing;
-
-public abstract class ContainerDrivenTest<TServicesConfigurator>
-    where TServicesConfigurator : IServicesConfigurator, new()
+public class ContainerDrivenTest
 {
-    private static readonly Lazy<IServiceCollection?> LazyOriginalServices = new(InitializeOriginalServices);
+    private IServiceCollection? OriginalServices;
 
-    private static IServiceCollection? originalServices;
+    private readonly object syncRoot = new object();
 
-    private static IServiceCollection? OriginalServices => LazyOriginalServices.Value;
-
-    protected ContainerDrivenTest()
-    {
-        // memoize original services
-        this.Services = new ServiceCollection();
-
-        foreach (var descriptor in OriginalServices!)
-        {
-            this.Services.Add(descriptor);
-        }
-
-        this.ConfigureTestServices(this.Services);
-    }
-
-    protected IServiceCollection Services { get; }
+    protected IServiceCollection Services { get; private set; }
 
     private IServiceScope? Scope { get; set; }
 
-    /// <summary>
-    /// Configure additional services that are defined outside of the dependency graph of the project being tested.
-    /// For example if there are interfaces that are implemented in upper layers or if interfaces are used,
-    /// but wiring up happens in upper layers you would also specify it here.
-    /// </summary>
-    protected abstract void ConfigureTestServices(IServiceCollection services);
+    public void InitializeOriginalServices(Func<IServiceCollection> servicesFactory)
+    {
+        lock (this.syncRoot)
+        {
+            if (this.OriginalServices != null)
+            {
+                return;
+            }
+
+            this.OriginalServices = servicesFactory.Invoke();
+
+            this.Services = new ServiceCollection();
+
+            foreach (var descriptor in this.OriginalServices!)
+            {
+                this.Services.Add(descriptor);
+            }
+        }
+    }
 
     /// <summary>
     /// Replaces service of Type T with your own version (fake,stub,mock,double...)
@@ -117,26 +111,6 @@ public abstract class ContainerDrivenTest<TServicesConfigurator>
         return this.Scope!.ServiceProvider.GetServices(t);
     }
 
-    private static IServiceCollection? InitializeOriginalServices()
-    {
-        if (originalServices != null)
-        {
-            return originalServices;
-        }
-
-        originalServices = new ServiceCollection();
-
-        var configurator = new TServicesConfigurator();
-
-        if (configurator is null)
-        {
-            throw new Exception("Services Configurator is null");
-        }
-
-        configurator.ConfigureServices(originalServices);
-
-        return originalServices;
-    }
 
     private void EnsureContainerBootstrapped()
     {
