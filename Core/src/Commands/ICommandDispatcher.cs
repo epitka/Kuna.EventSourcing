@@ -20,7 +20,8 @@ public class CommandDispatcher : ICommandDispatcher
     public async Task Send<TCommand>(TCommand command, CancellationToken ct)
         where TCommand : class, ICommand
     {
-        var handler = this.serviceProvider.GetRequiredService<IHandleCommand<TCommand>>();
+        using var scope = this.serviceProvider.CreateScope();
+        var handler = scope.ServiceProvider.GetRequiredService<IHandleCommand<TCommand>>();
 
         await handler.Handle(command, ct)
                      .ConfigureAwait(false);

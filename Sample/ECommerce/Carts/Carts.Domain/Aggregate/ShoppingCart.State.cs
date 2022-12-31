@@ -50,11 +50,11 @@ public partial class ShoppingCart
             );
         }
 
-        public void Apply(ProductRemoved @event)
+        public void Apply(ShoppingCartProductRemoved @event)
         {
-            var productItemToBeRemoved = @event.ProductItem;
+            var productItemToBeRemoved = PricedProductItem.Create(@event.ProductId, @event.Quantity, @event.UnitPrice);
 
-            var existingProductItem = this.FindProductItemMatchingWith(@event.ProductItem);
+            var existingProductItem = this.FindProductItemMatchingWith(productItemToBeRemoved);
 
             if (existingProductItem == null)
             {
