@@ -13,8 +13,8 @@ public class EventStoreContainerFixture
     public EventStoreContainerFixture()
     {
         this.EventStoreDockerContainer = EventStoreContainer()
-                                         .WithAutoRemove(false)
-                                         .WithCleanUp(false)
+                                         .WithAutoRemove(true)
+                                         .WithCleanUp(true)
                                          .Build();
     }
     public TestcontainersContainer EventStoreDockerContainer { get; }
@@ -42,18 +42,18 @@ public class EventStoreContainerFixture
                       .WithEnvironment("EVENTSTORE_CLUSTER_SIZE", "1")
                       .WithEnvironment("EVENTSTORE_RUN_PROJECTIONS", "All")
                       .WithEnvironment("EVENTSTORE_START_STANDARD_PROJECTIONS", "true")
-                      .WithEnvironment("EVENTSTORE_EXT_TCP_PORT", "1113")
-                      .WithEnvironment("EVENTSTORE_HTTP_PORT", "2113")
+                      .WithEnvironment("EVENTSTORE_EXT_TCP_PORT", "1117")
+                      .WithEnvironment("EVENTSTORE_HTTP_PORT", "2117")
                       .WithEnvironment("EVENTSTORE_INSECURE", "true")
                       .WithEnvironment("EVENTSTORE_ENABLE_EXTERNAL_TCP", "true")
                       .WithEnvironment("EVENTSTORE_ENABLE_ATOM_PUB_OVER_HTTP", "true")
                       .WithEnvironment("EVENTSTORE_ADVERTISE_HOST_TO_CLIENT_AS", "127.0.0.1")
-                      .WithPortBinding("1113", "1113")
-                      .WithPortBinding("2113", "2113")
-                      .WithExposedPort(1113)
-                      .WithExposedPort(2113)
+                      .WithPortBinding("1117", "1117")
+                      .WithPortBinding("2117", "2117")
+                      .WithExposedPort(1117)
+                      .WithExposedPort(2117)
                       .WithHostname(Dns.GetHostName())
-                      .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(1113))
+                      .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(1117))
                       .WithAutoRemove(true)
                       .WithCleanUp(true);
 

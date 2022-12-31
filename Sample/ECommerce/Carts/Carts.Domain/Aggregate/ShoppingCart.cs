@@ -65,7 +65,12 @@ public partial class ShoppingCart : Aggregate<Guid, ShoppingCart.State>
             throw new InvalidOperationException(
                 $"Cannot remove {productItemToBeRemoved.Quantity} items of Product with id `{productItemToBeRemoved.ProductId}` as there are only ${existingProductItem.Quantity} items in card");
 
-        this.RaiseEvent(new ProductRemoved(this.Id.Value, productItemToBeRemoved));
+        this.RaiseEvent(new ShoppingCartProductRemoved(
+                            this.Id.Value,
+                            productItemToBeRemoved.ProductId,
+                            productItemToBeRemoved.Quantity,
+                            productItemToBeRemoved.UnitPrice,
+                            productItemToBeRemoved.TotalPrice));
     }
 
     public void Process(ConfirmShoppingCart command)

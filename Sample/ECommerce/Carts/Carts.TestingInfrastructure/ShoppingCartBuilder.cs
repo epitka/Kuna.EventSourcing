@@ -39,7 +39,12 @@ public class ShoppingCartBuilder : AggregateBuilder<ShoppingCart, ShoppingCart.S
 
         var pricedItem = PricedProductItem.Create(item.ProductId, item.Quantity, unitPrice);
 
-        this.With(new ProductRemoved(this.aggregateState.Id.Value, pricedItem));
+        this.With(new ShoppingCartProductRemoved(
+                      this.aggregateState.Id.Value,
+                      pricedItem.ProductId,
+                      pricedItem.Quantity,
+                      pricedItem.UnitPrice,
+                      pricedItem.TotalPrice));
 
         return this;
     }

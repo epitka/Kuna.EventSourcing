@@ -30,7 +30,7 @@ public class DependencyRegistrationVerifier<TProgram>
         public VerificationResult Result { get; }
     }
 
-    public class VerificationResult : Exception
+    public class VerificationResult
     {
         public HashSet<string> FailureMessages { get; set; } = new();
 
