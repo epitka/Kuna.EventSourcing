@@ -1,6 +1,8 @@
+using Newtonsoft.Json;
+
 namespace Carts.Domain.Model;
 
-public sealed record PricedProductItem
+public sealed class PricedProductItem
 {
     public Guid ProductId => this.ProductItem.ProductId;
 
@@ -10,6 +12,13 @@ public sealed record PricedProductItem
 
     public decimal TotalPrice => this.Quantity * this.UnitPrice;
     public ProductItem ProductItem { get; }
+
+    [JsonConstructor]
+    private PricedProductItem(Guid productId, int quantity, decimal unitPrice)
+    {
+        this.ProductItem = ProductItem.From(productId, quantity);
+        this.UnitPrice = unitPrice;
+    }
 
     private PricedProductItem(ProductItem productItem, decimal unitPrice)
     {
@@ -30,7 +39,8 @@ public sealed record PricedProductItem
         return unitPrice switch
         {
             null => throw new ArgumentNullException(nameof(unitPrice)),
-            <= 0 => throw new ArgumentOutOfRangeException(nameof(unitPrice),
+            <= 0 => throw new ArgumentOutOfRangeException(
+                nameof(unitPrice),
                 "Unit price has to be positive number"),
             _ => new PricedProductItem(productItem, unitPrice.Value)
         };
@@ -43,16 +53,14 @@ public sealed record PricedProductItem
 
     public PricedProductItem MergeWith(PricedProductItem pricedProductItem)
     {
-        if (!this.MatchesProductAndPrice(pricedProductItem))
-            throw new ArgumentException("Product or price does not match.");
+        if (!this.MatchesProductAndPrice(pricedProductItem)) throw new ArgumentException("Product or price does not match.");
 
         return new PricedProductItem(this.ProductItem.MergeWith(pricedProductItem.ProductItem), this.UnitPrice);
     }
 
     public PricedProductItem Subtract(PricedProductItem pricedProductItem)
     {
-        if (!this.MatchesProductAndPrice(pricedProductItem))
-            throw new ArgumentException("Product or price does not match.");
+        if (!this.MatchesProductAndPrice(pricedProductItem)) throw new ArgumentException("Product or price does not match.");
 
         return new PricedProductItem(this.ProductItem.Subtract(pricedProductItem.ProductItem), this.UnitPrice);
     }

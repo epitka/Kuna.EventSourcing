@@ -6,14 +6,28 @@ using Senf.EventSourcing.Testing;
 
 namespace Carts.TestingInfrastructure;
 
-public class ShoppingCartBuilder : AggregateBuilder<ShoppingCart, ShoppingCart.State, Guid>
+// TODO: add events factory
+
+public class ShoppingCartBuilder
 {
+    private AggregateBuilder<ShoppingCart, ShoppingCart.State, Guid> builder = default!;
+
     public static ShoppingCartBuilder With_ShoppingCartOpened(GuidId? cartId, GuidId? clientId)
     {
         var state = new ShoppingCart.State();
 
-        // TODO add events factory
-        return (ShoppingCartBuilder)Init(state, new ShoppingCartOpened(cartId ?? GuidId.Create(), clientId ?? GuidId.Create()));
+        var builder = AggregateBuilder<ShoppingCart, ShoppingCart.State, Guid>
+            .Init(state, new ShoppingCartOpened(cartId ?? GuidId.Create(), clientId ?? GuidId.Create()));
+
+        return new ShoppingCartBuilder()
+        {
+            builder = builder,
+        };
+    }
+
+    public ShoppingCart Build()
+    {
+        return this.builder.Build();
     }
 
     public ShoppingCartBuilder With_ProductAdded(ProductItem? productItem = null, decimal unitPrice = 1)
@@ -22,9 +36,9 @@ public class ShoppingCartBuilder : AggregateBuilder<ShoppingCart, ShoppingCart.S
 
         var pricedItem = PricedProductItem.Create(item.ProductId, item.Quantity, unitPrice);
 
-        this.With(
+        this.builder.With(
             new ShoppingCartProductAdded(
-                this.aggregateState.Id.Value,
+                this.builder.aggregateState.Id.Value,
                 pricedItem.ProductId,
                 pricedItem.Quantity,
                 pricedItem.UnitPrice,
@@ -39,8 +53,8 @@ public class ShoppingCartBuilder : AggregateBuilder<ShoppingCart, ShoppingCart.S
 
         var pricedItem = PricedProductItem.Create(item.ProductId, item.Quantity, unitPrice);
 
-        this.With(new ShoppingCartProductRemoved(
-                      this.aggregateState.Id.Value,
+        this.builder.With(new ShoppingCartProductRemoved(
+                      this.builder.aggregateState.Id.Value,
                       pricedItem.ProductId,
                       pricedItem.Quantity,
                       pricedItem.UnitPrice,
@@ -51,14 +65,14 @@ public class ShoppingCartBuilder : AggregateBuilder<ShoppingCart, ShoppingCart.S
 
     public ShoppingCartBuilder With_ShoppingCartCancelled()
     {
-        this.With(new ShoppingCartCanceled(this.aggregateState.Id.Value, DateTime.Now));
+        this.builder.With(new ShoppingCartCanceled(this.builder.aggregateState.Id.Value, DateTime.Now));
 
         return this;
     }
 
     public ShoppingCartBuilder With_ShoppingCartConfirmed()
     {
-        this.With(new ShoppingCartConfirmed(this.aggregateState.Id.Value, DateTime.Now));
+        this.builder.With(new ShoppingCartConfirmed(this.builder.aggregateState.Id.Value, DateTime.Now));
 
         return this;
     }
