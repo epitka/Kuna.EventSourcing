@@ -1,0 +1,12 @@
+﻿global using System.Linq;
+global using Carts.Domain.Aggregate;
+global using Carts.Domain.Aggregate.Events;
+global using Carts.Domain.Commands;
+global using Carts.TestingInfrastructure;
+global using DeepEqual.Syntax;
+global using FluentAssertions;
+global using Senf.EventSourcing.Core.Ids;
+global using Xunit;
+global using Carts.Domain.Model;
+global using Carts.Domain.Services;
+global using FakeItEasy;

@@ -1,10 +1,12 @@
 namespace Carts.Domain.Model;
 
-public sealed record ProductItem
+public sealed class ProductItem
 {
     public Guid ProductId { get; }
 
     public int Quantity { get; }
+
+    private ProductItem(){}
 
     private ProductItem(GuidId productId, int quantity)
     {

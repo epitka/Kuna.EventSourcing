@@ -1,8 +1,3 @@
-
-
-using System;
-
-
 namespace Senf.EventSourcing.Testing;
 
 public class AggregateBuilder<TAggregate, TState, TKey>
@@ -13,7 +8,7 @@ public class AggregateBuilder<TAggregate, TState, TKey>
     private const string RaiseEvent = "RaiseEvent";
     private Queue<IAggregateEvent> queuedEvents = default!;
 
-    protected TState aggregateState = default!;
+    public TState aggregateState = default!;
 
     public static AggregateBuilder<TAggregate, TState, TKey> Init(TState state, IAggregateEvent createEvent)
     {

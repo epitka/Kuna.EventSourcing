@@ -21,4 +21,15 @@ public static class StateTestingExtensions
 
         currentState.ShouldBeDeepEqualTo(expectedState);
     }
+
+    public static void VerifyStateAfter(this ShoppingCart sut, AddProduct command, ShoppingCart.State beforeState, PricedProductItem pricedProductItem)
+    {
+        var currentState = sut.GetState();
+
+        var expectedState = beforeState;
+
+        expectedState.ProductItems.Add(pricedProductItem);
+
+        currentState.ShouldBeDeepEqualTo(expectedState);
+    }
 }

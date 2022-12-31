@@ -1,14 +1,4 @@
-﻿using System.Linq;
-using Carts.Domain.Aggregate;
-using Carts.Domain.Aggregate.Events;
-using Carts.Domain.Commands;
-using DeepEqual.Syntax;
-using FluentAssertions;
-using Senf.EventSourcing.Core.Ids;
-using Xunit;
-using static Carts.TestingInfrastructure.StateTestingExtensions;
-
-namespace Carts.Tests.Aggregate;
+﻿namespace Carts.Tests.Aggregate;
 
 public class OpenShoppingCartTests
 {
