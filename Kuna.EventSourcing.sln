@@ -1,22 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Senf.EventSourcing.Core", "Core\src\Senf.EventSourcing.Core.csproj", "{43510A12-EF33-4764-AB1B-7003699F3065}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kuna.EventSourcing.Core", "Core\src\Kuna.EventSourcing.Core.csproj", "{43510A12-EF33-4764-AB1B-7003699F3065}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{65D0BD3E-0ED1-4DED-91B0-366EEECB28C2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{66CC6ECC-2E38-4BB8-A19C-984086D10733}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Senf.EventSourcing.Core.EventStore", "Core.EventStore\src\Senf.EventSourcing.Core.EventStore.csproj", "{FD26FDB7-4C15-45C5-A9E3-F982F23E4FC2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kuna.EventSourcing.Core.EventStore", "Core.EventStore\src\Kuna.EventSourcing.Core.EventStore.csproj", "{FD26FDB7-4C15-45C5-A9E3-F982F23E4FC2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{104BEE7C-F012-46FA-9EFD-98C9A0C081F4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{BAB40D2B-2709-4950-8074-E849F9EB3AB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Senf.EventSourcing.Core.Tests", "Core\test\Senf.EventSourcing.Core.Tests.csproj", "{3AD71972-5DF6-497A-A58C-F4FD48AD4DFF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kuna.EventSourcing.Core.Tests", "Core\test\Kuna.EventSourcing.Core.Tests.csproj", "{3AD71972-5DF6-497A-A58C-F4FD48AD4DFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Senf.EventSourcing.Core.EventStore.Tests", "Core.EventStore\test\Senf.EventSourcing.Core.EventStore.Tests.csproj", "{FAA70EA8-382E-45DE-AA02-04A8F0D86457}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kuna.EventSourcing.Core.EventStore.Tests", "Core.EventStore\test\Kuna.EventSourcing.Core.EventStore.Tests.csproj", "{FAA70EA8-382E-45DE-AA02-04A8F0D86457}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Senf.EventSourcing.Testing", "Testing\Senf.EventSourcing.Testing.csproj", "{F885307D-8D45-4D55-BC94-7104619A726A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kuna.EventSourcing.Testing", "Testing\Kuna.EventSourcing.Testing.csproj", "{F885307D-8D45-4D55-BC94-7104619A726A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{15DA8E71-6B7D-4D0D-97B5-DA4CD201AE0E}"
 EndProject

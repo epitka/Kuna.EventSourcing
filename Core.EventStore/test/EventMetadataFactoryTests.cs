@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
-using FluentAssertions;
 
-namespace Senf.EventSourcing.Core.EventStore.Tests;
+namespace Kuna.EventSourcing.Core.EventStore.Tests;
 
 public class EventMetadataFactoryTests
 {

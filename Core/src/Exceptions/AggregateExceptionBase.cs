@@ -1,6 +1,4 @@
-using System.Runtime.Serialization;
-
-namespace Senf.EventSourcing.Core.Exceptions;
+namespace Kuna.EventSourcing.Core.Exceptions;
 
 public abstract class AggregateExceptionBase : Exception
 {

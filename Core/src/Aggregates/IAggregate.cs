@@ -1,6 +1,6 @@
-using Senf.EventSourcing.Core.Events;
+using Kuna.EventSourcing.Core.Events;
 
-namespace Senf.EventSourcing.Core.Aggregates;
+namespace Kuna.EventSourcing.Core.Aggregates;
 
 public interface IAggregate<TKey>
 {

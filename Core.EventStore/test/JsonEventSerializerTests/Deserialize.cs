@@ -1,10 +1,7 @@
-﻿using System.Diagnostics;
-using EventStore.Client;
-using FakeItEasy;
-using FluentAssertions;
-using Senf.EventSourcing.Core.Events;
+﻿using EventStore.Client;
+using Kuna.EventSourcing.Core.Events;
 
-namespace Senf.EventSourcing.Core.EventStore.Tests.JsonEventSerializerTests;
+namespace Kuna.EventSourcing.Core.EventStore.Tests.JsonEventSerializerTests;
 
 public class Deserialize
 {

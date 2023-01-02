@@ -1,7 +1,7 @@
-﻿using Senf.EventSourcing.Core.Events;
-using Senf.EventSourcing.Core.EventStore.Subscriptions;
+﻿using Kuna.EventSourcing.Core.Events;
+using Kuna.EventSourcing.Core.EventStore.Subscriptions;
 
-namespace Senf.EventSourcing.Core.EventStore.Tests;
+namespace Kuna.EventSourcing.Core.EventStore.Tests.Subscriptions;
 
 public class EventDispatcherTest
 {

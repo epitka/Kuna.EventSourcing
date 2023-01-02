@@ -1,8 +1,7 @@
 ﻿using DeepEqual.Syntax;
-using Senf.EventSourcing.Core.Aggregates;
-using Senf.EventSourcing.Core.Tests.Events;
+using Kuna.EventSourcing.Core.Tests.Events;
 
-namespace Senf.EventSourcing.Core.Tests.AggregateTests;
+namespace Kuna.EventSourcing.Core.Tests.AggregateTests;
 
 public class InitWithState
 {

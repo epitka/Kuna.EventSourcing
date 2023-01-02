@@ -1,11 +1,8 @@
-﻿using System.Data.SqlTypes;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
-using Xunit;
-using Xunit.Sdk;
 
-namespace Senf.EventSourcing.Testing;
+namespace Kuna.EventSourcing.Testing;
 
 public class DependencyRegistrationVerifier<TProgram>
     where TProgram : class

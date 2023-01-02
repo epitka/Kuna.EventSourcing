@@ -1,4 +1,4 @@
-﻿namespace Senf.EventSourcing.Core.Tests.AggregateStateTests;
+﻿namespace Kuna.EventSourcing.Core.Tests.AggregateStateTests;
 
 public class Ctor
 {

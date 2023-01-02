@@ -1,7 +1,7 @@
 ﻿using Carts.Domain.Aggregate;
 using Carts.Domain.Commands;
 using Carts.Domain.Model;
-using Senf.EventSourcing.Testing;
+using Kuna.EventSourcing.Testing;
 
 namespace Carts.TestingInfrastructure;
 

@@ -1,4 +1,4 @@
-﻿namespace Senf.EventSourcing.Core.Commands;
+﻿namespace Kuna.EventSourcing.Core.Commands;
 
 /// <summary>
 /// Marker interface used to identify handlers of events

@@ -1,6 +1,6 @@
-﻿using Senf.EventSourcing.Core.Aggregates;
+﻿using Kuna.EventSourcing.Core.Aggregates;
 
-namespace Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers;
+namespace Kuna.EventSourcing.Core.EventStore.Tests.TestingHelpers;
 
 public class TestAggregateRepository : AggregateRepository<Guid, TestAggregate>
 {

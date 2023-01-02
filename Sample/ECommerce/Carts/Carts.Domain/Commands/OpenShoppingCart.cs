@@ -1,3 +1,6 @@
+using Kuna.EventSourcing.Core.Commands;
+using Kuna.EventSourcing.Core.Ids;
+
 namespace Carts.Domain.Commands;
 
 public sealed record OpenShoppingCart(GuidId CartId, GuidId ClientId) : ICommand

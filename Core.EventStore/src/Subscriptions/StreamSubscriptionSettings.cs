@@ -1,6 +1,6 @@
 ﻿using EventStore.Client;
 
-namespace Senf.EventSourcing.Core.EventStore.Subscriptions;
+namespace Kuna.EventSourcing.Core.EventStore.Subscriptions;
 
 public record StreamSubscriptionSettings(
     string StreamName,

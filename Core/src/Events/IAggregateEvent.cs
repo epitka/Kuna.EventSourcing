@@ -1,4 +1,4 @@
-namespace Senf.EventSourcing.Core.Events
+namespace Kuna.EventSourcing.Core.Events
 {
     /// <summary>
     /// marker interface

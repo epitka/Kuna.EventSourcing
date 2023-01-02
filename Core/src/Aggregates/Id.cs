@@ -1,4 +1,4 @@
-﻿namespace Senf.EventSourcing.Core.Aggregates;
+﻿namespace Kuna.EventSourcing.Core.Aggregates;
 
 public sealed class Id<T> : IEquatable<T>
 {

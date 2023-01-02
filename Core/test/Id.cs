@@ -1,4 +1,4 @@
-﻿namespace Senf.EventSourcing.Core.Tests;
+﻿namespace Kuna.EventSourcing.Core.Tests;
 
 public static class Id
 {

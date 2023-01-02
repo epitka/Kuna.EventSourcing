@@ -1,11 +1,8 @@
 ﻿using System.Text;
-using FakeItEasy;
-using FluentAssertions;
+using Kuna.EventSourcing.Core.Events;
 using Newtonsoft.Json;
-using Senf.EventSourcing.Core.Events;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
-namespace Senf.EventSourcing.Core.EventStore.Tests;
+namespace Kuna.EventSourcing.Core.EventStore.Tests;
 
 public class EventDataFactoryTests
 {

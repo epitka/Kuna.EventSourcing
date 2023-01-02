@@ -1,6 +1,6 @@
 ﻿using EventStore.Client;
 
-namespace Senf.EventSourcing.Core.EventStore;
+namespace Kuna.EventSourcing.Core.EventStore;
 
 public static class Extensions
 {

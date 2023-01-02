@@ -1,4 +1,4 @@
-using Senf.EventSourcing.Core.Events;
+using Kuna.EventSourcing.Core.Events;
 
 namespace Carts.Domain.Aggregate.Events;
 

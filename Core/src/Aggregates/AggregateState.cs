@@ -1,7 +1,4 @@
-﻿using Senf.EventSourcing.Core.Events;
-using Senf.EventSourcing.Core.Exceptions;
-
-namespace Senf.EventSourcing.Core.Aggregates;
+﻿namespace Kuna.EventSourcing.Core.Aggregates;
 
 public abstract class AggregateState<TKey> : IAggregateState<TKey>
 where TKey : IEquatable<TKey>

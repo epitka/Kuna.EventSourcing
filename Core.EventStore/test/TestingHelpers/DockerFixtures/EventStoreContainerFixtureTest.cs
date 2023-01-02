@@ -1,7 +1,6 @@
 ﻿using DotNet.Testcontainers.Containers;
-using FluentAssertions;
 
-namespace Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.DockerFixtures;
+namespace Kuna.EventSourcing.Core.EventStore.Tests.TestingHelpers.DockerFixtures;
 
 public class EventStoreContainerFixtureTest
 {

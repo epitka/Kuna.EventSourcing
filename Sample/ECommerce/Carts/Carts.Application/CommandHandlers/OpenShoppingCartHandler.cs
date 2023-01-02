@@ -1,4 +1,5 @@
 using Carts.Domain.Aggregate;
+using Kuna.EventSourcing.Core.Commands;
 
 namespace Carts.Application.CommandHandlers;
 

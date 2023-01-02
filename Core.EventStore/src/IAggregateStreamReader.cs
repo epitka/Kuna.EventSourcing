@@ -1,8 +1,8 @@
 ﻿using EventStore.Client;
-using Senf.EventSourcing.Core.Aggregates;
-using Senf.EventSourcing.Core.Events;
+using Kuna.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.Core.Events;
 
-namespace Senf.EventSourcing.Core.EventStore;
+namespace Kuna.EventSourcing.Core.EventStore;
 
 public sealed class AggregateStreamReader
     : IAggregateStreamReader

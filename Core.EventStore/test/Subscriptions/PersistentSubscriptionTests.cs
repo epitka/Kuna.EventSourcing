@@ -1,21 +1,18 @@
 ﻿using EventStore.Client;
-using FakeItEasy;
-using FluentAssertions;
+using Kuna.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.Core.Events;
+using Kuna.EventSourcing.Core.EventStore.Configuration;
+using Kuna.EventSourcing.Core.EventStore.Subscriptions;
+using Kuna.EventSourcing.Core.EventStore.Tests.TestingHelpers;
+using Kuna.EventSourcing.Core.EventStore.Tests.TestingHelpers.DockerFixtures;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using Senf.EventSourcing.Core.Aggregates;
-using Senf.EventSourcing.Core.Events;
-using Senf.EventSourcing.Core.EventStore.Configuration;
-using Senf.EventSourcing.Core.EventStore.Subscriptions;
-using Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers;
-using Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.DockerFixtures;
-using static Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.HelperFunctions;
+using static Kuna.EventSourcing.Core.EventStore.Tests.TestingHelpers.HelperFunctions;
 
 
-namespace Senf.EventSourcing.Core.EventStore.Tests;
+namespace Kuna.EventSourcing.Core.EventStore.Tests.Subscriptions;
 
 [Collection("EventStore collection")]
 public class PersistentSubscriptionTests

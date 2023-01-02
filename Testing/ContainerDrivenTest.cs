@@ -1,4 +1,4 @@
-﻿namespace Senf.EventSourcing.Testing;
+﻿namespace Kuna.EventSourcing.Testing;
 
 public class ContainerDrivenTest
 {

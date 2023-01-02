@@ -1,5 +1,9 @@
 ﻿
-namespace Senf.EventSourcing.Testing;
+using Kuna.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.Core.Events;
+using Kuna.EventSourcing.Core.Exceptions;
+
+namespace Kuna.EventSourcing.Testing;
 
 public class InMemoryAggregateRepository<Guid, TAggregate> : IAggregateRepository<Guid, TAggregate>
     where TAggregate : class, IAggregate<Guid>, new()

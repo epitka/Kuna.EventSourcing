@@ -1,4 +1,4 @@
-﻿namespace Senf.EventSourcing.Core.Extensions;
+﻿namespace Kuna.EventSourcing.Core.Extensions;
 
 public static class ListExtensions
 {

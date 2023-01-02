@@ -24,7 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\..\Testing\Senf.EventSourcing.Testing.csproj" />
+        <ProjectReference Include="..\..\..\..\Testing\Kuna.EventSourcing.Testing.csproj" />
         <ProjectReference Include="..\Carts.Application\Carts.Application.csproj" />
         <ProjectReference Include="..\Carts.TestingInfrastructure\Carts.TestingInfrastructure.csproj" />
     </ItemGroup>

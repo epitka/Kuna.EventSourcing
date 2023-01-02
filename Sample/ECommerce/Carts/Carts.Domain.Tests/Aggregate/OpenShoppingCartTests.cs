@@ -1,4 +1,6 @@
-﻿namespace Carts.Tests.Aggregate;
+﻿using Kuna.EventSourcing.Core.Ids;
+
+namespace Carts.Tests.Aggregate;
 
 public class OpenShoppingCartTests
 {

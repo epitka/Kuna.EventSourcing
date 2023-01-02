@@ -1,20 +1,18 @@
 ﻿using System.Text;
 using EventStore.Client;
-using FluentAssertions;
+using Kuna.EventSourcing.Core.EventStore.Configuration;
+using Kuna.EventSourcing.Core.EventStore.Tests.TestingHelpers;
+using Kuna.EventSourcing.Core.EventStore.Tests.TestingHelpers.DockerFixtures;
+using Kuna.EventSourcing.Core.EventStore.Tests.TestingHelpers.XUnitHelpers;
+using Kuna.EventSourcing.Core.Exceptions;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using Senf.EventSourcing.Core.EventStore.Configuration;
-using Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers;
-using Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.DockerFixtures;
-using Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.XUnitHelpers;
-using Senf.EventSourcing.Core.Exceptions;
-using static Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.HelperFunctions;
+using static Kuna.EventSourcing.Core.EventStore.Tests.TestingHelpers.HelperFunctions;
 
-namespace Senf.EventSourcing.Core.EventStore.Tests;
+namespace Kuna.EventSourcing.Core.EventStore.Tests;
 
 [Collection("EventStore collection")]
-[TestCaseOrderer("Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.XUnitHelpers.PriorityOrderer", "Senf.EventSourcing.Core.EventStore.Tests")]
+[TestCaseOrderer("Kuna.EventSourcing.Core.EventStore.Tests.TestingHelpers.XUnitHelpers.PriorityOrderer", "Kuna.EventSourcing.Core.EventStore.Tests")]
 public class AggregateStreamWriterTests
 {
     private static readonly string streamPrefix = "writeTest-";

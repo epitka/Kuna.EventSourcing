@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Senf.EventSourcing.Core.Exceptions;
+namespace Kuna.EventSourcing.Core.Exceptions;
 
 [DataContract]
 public class AggregateDeletedException : AggregateExceptionBase

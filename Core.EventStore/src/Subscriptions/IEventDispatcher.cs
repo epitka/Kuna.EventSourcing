@@ -1,9 +1,9 @@
 ﻿using System.Collections.Concurrent;
 using System.Reflection;
+using Kuna.EventSourcing.Core.Events;
 using Microsoft.Extensions.DependencyInjection;
-using Senf.EventSourcing.Core.Events;
 
-namespace Senf.EventSourcing.Core.EventStore.Subscriptions;
+namespace Kuna.EventSourcing.Core.EventStore.Subscriptions;
 
 public interface IEventDispatcher
 {

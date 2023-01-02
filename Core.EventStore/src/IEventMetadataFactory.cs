@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
-namespace Senf.EventSourcing.Core.EventStore;
+
+namespace Kuna.EventSourcing.Core.EventStore;
 
 public interface IEventMetadataFactory
 {

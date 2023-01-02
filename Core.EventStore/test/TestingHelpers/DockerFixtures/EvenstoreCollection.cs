@@ -1,4 +1,4 @@
-﻿namespace Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.DockerFixtures;
+﻿namespace Kuna.EventSourcing.Core.EventStore.Tests.TestingHelpers.DockerFixtures;
 
 [CollectionDefinition("EventStore collection")]
 public class DatabaseCollection : ICollectionFixture<EventStoreContainerFixture>

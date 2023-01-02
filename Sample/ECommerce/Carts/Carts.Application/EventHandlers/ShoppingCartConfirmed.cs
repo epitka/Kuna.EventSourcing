@@ -3,8 +3,9 @@ using System.Linq;
 using Carts.Domain.Aggregate;
 using Carts.Domain.Aggregate.Events;
 using Carts.Domain.Model;
-using Senf.EventSourcing.Core.Aggregates;
-using Senf.EventSourcing.Core.Events;
+using Kuna.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.Core.Events;
+using Kuna.EventSourcing.Core.Ids;
 
 namespace Carts.Application.EventHandlers;
 

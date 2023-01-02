@@ -1,3 +1,5 @@
+using Kuna.EventSourcing.Core.Ids;
+
 namespace Carts.Domain.Model;
 
 public sealed class ProductItem
