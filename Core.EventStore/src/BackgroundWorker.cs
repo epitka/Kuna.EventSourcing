@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Senf.EventSourcing.Core.EventStore;
+namespace Kuna.EventSourcing.Core.EventStore;
 
 public class BackgroundWorker : BackgroundService
 {

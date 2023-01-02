@@ -1,11 +1,8 @@
 ﻿using System.Net;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
-using EventStore.Client;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.DockerFixtures;
+namespace Kuna.EventSourcing.Core.EventStore.Tests.TestingHelpers.DockerFixtures;
 
 public class EventStoreContainerFixture
     : IAsyncLifetime

@@ -1,6 +1,7 @@
 ﻿using DeepEqual.Syntax;
+using Kuna.EventSourcing.Core.Aggregates;
 
-namespace Senf.EventSourcing.Testing;
+namespace Kuna.EventSourcing.Testing;
 
 public static class DeepEqualExtensions
 {

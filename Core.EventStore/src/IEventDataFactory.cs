@@ -1,9 +1,7 @@
-﻿using System.Text;
-using EventStore.Client;
-using Newtonsoft.Json;
-using Senf.EventSourcing.Core.Events;
+﻿using EventStore.Client;
+using Kuna.EventSourcing.Core.Events;
 
-namespace Senf.EventSourcing.Core.EventStore;
+namespace Kuna.EventSourcing.Core.EventStore;
 
 public interface IEventDataFactory
 {

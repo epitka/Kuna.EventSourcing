@@ -1,6 +1,6 @@
-﻿using Senf.EventSourcing.Core.Commands;
+﻿using Kuna.EventSourcing.Core.Commands;
 
-namespace Senf.EventSourcing.Core.Tests.Commands;
+namespace Kuna.EventSourcing.Core.Tests.Commands;
 
 public class CommandDispatcherTests
 {

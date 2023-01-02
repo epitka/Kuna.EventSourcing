@@ -1,5 +1,5 @@
 ﻿using Carts.Domain.Aggregate;
-using Senf.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.Core.Aggregates;
 
 namespace Carts.Application;
 

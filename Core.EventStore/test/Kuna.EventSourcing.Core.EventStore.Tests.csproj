@@ -42,7 +42,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\Senf.EventSourcing.Core.EventStore.csproj" />
+      <ProjectReference Include="..\src\Kuna.EventSourcing.Core.EventStore.csproj" />
     </ItemGroup>
 
     <ItemGroup>

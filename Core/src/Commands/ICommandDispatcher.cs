@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Senf.EventSourcing.Core.Commands;
+namespace Kuna.EventSourcing.Core.Commands;
 
 public interface ICommandDispatcher
 {

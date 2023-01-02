@@ -1,8 +1,7 @@
 ﻿using DeepEqual.Syntax;
-using Senf.EventSourcing.Core.Exceptions;
-using Senf.EventSourcing.Core.Tests.Events;
+using Kuna.EventSourcing.Core.Tests.Events;
 
-namespace Senf.EventSourcing.Core.Tests.AggregateStateTests;
+namespace Kuna.EventSourcing.Core.Tests.AggregateStateTests;
 
 public class ApplyEvent
 {

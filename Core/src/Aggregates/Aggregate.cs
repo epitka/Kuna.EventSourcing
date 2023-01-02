@@ -1,7 +1,7 @@
-using Senf.EventSourcing.Core.Events;
-using Senf.EventSourcing.Core.Extensions;
+using Kuna.EventSourcing.Core.Events;
+using Kuna.EventSourcing.Core.Extensions;
 
-namespace Senf.EventSourcing.Core.Aggregates;
+namespace Kuna.EventSourcing.Core.Aggregates;
 
 public abstract class Aggregate<TKey, TState>
     : IAggregate<TKey, TState>

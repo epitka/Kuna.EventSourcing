@@ -2,7 +2,8 @@ using Carts.Domain.Aggregate.Events;
 using Carts.Domain.Commands;
 using Carts.Domain.Model;
 using Carts.Domain.Services;
-using Senf.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.Core.Ids;
 
 namespace Carts.Domain.Aggregate;
 

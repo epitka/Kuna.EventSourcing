@@ -1,7 +1,7 @@
 ﻿using DeepEqual.Syntax;
-using Senf.EventSourcing.Core.Extensions;
+using Kuna.EventSourcing.Core.Extensions;
 
-namespace Senf.EventSourcing.Core.Tests.Extensions;
+namespace Kuna.EventSourcing.Core.Tests.Extensions;
 
 public class ObjectExtensionsTests
 {

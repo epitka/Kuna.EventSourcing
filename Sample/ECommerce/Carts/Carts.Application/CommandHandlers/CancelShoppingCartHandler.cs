@@ -1,3 +1,5 @@
+using Kuna.EventSourcing.Core.Commands;
+
 namespace Carts.Application.CommandHandlers;
 
 public class CancelShoppingCartHandler: IHandleCommand<CancelShoppingCart>

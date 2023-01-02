@@ -1,6 +1,6 @@
 ﻿using EventStore.Client;
 
-namespace Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers;
+namespace Kuna.EventSourcing.Core.EventStore.Tests.TestingHelpers;
 
 public static class HelperFunctions
 {

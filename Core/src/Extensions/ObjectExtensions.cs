@@ -1,10 +1,7 @@
-﻿using System.Reflection;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using JsonConverter = System.Text.Json.Serialization.JsonConverter;
-using JsonProperty = System.Text.Json.JsonProperty;
 
-namespace Senf.EventSourcing.Core.Extensions;
+namespace Kuna.EventSourcing.Core.Extensions;
 
 public static class ObjectExtensions
 {

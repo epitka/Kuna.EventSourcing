@@ -1,4 +1,4 @@
-﻿namespace Senf.EventSourcing.Core.Exceptions;
+﻿namespace Kuna.EventSourcing.Core.Exceptions;
 
 public class UnrecoverableException : Exception
 {

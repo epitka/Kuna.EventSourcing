@@ -1,12 +1,10 @@
 ﻿using EventStore.Client;
-using FakeItEasy;
 using FakeItEasy.Configuration;
-using FluentAssertions;
-using Senf.EventSourcing.Core.Aggregates;
-using Senf.EventSourcing.Core.Events;
-using Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers;
+using Kuna.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.Core.Events;
+using Kuna.EventSourcing.Core.EventStore.Tests.TestingHelpers;
 
-namespace Senf.EventSourcing.Core.EventStore.Tests.AggregateRepositoryTests;
+namespace Kuna.EventSourcing.Core.EventStore.Tests.AggregateRepositoryTests;
 
 public class Save
 {

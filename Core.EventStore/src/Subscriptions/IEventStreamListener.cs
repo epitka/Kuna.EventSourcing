@@ -1,11 +1,10 @@
 ﻿using System.Reflection;
 using EventStore.Client;
 using Grpc.Core;
+using Kuna.EventSourcing.Core.Exceptions;
 using Microsoft.Extensions.Logging;
-using Senf.EventSourcing.Core.Events;
-using Senf.EventSourcing.Core.Exceptions;
 
-namespace Senf.EventSourcing.Core.EventStore.Subscriptions;
+namespace Kuna.EventSourcing.Core.EventStore.Subscriptions;
 
 public interface IEventStreamListener
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Senf.EventSourcing.Core.Configuration;
+namespace Kuna.EventSourcing.Core.Configuration;
 
 public interface IServicesConfigurator
 {

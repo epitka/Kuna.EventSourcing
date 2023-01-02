@@ -1,12 +1,12 @@
 ﻿using System.Reflection;
 using EventStore.Client;
+using Kuna.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.Core.EventStore.Subscriptions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Senf.EventSourcing.Core.Aggregates;
-using Senf.EventSourcing.Core.EventStore.Subscriptions;
 
-namespace Senf.EventSourcing.Core.EventStore.Configuration;
+namespace Kuna.EventSourcing.Core.EventStore.Configuration;
 
 public static class ConfigurationExtensions
 {

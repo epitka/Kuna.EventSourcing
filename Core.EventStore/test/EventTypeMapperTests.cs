@@ -1,9 +1,6 @@
-﻿using FluentAssertions;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Utilities;
-using Senf.EventSourcing.Core.Events;
-using Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers;
+﻿using Kuna.EventSourcing.Core.EventStore.Tests.TestingHelpers;
 
-namespace Senf.EventSourcing.Core.EventStore.Tests;
+namespace Kuna.EventSourcing.Core.EventStore.Tests;
 
 public class EventTypeMapperTests
 {

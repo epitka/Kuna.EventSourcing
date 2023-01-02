@@ -1,7 +1,7 @@
 #nullable disable
-using Senf.EventSourcing.Core.Events;
+using Kuna.EventSourcing.Core.Events;
 
-namespace Senf.EventSourcing.Core.Tests.Events
+namespace Kuna.EventSourcing.Core.Tests.Events
 {
     /// <summary>
     ///

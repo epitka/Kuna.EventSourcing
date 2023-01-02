@@ -10,7 +10,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Core\src\Senf.EventSourcing.Core.csproj" />
+      <ProjectReference Include="..\Core\src\Kuna.EventSourcing.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>

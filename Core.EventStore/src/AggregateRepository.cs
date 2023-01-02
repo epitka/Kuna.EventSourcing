@@ -1,8 +1,7 @@
-﻿using Senf.EventSourcing.Core.Aggregates;
-using Senf.EventSourcing.Core.Events;
-using Senf.EventSourcing.Core.Exceptions;
+﻿using Kuna.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.Core.Exceptions;
 
-namespace Senf.EventSourcing.Core.EventStore;
+namespace Kuna.EventSourcing.Core.EventStore;
 
 public abstract class AggregateRepository<TKey, TAggregate> : IAggregateRepository<TKey, TAggregate>
     where TAggregate : class, IAggregate<TKey>, new()

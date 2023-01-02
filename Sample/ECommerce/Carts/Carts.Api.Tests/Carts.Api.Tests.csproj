@@ -23,7 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\..\Testing\Senf.EventSourcing.Testing.csproj" />
+      <ProjectReference Include="..\..\..\..\Testing\Kuna.EventSourcing.Testing.csproj" />
       <ProjectReference Include="..\Carts.Api\Carts.Api.csproj" />
     </ItemGroup>
 

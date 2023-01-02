@@ -1,12 +1,13 @@
 using Carts.Domain.Aggregate.Events;
 using Carts.Domain.Model;
-using Senf.EventSourcing.Core.Extensions;
+using Kuna.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.Core.Extensions;
 
 namespace Carts.Domain.Aggregate;
 
 public partial class ShoppingCart
 {
-    public class State : Senf.EventSourcing.Core.Aggregates.AggregateState<Guid>
+    public class State : AggregateState<Guid>
     {
         public Guid ClientId { get; set; }
 

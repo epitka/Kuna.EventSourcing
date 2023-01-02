@@ -1,8 +1,8 @@
 ﻿using EventStore.Client;
-using Senf.EventSourcing.Core.Events;
-using Senf.EventSourcing.Core.Exceptions;
+using Kuna.EventSourcing.Core.Events;
+using Kuna.EventSourcing.Core.Exceptions;
 
-namespace Senf.EventSourcing.Core.EventStore;
+namespace Kuna.EventSourcing.Core.EventStore;
 
 public interface IAggregateStreamWriter
 {

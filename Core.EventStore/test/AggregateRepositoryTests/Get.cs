@@ -1,11 +1,10 @@
 ﻿using DeepEqual.Syntax;
-using FakeItEasy;
-using Senf.EventSourcing.Core.Aggregates;
-using Senf.EventSourcing.Core.Events;
-using Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers;
-using Senf.EventSourcing.Core.Exceptions;
+using Kuna.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.Core.Events;
+using Kuna.EventSourcing.Core.EventStore.Tests.TestingHelpers;
+using Kuna.EventSourcing.Core.Exceptions;
 
-namespace Senf.EventSourcing.Core.EventStore.Tests.AggregateRepositoryTests;
+namespace Kuna.EventSourcing.Core.EventStore.Tests.AggregateRepositoryTests;
 
 public class Get
 {

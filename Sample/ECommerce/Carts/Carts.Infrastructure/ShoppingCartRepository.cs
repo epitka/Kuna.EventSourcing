@@ -1,7 +1,7 @@
 ﻿using Carts.Application;
 using Carts.Domain.Aggregate;
-using Senf.EventSourcing.Core.Aggregates;
-using Senf.EventSourcing.Core.EventStore;
+using Kuna.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.Core.EventStore;
 
 namespace Carts.Infrastructure;
 

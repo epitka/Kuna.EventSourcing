@@ -1,8 +1,6 @@
-﻿using System.ComponentModel;
-using System.Globalization;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace Senf.EventSourcing.Core.Ids;
+namespace Kuna.EventSourcing.Core.Ids;
 
 public sealed class GuidId
     : IEquatable<GuidId>,

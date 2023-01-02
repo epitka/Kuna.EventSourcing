@@ -1,8 +1,8 @@
 #nullable disable
-using Senf.EventSourcing.Core.Aggregates;
-using Senf.EventSourcing.Core.Tests.Events;
+using Kuna.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.Core.Tests.Events;
 
-namespace Senf.EventSourcing.Core.Tests;
+namespace Kuna.EventSourcing.Core.Tests;
 
 public partial class TestAggregate
 {

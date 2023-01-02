@@ -1,4 +1,7 @@
-namespace Senf.EventSourcing.Testing;
+using Kuna.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.Core.Events;
+
+namespace Kuna.EventSourcing.Testing;
 
 public class AggregateBuilder<TAggregate, TState, TKey>
     where TAggregate : Aggregate<TKey, TState>, new()

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Concurrent;
 using System.Reflection;
-using Senf.EventSourcing.Core.Events;
+using Kuna.EventSourcing.Core.Events;
 
-namespace Senf.EventSourcing.Core.EventStore;
+namespace Kuna.EventSourcing.Core.EventStore;
 
 public interface IEventTypeMapper
 {

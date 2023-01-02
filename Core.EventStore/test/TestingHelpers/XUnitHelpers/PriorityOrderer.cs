@@ -1,7 +1,7 @@
 ﻿using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers.XUnitHelpers;
+namespace Kuna.EventSourcing.Core.EventStore.Tests.TestingHelpers.XUnitHelpers;
 
 public class PriorityOrderer : ITestCaseOrderer
 {

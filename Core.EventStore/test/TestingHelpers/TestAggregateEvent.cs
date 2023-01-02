@@ -1,6 +1,6 @@
-﻿using Senf.EventSourcing.Core.Events;
+﻿using Kuna.EventSourcing.Core.Events;
 
-namespace Senf.EventSourcing.Core.EventStore.Tests.TestingHelpers;
+namespace Kuna.EventSourcing.Core.EventStore.Tests.TestingHelpers;
 
 public record TestAggregateEvent(Guid Id, string Value) : IAggregateEvent
 {

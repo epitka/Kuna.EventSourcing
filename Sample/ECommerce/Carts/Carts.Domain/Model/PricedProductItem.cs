@@ -1,3 +1,4 @@
+using Kuna.EventSourcing.Core.Ids;
 using Newtonsoft.Json;
 
 namespace Carts.Domain.Model;

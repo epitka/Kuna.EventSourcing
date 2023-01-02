@@ -24,8 +24,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\..\Core\src\Senf.EventSourcing.Core.csproj" />
-      <ProjectReference Include="..\..\..\..\Testing\Senf.EventSourcing.Testing.csproj" />
+      <ProjectReference Include="..\..\..\..\Core\src\Kuna.EventSourcing.Core.csproj" />
+      <ProjectReference Include="..\..\..\..\Testing\Kuna.EventSourcing.Testing.csproj" />
       <ProjectReference Include="..\Carts.Domain\Carts.Domain.csproj" />
       <ProjectReference Include="..\Carts.TestingInfrastructure\Carts.TestingInfrastructure.csproj" />
     </ItemGroup>

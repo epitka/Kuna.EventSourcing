@@ -5,7 +5,7 @@ using Carts.Application.CommandHandlers;
 using Carts.Domain.Commands;
 using Carts.TestingInfrastructure;
 using FluentAssertions;
-using Senf.EventSourcing.Core.Ids;
+using Kuna.EventSourcing.Core.Ids;
 using Xunit;
 using static Carts.TestingInfrastructure.StateTestingExtensions;
 

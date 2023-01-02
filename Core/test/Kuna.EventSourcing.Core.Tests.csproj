@@ -41,7 +41,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\Senf.EventSourcing.Core.csproj" />
+      <ProjectReference Include="..\src\Kuna.EventSourcing.Core.csproj" />
     </ItemGroup>
     <ItemGroup>
         <Using Include="Xunit" />
