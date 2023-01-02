@@ -1,1 +1,1 @@
-# Senf.EventSourcing
+# Kuna.EventSourcing
