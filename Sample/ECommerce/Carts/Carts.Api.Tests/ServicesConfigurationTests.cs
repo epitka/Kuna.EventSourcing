@@ -1,5 +1,7 @@
 ﻿using Carts.Api.Controllers;
 using Carts.Application;
+using Kuna.Extensions.DependencyInjection.Validation;
+using Kuna.Extensions.DependencyInjection.Validation.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Senf.EventSourcing.Core.Commands;
 using Senf.EventSourcing.Testing;
@@ -26,7 +28,7 @@ public class ServicesConfigurationTest
             typeof(IShoppingCartRepository).Assembly, // application
         };
 
-        var verifier = new DependencyRegistrationVerifier<Program>(assemblies);
+        var verifier = new RegistrationValidator<Program>(assemblies);
 
         try
         {
@@ -34,13 +36,13 @@ public class ServicesConfigurationTest
                 typeof(Controller),
                 typeof(IHandleCommand<>));
         }
-        catch (DependencyRegistrationVerifier<Program>.FailureException fe)
+        catch (FailureException fe)
         {
             this.console.WriteLine(fe.Result.ToString());
 
             Assert.Fail("Could not resolve all dependencies");
         }
-        catch (DependencyRegistrationVerifier<Program>.SuccessException e)
+        catch (SuccessException e)
         {
             // short cut app bootstrap process
             // ignore
