@@ -1,1 +1,2 @@
-# Senf.EventSourcing
+# What is event sourcing?
+

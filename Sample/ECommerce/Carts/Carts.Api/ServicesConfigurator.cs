@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
+
 namespace Carts.Api;
 
 public class ServicesConfigurator : IServicesConfigurator
@@ -28,7 +29,7 @@ public class ServicesConfigurator : IServicesConfigurator
                 c =>
                 {
                     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Carts", Version = "v1" });
-                    // c.OperationFilter<MetadataOperationFilter>();
+                    //// c.OperationFilter<MetadataOperationFilter>();
                 })
 
             /*.AddCorrelationIdMiddleware()
