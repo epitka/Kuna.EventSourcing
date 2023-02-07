@@ -13,7 +13,6 @@ public class CancelShoppingCartHandler: IHandleCommand<CancelShoppingCart>
 
     public async Task Handle(CancelShoppingCart command, CancellationToken ct)
     {
-
         var cart = await this.shoppingCartRepository.Get(command.CartId, ct);
 
         cart.Process(command);

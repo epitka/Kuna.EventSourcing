@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using EventStore.Client;
 using Kuna.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.Core.Events;
 using Kuna.EventSourcing.Core.EventStore.Subscriptions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -98,11 +99,10 @@ public static class ConfigurationExtensions
                                           }))
                                   .ConfigureAwait(false);
 
-                        ;
 
-                        // keep background worker alive
                         while (!stoppingToken.IsCancellationRequested)
                         {
+                            // keep background worker alive
                         }
                     });
             });

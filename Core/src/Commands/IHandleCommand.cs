@@ -1,7 +1,7 @@
 ﻿namespace Kuna.EventSourcing.Core.Commands;
 
 /// <summary>
-/// Marker interface used to identify handlers of events
+/// Marker interface used to identify handlers of commands
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public interface IHandleCommand<in TCommand>

@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using EventStore.Client;
 using Grpc.Core;
+using Kuna.EventSourcing.Core.Events;
 using Kuna.EventSourcing.Core.Exceptions;
 using Microsoft.Extensions.Logging;
 
@@ -122,7 +123,7 @@ public class EventStreamListener : IEventStreamListener
     public async Task Stop(TimeSpan delay)
     {
         await Task.Delay(delay)
-                  .ConfigureAwait(false);;
+                  .ConfigureAwait(false);
         this.cts.Cancel();
     }
 
@@ -140,7 +141,7 @@ public class EventStreamListener : IEventStreamListener
             // TODO: Add OpenTelemetry tracing here
             // Propagate CorrelationId and set CausationId using EventId
             // Use OpenTelemetry api instead of Activity
-            //var metaData = this.eventSerializer.DeserializeMetaData(resolvedEvent);
+            //// var metaData = this.eventSerializer.DeserializeMetaData(resolvedEvent);
 
             if (result.Event == null)
             {

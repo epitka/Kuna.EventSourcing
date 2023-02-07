@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using EventStore.Client;
+using Kuna.EventSourcing.Core.Aggregates;
 using Kuna.EventSourcing.Core.Events;
 using Newtonsoft.Json;
 

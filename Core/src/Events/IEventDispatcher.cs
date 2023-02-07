@@ -1,13 +1,10 @@
-﻿using System.Collections.Concurrent;
-using System.Reflection;
-using Kuna.EventSourcing.Core.Events;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Kuna.EventSourcing.Core.EventStore.Subscriptions;
+namespace Kuna.EventSourcing.Core.Events;
 
 public interface IEventDispatcher
 {
-    Task Publish(object aggregateEvent, Type eventType, CancellationToken ct);
+    Task Publish(object @event, Type eventType, CancellationToken ct);
 }
 
 public class EventDispatcher : IEventDispatcher
@@ -21,22 +18,22 @@ public class EventDispatcher : IEventDispatcher
         this.serviceProvider = serviceProvider;
     }
 
-    public async Task Publish(object aggregateEvent, Type eventType, CancellationToken ct)
+    public async Task Publish(object @event, Type eventType, CancellationToken ct)
     {
         var methodInfo = GetGenericPublishFor(eventType);
 
         if (methodInfo is not null)
         {
-            await (Task)methodInfo.Invoke(this, new[] { aggregateEvent, ct })!;
+            await (Task)methodInfo.Invoke(this, new[] { @event, ct })!;
         }
     }
 
     private async Task InternalPublish<TEvent>(TEvent @event, CancellationToken ct)
-        where TEvent : class, IAggregateEvent
+        where TEvent : class
     {
         var handlers = this.serviceProvider.GetServices<IHandleEvent<TEvent>>();
 
-        if (handlers.Any() == false)
+        if (!handlers.Any())
         {
             return;
         }
