@@ -1,2 +1,1 @@
-# What is event sourcing?
 
