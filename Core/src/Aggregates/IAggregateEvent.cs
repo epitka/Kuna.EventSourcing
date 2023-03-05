@@ -1,4 +1,4 @@
-namespace Kuna.EventSourcing.Core.Events
+namespace Kuna.EventSourcing.Core.Aggregates
 {
     /// <summary>
     /// marker interface

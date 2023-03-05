@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Kuna.EventSourcing.Core.Aggregates;
 using Kuna.EventSourcing.Core.Events;
 using Newtonsoft.Json;
 
