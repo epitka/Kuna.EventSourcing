@@ -5,9 +5,11 @@ using Carts.Domain.Aggregate;
 using Carts.Domain.Commands;
 using Carts.Domain.Services;
 using Carts.Infrastructure;
+using EventStore.Client;
 using Kuna.EventSourcing.Core.Commands;
 using Kuna.EventSourcing.Core.Configuration;
 using Kuna.EventSourcing.Core.EventStore.Configuration;
+using Kuna.EventSourcing.Core.EventStore.Subscriptions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -39,7 +41,16 @@ public class ServicesConfigurator : IServicesConfigurator
              )*/
             .AddControllers();
 
-        services.AddEventStore(this.Configuration, "EventStore", new [] {typeof(ShoppingCart).Assembly});
+        services.AddEventStore(
+            configuration:this.Configuration,
+            eventStoreConnectionStringName:"EventStore",
+            assembliesWithAggregateEvents: new [] {typeof(ShoppingCart).Assembly},
+            subscriptionSettings: new[]
+            {
+                new StreamSubscriptionSettings(
+                    "$ce-cart",
+                    StreamPosition.End),
+            });
 
         services.AddSingleton<ICommandDispatcher, CommandDispatcher>();
         services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
