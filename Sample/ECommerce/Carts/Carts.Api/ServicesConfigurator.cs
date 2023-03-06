@@ -1,12 +1,15 @@
 ﻿using Carts.Application;
 using Carts.Application.CommandHandlers;
+using Carts.Application.EventHandlers;
 using Carts.Application.Services;
 using Carts.Domain.Aggregate;
+using Carts.Domain.Aggregate.Events;
 using Carts.Domain.Commands;
 using Carts.Domain.Services;
 using Carts.Infrastructure;
 using Kuna.EventSourcing.Core.Commands;
 using Kuna.EventSourcing.Core.Configuration;
+using Kuna.EventSourcing.Core.Events;
 using Kuna.EventSourcing.Core.EventStore.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -47,6 +50,8 @@ public class ServicesConfigurator : IServicesConfigurator
 
         this.AddCommandHandlers(services);
 
+        this.AddEventHandlers(services);
+
         return services;
     }
 
@@ -59,5 +64,10 @@ public class ServicesConfigurator : IServicesConfigurator
         services.AddTransient<IHandleCommand<ConfirmShoppingCart>, ConfirmShoppingCartHandler>();
         services.AddTransient<IHandleCommand<OpenShoppingCart>, OpenShoppingCartHandler>();
         services.AddTransient<IHandleCommand<RemoveProduct>, RemoveProductHandler>();
+    }
+
+    private void AddEventHandlers(IServiceCollection services)
+    {
+        services.AddTransient<IHandleEvent<ShoppingCartConfirmed>, ShoppingCartConfirmedHandler>();
     }
 }

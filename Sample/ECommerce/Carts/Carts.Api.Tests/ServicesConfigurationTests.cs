@@ -1,6 +1,7 @@
 ﻿using Carts.Api.Controllers;
 using Carts.Application;
 using Kuna.EventSourcing.Core.Commands;
+using Kuna.EventSourcing.Core.Events;
 using Kuna.Extensions.DependencyInjection.Validation;
 using Kuna.Extensions.DependencyInjection.Validation.Exceptions;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +34,8 @@ public class ServicesConfigurationTest
         {
             verifier.Validate(
                 typeof(Controller),
-                typeof(IHandleCommand<>));
+                typeof(IHandleCommand<>),
+                typeof(IHandleEvent<>));
         }
         catch (FailureException fe)
         {

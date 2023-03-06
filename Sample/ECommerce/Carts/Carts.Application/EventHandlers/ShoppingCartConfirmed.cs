@@ -27,7 +27,7 @@ public record CartFinalized(
     }
 }
 
-internal class ShoppingCartConfirmedHandler : IHandleEvent<ShoppingCartConfirmed>
+public class ShoppingCartConfirmedHandler : IHandleEvent<ShoppingCartConfirmed>
 {
     private readonly IAggregateStreamReader streamReader;
 
