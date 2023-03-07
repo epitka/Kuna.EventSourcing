@@ -9,11 +9,11 @@ namespace Kuna.EventSourcing.Core.EventStore.Subscriptions;
 
 public interface IEventStreamListener
 {
-    Task Start(
+    void Start(
         StreamSubscriptionSettings subscriptionSettings,
         CancellationToken ct);
 
-    Task Stop(TimeSpan delay);
+    void Stop(TimeSpan delay);
 }
 
 public class EventStreamListener : IEventStreamListener
@@ -25,8 +25,8 @@ public class EventStreamListener : IEventStreamListener
     private StreamSubscriptionSettings subscriptionSettings = default!;
     private bool started;
     private CancellationTokenSource cts = default!;
-    static readonly SemaphoreSlim throttler = new(1, 1);
     private int resubscribeAttempts = 0;
+    private static readonly object obj = new();
 
     private string SubscriptionGroupName { get; }
 
@@ -45,34 +45,33 @@ public class EventStreamListener : IEventStreamListener
         this.SubscriptionGroupName = Assembly.GetEntryAssembly()!.GetName()!.Name!;
     }
 
-    public async Task Start(
+    public void Start(
         StreamSubscriptionSettings subscriptionSettings,
         CancellationToken ct)
     {
-        await throttler.WaitAsync(ct);
-
-        try
+        lock (obj)
         {
-            this.cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+            Task.Run(
+                async () =>
+                {
+                    this.cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
 
-            if (this.started)
-            {
-                throw new InvalidOperationException("Cannot reuse listener, already started");
-            }
+                    if (this.started)
+                    {
+                        throw new InvalidOperationException("Cannot reuse listener, already started");
+                    }
 
-            this.subscriptionSettings = subscriptionSettings;
+                    this.subscriptionSettings = subscriptionSettings;
 
-            await this.EnsureSubscriptionGroupExists(this.subscriptionSettings, this.cts.Token)
-                      .ConfigureAwait(false);
+                    await this.EnsureSubscriptionGroupExists(this.subscriptionSettings, this.cts.Token)
+                              .ConfigureAwait(false);
 
-            await this.Start(this.cts.Token)
-                      .ConfigureAwait(false);
+                    await this.Start(this.cts.Token)
+                              .ConfigureAwait(false);
 
-            this.started = true;
-        }
-        finally
-        {
-            throttler.Release();
+                    this.started = true;
+                },
+                ct);
         }
     }
 
@@ -130,12 +129,10 @@ public class EventStreamListener : IEventStreamListener
             this.subscriptionSettings.StreamName);
     }
 
-    public async Task Stop(TimeSpan delay)
+    public void Stop(TimeSpan delay)
     {
-        await Task.Delay(delay)
-                  .ConfigureAwait(false);
 
-        this.cts.Cancel();
+        this.cts.CancelAfter(delay);
     }
 
     private async Task OnEventAppeared(

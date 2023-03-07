@@ -88,22 +88,20 @@ public static class ConfigurationExtensions
                 return new BackgroundWorker(
                     backgroundWorkerName,
                     logger,
-                    async stoppingToken =>
+                    stoppingToken =>
                     {
-                        await Task.WhenAll(
-                                      settings.Select(
-                                          s =>
-                                          {
-                                              var listener = serviceProvider.GetRequiredService<IEventStreamListener>();
-                                              return listener.Start(s, stoppingToken);
-                                          }))
-                                  .ConfigureAwait(false);
-
+                        foreach (var s in settings)
+                        {
+                            var listener = serviceProvider.GetRequiredService<IEventStreamListener>();
+                            listener.Start(s, stoppingToken);
+                        }
 
                         while (!stoppingToken.IsCancellationRequested)
                         {
                             // keep background worker alive
                         }
+
+                        return Task.CompletedTask;
                     });
             });
     }

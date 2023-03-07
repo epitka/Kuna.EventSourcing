@@ -50,8 +50,6 @@ try
             });
 
     app.Run();
-
-
 }
 catch (Exception ex)
 {
