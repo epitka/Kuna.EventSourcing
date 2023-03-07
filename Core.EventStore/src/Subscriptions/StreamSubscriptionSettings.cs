@@ -2,11 +2,12 @@
 
 namespace Kuna.EventSourcing.Core.EventStore.Subscriptions;
 
+// TODO: add retry delay timespan
 public record StreamSubscriptionSettings(
     string StreamName,
     StreamPosition StartFrom,
     string ConsumerStrategy = nameof(SystemConsumerStrategies.Pinned),
-    int MaxRetryCount = 10,
+    int MaxResubscribeAttempts = 10,
     int LiveBufferSize = 500,
     int ReadBatchSize = 20,
     int HistoryBufferSize = 500,

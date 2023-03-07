@@ -26,6 +26,7 @@ public class EventStreamListener : IEventStreamListener
     private bool started;
     private CancellationTokenSource cts = default!;
     static readonly SemaphoreSlim throttler = new(1, 1);
+    private int resubscribeAttempts = 0;
 
     private string SubscriptionGroupName { get; }
 
@@ -85,7 +86,7 @@ public class EventStreamListener : IEventStreamListener
                 resolveLinkTos: true,
                 startFrom: subscriptionSettings.StartFrom,
                 consumerStrategyName: subscriptionSettings.ConsumerStrategy,
-                maxRetryCount: subscriptionSettings.MaxRetryCount,
+                maxRetryCount: subscriptionSettings.MaxResubscribeAttempts,
                 extraStatistics: subscriptionSettings.ExtraStatistics,
                 messageTimeout: subscriptionSettings.MessageTimeout,
                 liveBufferSize: subscriptionSettings.LiveBufferSize,
@@ -145,6 +146,8 @@ public class EventStreamListener : IEventStreamListener
     {
         ct.ThrowIfCancellationRequested();
 
+        this.resubscribeAttempts = 0;
+
         try
         {
             var result = this.eventStoreSerializer.Deserialize(resolvedEvent);
@@ -179,7 +182,7 @@ public class EventStreamListener : IEventStreamListener
         }
         catch (Exception ex)
         {
-            if (retryCount == this.subscriptionSettings.MaxRetryCount)
+            if (retryCount == this.subscriptionSettings.MaxResubscribeAttempts)
             {
                 await subscription.Nack(PersistentSubscriptionNakEventAction.Park, ex.Message, resolvedEvent)
                                   .ConfigureAwait(false);
@@ -203,14 +206,14 @@ public class EventStreamListener : IEventStreamListener
             exception
         );
 
-        if (exception is RpcException { StatusCode: StatusCode.Cancelled or StatusCode.Unavailable })
+        if (dropReason == SubscriptionDroppedReason.Disposed)
         {
             return;
         }
 
-        if (dropReason == SubscriptionDroppedReason.Disposed)
+        if (exception is RpcException { StatusCode: StatusCode.Cancelled or StatusCode.Unavailable })
         {
-            return;
+            throw exception;
         }
 
         this.Resubscribe();
@@ -223,12 +226,36 @@ public class EventStreamListener : IEventStreamListener
             return;
         }
 
-        await this.client.SubscribeToStreamAsync()
-                      this.subscriptionSettings.StreamName,
-                      this.SubscriptionGroupName,
-                      this.OnEventAppeared,
-                      this.OnSubscriptionDropped,
-                      cancellationToken: ct)
-                  .ConfigureAwait(false);
+        if (this.subscriptionSettings.MaxResubscribeAttempts == this.resubscribeAttempts)
+        {
+            // this sucks to throw and log, but it will do for now
+            // TODO: add interpolated string handler
+            var ex = new Exception("Max subscribe retry count reached");
+            this.logger.LogError(ex, "{RetryCount}, {SubscriptionSettings}", this.resubscribeAttempts, this.subscriptionSettings);
+            throw ex;
+        }
+
+        // TODO: provide delay in settings rather than hard coding it
+        Task.Delay(TimeSpan.FromMilliseconds(500));
+
+        if (this.cts.IsCancellationRequested)
+        {
+            return;
+        }
+
+        Task.Run(
+            async () =>
+            {
+                this.resubscribeAttempts += 1;
+
+                await this.client.SubscribeToStreamAsync(
+                              this.subscriptionSettings.StreamName,
+                              this.SubscriptionGroupName,
+                              this.OnEventAppeared,
+                              this.OnSubscriptionDropped,
+                              cancellationToken:
+                              this.cts.Token)
+                          .ConfigureAwait(false);
+            });
     }
 }
