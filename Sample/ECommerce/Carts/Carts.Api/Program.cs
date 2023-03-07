@@ -1,45 +1,66 @@
+using System;
 using Carts.Api;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
+using Serilog;
+using Serilog.Events;
 
-var builder = WebApplication.CreateBuilder(args);
+Log.Logger = new LoggerConfiguration()
+             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+             .Enrich.FromLogContext()
+             .WriteTo.Console()
+             .CreateBootstrapLogger();
 
-builder.Configuration.AddJsonFile("appsettings.json");
-
-var servicesConfigurator = new ServicesConfigurator
+try
 {
-    Configuration = builder.Configuration,
-    Environment = builder.Environment,
-};
+    Log.Information("Starting web application");
 
-servicesConfigurator.ConfigureServices(
-    builder.Services);
+    var builder = WebApplication.CreateBuilder(args);
 
-var app = builder.Build();
+    builder.Configuration.AddJsonFile("appsettings.json");
 
-app
-    /*.UseExceptionHandlingMiddleware(exception => exception switch
-   {
-       AggregateNotFoundException _  => HttpStatusCode.NotFound,
-       WrongExpectedVersionException => HttpStatusCode.PreconditionFailed,
-       _                             => HttpStatusCode.InternalServerError
-   })
-   .UseCorrelationIdMiddleware()
-   .UseOptimisticConcurrencyMiddleware()*/
-   .UseRouting()
-   .UseAuthorization()
-   .UseEndpoints(endpoints =>
-   {
-       endpoints.MapControllers();
-   })
-   .UseSwagger()
-   .UseSwaggerUI(c =>
-   {
-       c.SwaggerEndpoint("/swagger/v1/swagger.json", "Carts V1");
-       c.RoutePrefix = string.Empty;
-   });
+    builder.Host.UseSerilog(
+        (context, services, configuration) => configuration
+                                              .ReadFrom.Configuration(context.Configuration)
+                                              .ReadFrom.Services(services)
+                                              .Enrich.FromLogContext()
+                                              .WriteTo.Console());
 
-app.Run();
+    var servicesConfigurator = new ServicesConfigurator
+    {
+        Configuration = builder.Configuration,
+        Environment = builder.Environment,
+    };
+
+    servicesConfigurator.ConfigureServices(builder.Services);
+
+    var app = builder.Build();
+
+    app
+        .UseSerilogRequestLogging()
+        .UseRouting()
+        .UseAuthorization()
+        .UseEndpoints(endpoints => { endpoints.MapControllers(); })
+        .UseSwagger()
+        .UseSwaggerUI(
+            c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Carts V1");
+                c.RoutePrefix = string.Empty;
+            });
+
+    app.Run();
+
+
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
 
 namespace Carts.Api
 {

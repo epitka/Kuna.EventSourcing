@@ -32,7 +32,7 @@ public class EventStreamListener : IEventStreamListener
         EventStorePersistentSubscriptionsClient client,
         IEventStoreSerializer eventStoreSerializer,
         IEventDispatcher eventDispatcher,
-        ILogger logger)
+        ILogger<EventStreamListener> logger)
     {
         this.client = client;
         this.eventStoreSerializer = eventStoreSerializer;
@@ -71,7 +71,6 @@ public class EventStreamListener : IEventStreamListener
     {
         try
         {
-
             var persistentSubscriptionSettings = new PersistentSubscriptionSettings(
                 resolveLinkTos: true,
                 startFrom: subscriptionSettings.StartFrom,
@@ -108,12 +107,12 @@ public class EventStreamListener : IEventStreamListener
         ct.ThrowIfCancellationRequested();
 
         await this.client.SubscribeToStreamAsync(
-                                          this.subscriptionSettings.StreamName,
-                                          this.SubscriptionGroupName,
-                                          this.OnEventAppeared,
-                                          this.OnSubscriptionDropped,
-                                          cancellationToken: ct)
-                                      .ConfigureAwait(false);
+                      this.subscriptionSettings.StreamName,
+                      this.SubscriptionGroupName,
+                      this.OnEventAppeared,
+                      this.OnSubscriptionDropped,
+                      cancellationToken: ct)
+                  .ConfigureAwait(false);
 
         this.logger.LogTrace(
             "Persistent subscription to stream {StreamName} created",
@@ -124,6 +123,7 @@ public class EventStreamListener : IEventStreamListener
     {
         await Task.Delay(delay)
                   .ConfigureAwait(false);
+
         this.cts.Cancel();
     }
 
@@ -137,7 +137,7 @@ public class EventStreamListener : IEventStreamListener
 
         try
         {
-           var result = this.eventStoreSerializer.Deserialize(resolvedEvent);
+            var result = this.eventStoreSerializer.Deserialize(resolvedEvent);
             // TODO: Add OpenTelemetry tracing here
             // Propagate CorrelationId and set CausationId using EventId
             // Use OpenTelemetry api instead of Activity

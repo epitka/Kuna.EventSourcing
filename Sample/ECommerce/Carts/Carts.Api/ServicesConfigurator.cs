@@ -7,15 +7,16 @@ using Carts.Domain.Aggregate.Events;
 using Carts.Domain.Commands;
 using Carts.Domain.Services;
 using Carts.Infrastructure;
+using EventStore.Client;
 using Kuna.EventSourcing.Core.Commands;
 using Kuna.EventSourcing.Core.Configuration;
 using Kuna.EventSourcing.Core.Events;
 using Kuna.EventSourcing.Core.EventStore.Configuration;
+using Kuna.EventSourcing.Core.EventStore.Subscriptions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-
 
 namespace Carts.Api;
 
@@ -24,8 +25,8 @@ public class ServicesConfigurator : IServicesConfigurator
     public IConfiguration Configuration { get; set; } = default!;
 
     public IHostEnvironment Environment { get; set; } = default!;
-    public IServiceCollection ConfigureServices(
-        IServiceCollection services)
+
+    public IServiceCollection ConfigureServices(IServiceCollection services)
     {
         services
             .AddSwaggerGen(
@@ -34,15 +35,18 @@ public class ServicesConfigurator : IServicesConfigurator
                     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Carts", Version = "v1" });
                     //// c.OperationFilter<MetadataOperationFilter>();
                 })
-
-            /*.AddCorrelationIdMiddleware()
-             .AddOptimisticConcurrencyMiddleware(
-                 sp => sp.GetRequiredService<EventStoreDBExpectedStreamRevisionProvider>().TrySet,
-                 sp => () => sp.GetRequiredService<EventStoreDBNextStreamRevisionProvider>().Value?.ToString()
-             )*/
             .AddControllers();
 
-        services.AddEventStore(this.Configuration, "EventStore", new [] {typeof(ShoppingCart).Assembly});
+        services.AddEventStore(
+            configuration: this.Configuration,
+            eventStoreConnectionStringName: "EventStore",
+            assembliesWithAggregateEvents: new[] { typeof(ShoppingCart).Assembly },
+            subscriptionSettings: new[]
+            {
+                new StreamSubscriptionSettings(
+                    "$ce-cart",
+                    StreamPosition.Start),
+            });
 
         services.AddSingleton<ICommandDispatcher, CommandDispatcher>();
         services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();

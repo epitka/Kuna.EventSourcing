@@ -1,7 +1,9 @@
-﻿using Carts.Api.Controllers;
+﻿using System.Diagnostics.Tracing;
+using Carts.Api.Controllers;
 using Carts.Application;
 using Kuna.EventSourcing.Core.Commands;
 using Kuna.EventSourcing.Core.Events;
+using Kuna.EventSourcing.Core.EventStore.Subscriptions;
 using Kuna.Extensions.DependencyInjection.Validation;
 using Kuna.Extensions.DependencyInjection.Validation.Exceptions;
 using Microsoft.AspNetCore.Mvc;
