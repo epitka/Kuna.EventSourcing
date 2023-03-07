@@ -76,7 +76,7 @@ public partial class ShoppingCart : Aggregate<Guid, ShoppingCart.State>
 
     public void Process(ConfirmShoppingCart command)
     {
-        // TODO: it is not good idea to have DateTime.UtcNow hardcoded
+        // it is not good idea to have DateTime.UtcNow hardcoded
 
         if (this.CurrentState.Status != ShoppingCartStatus.Pending)
         {

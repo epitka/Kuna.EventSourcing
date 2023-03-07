@@ -41,14 +41,12 @@ public class ShoppingCartConfirmedHandler : IHandleEvent<ShoppingCartConfirmed>
         // This would very much depend on implementation details of how
         // we want to distribute integration events, and whether meta-data should be present
         // to many assumptions here are made. Maybe we are using Pulsar, Kafka, EventHub, RabbitMQ, Azure ASB  etc.
-        // not sure this needs to be hidden behind IEventBus interface etc.
 
-        // TODO: wrap this in convenience method
         var events = await this.streamReader.GetEvents("cart-" + @event.CartId, ct);
         var state = new ShoppingCart.State();
         state.InitWith(events);
 
-        // TODO: this could be pushed into ASB, Pulsar, Kafka, RabbitMQ etc.
+        // this could be pushed into ASB, Pulsar, Kafka, RabbitMQ etc.
         var cartFinalized =
             CartFinalized.Create(
                 @event.CartId,

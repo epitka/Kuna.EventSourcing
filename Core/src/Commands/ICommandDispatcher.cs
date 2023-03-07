@@ -16,9 +16,6 @@ public interface ICommandDispatcher
 /// </summary>
 public class CommandDispatcher : ICommandDispatcher
 {
-    //TODO: Add method to add command dispatcher as Singleton to ServiceCollection
-    //TODO: just make is singleton using Lazy
-    //TODO: use compiled lambda instead of reflection
     // map used for resolving handlers for commands that implement ICommand<TReturn> interface
     private ConcurrentDictionary<Type, (Type, MethodInfo)> cmdToHandlerMap = new();
 

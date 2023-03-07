@@ -17,7 +17,6 @@ public partial class ShoppingCart
 
         public decimal TotalPrice => this.ProductItems.Sum(pi => pi.TotalPrice);
 
-        // TODO: why do we need query method on the aggregate
         public PricedProductItem? FindProductItemMatchingWith(PricedProductItem productItem)
         {
             return this.ProductItems

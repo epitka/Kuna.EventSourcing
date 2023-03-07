@@ -16,7 +16,6 @@ public class OpenShoppingCartHandlerTests
     [Fact]
     public async Task Should_Create_ShoppingCart()
     {
-        // TODO: add example of using ContainerDrivenTest
         var fakeRepository = new FakeShoppingCartRepository();
 
         var cmd = new OpenShoppingCart(GuidId.Create(), GuidId.Create());

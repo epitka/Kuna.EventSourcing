@@ -6,8 +6,6 @@ using Kuna.EventSourcing.Testing;
 
 namespace Carts.TestingInfrastructure;
 
-// TODO: add events factory
-
 public class ShoppingCartBuilder
 {
     private AggregateBuilder<ShoppingCart, ShoppingCart.State, Guid> builder = default!;
