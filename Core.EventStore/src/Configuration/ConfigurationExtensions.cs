@@ -69,6 +69,8 @@ public static class ConfigurationExtensions
                 return new EventStorePersistentSubscriptionsClient(esSettings);
             });
 
+        //TODO: should we start each listener as separate background worker
+        // so they don't affect each other if failing
         services.AddHostedService(
             serviceProvider =>
             {

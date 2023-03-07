@@ -25,6 +25,7 @@ public class EventStreamListener : IEventStreamListener
     private StreamSubscriptionSettings subscriptionSettings = default!;
     private bool started;
     private CancellationTokenSource cts = default!;
+    static readonly SemaphoreSlim throttler = new(1, 1);
 
     private string SubscriptionGroupName { get; }
 
@@ -47,22 +48,31 @@ public class EventStreamListener : IEventStreamListener
         StreamSubscriptionSettings subscriptionSettings,
         CancellationToken ct)
     {
-        this.cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+        await throttler.WaitAsync(ct);
 
-        if (this.started)
+        try
         {
-            throw new InvalidOperationException("Cannot reuse listener, already started");
+            this.cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+
+            if (this.started)
+            {
+                throw new InvalidOperationException("Cannot reuse listener, already started");
+            }
+
+            this.subscriptionSettings = subscriptionSettings;
+
+            await this.EnsureSubscriptionGroupExists(this.subscriptionSettings, this.cts.Token)
+                      .ConfigureAwait(false);
+
+            await this.Start(this.cts.Token)
+                      .ConfigureAwait(false);
+
+            this.started = true;
         }
-
-        this.subscriptionSettings = subscriptionSettings;
-
-        await this.EnsureSubscriptionGroupExists(this.subscriptionSettings, this.cts.Token)
-                  .ConfigureAwait(false);
-
-        await this.Start(this.cts.Token)
-                  .ConfigureAwait(false);
-
-        this.started = true;
+        finally
+        {
+            throttler.Release();
+        }
     }
 
     private async Task EnsureSubscriptionGroupExists(
@@ -213,6 +223,12 @@ public class EventStreamListener : IEventStreamListener
             return;
         }
 
-        throw new NotImplementedException("Finish resubscribe");
+        await this.client.SubscribeToStreamAsync()
+                      this.subscriptionSettings.StreamName,
+                      this.SubscriptionGroupName,
+                      this.OnEventAppeared,
+                      this.OnSubscriptionDropped,
+                      cancellationToken: ct)
+                  .ConfigureAwait(false);
     }
 }
