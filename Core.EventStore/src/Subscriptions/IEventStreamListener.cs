@@ -211,11 +211,6 @@ public class EventStreamListener : IEventStreamListener
             return;
         }
 
-        if (exception is RpcException { StatusCode: StatusCode.Cancelled or StatusCode.Unavailable })
-        {
-            throw exception;
-        }
-
         this.Resubscribe();
     }
 
@@ -236,7 +231,7 @@ public class EventStreamListener : IEventStreamListener
         }
 
         // TODO: provide delay in settings rather than hard coding it
-        Task.Delay(TimeSpan.FromMilliseconds(500));
+        Task.Delay(TimeSpan.FromMilliseconds(500)).ConfigureAwait(false);
 
         if (this.cts.IsCancellationRequested)
         {
