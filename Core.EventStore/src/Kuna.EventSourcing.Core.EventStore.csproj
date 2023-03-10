@@ -19,11 +19,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="EventStore.Client.Grpc" Version="22.0.0" />
-      <PackageReference Include="EventStore.Client.Grpc.PersistentSubscriptions" Version="22.0.0" />
-      <PackageReference Include="EventStore.Client.Grpc.Streams" Version="22.0.0" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
+      <PackageReference Include="EventStore.Client.Grpc" />
+      <PackageReference Include="EventStore.Client.Grpc.PersistentSubscriptions" />
+      <PackageReference Include="EventStore.Client.Grpc.Streams" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+      <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
     </ItemGroup>
 
     <ItemGroup>

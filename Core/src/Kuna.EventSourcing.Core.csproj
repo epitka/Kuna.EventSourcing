@@ -27,11 +27,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="AutoFixture.Xunit2" Version="4.17.0" />
-      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
-      <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+      <PackageReference Include="AutoFixture.Xunit2" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+      <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+      <PackageReference Include="Newtonsoft.Json" />
     </ItemGroup>
 </Project>
