@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>net6.0</TargetFrameworks>
+        <Nullable>enable</Nullable>
+        <CodeAnalysisRuleSet>../../../stylecop.ruleset</CodeAnalysisRuleSet>
+        <NoWarn>$(NoWarn);1591</NoWarn>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <LangVersion>default</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="../../../stylecop.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="DeepEqual" />
+      <PackageReference Include="FluentAssertions" />
+      <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" />
+      <PackageReference Include="Microsoft.AspNetCore.TestHost" />
+      <PackageReference Include="Microsoft.Extensions.Configuration" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+      <PackageReference Include="xunit.assert" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Kuna.EventSourcing.Core\Kuna.EventSourcing.Core.csproj" />
+    </ItemGroup>
+
+</Project>

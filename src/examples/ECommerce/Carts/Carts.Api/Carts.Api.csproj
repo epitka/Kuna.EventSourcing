@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>default</LangVersion>
+        <Nullable>enable</Nullable>
+        <CodeAnalysisRuleSet>../../../../../stylecop.ruleset</CodeAnalysisRuleSet>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Serilog" />
+        <PackageReference Include="Serilog.AspNetCore" />
+        <PackageReference Include="Serilog.Sinks.Console" />
+        <PackageReference Include="Swashbuckle.AspNetCore" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="../../../../../stylecop.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\..\core\Kuna.EventSourcing.Core\Kuna.EventSourcing.Core.csproj" />
+      <ProjectReference Include="..\Carts.Application\Carts.Application.csproj" />
+      <ProjectReference Include="..\Carts.Domain\Carts.Domain.csproj" />
+      <ProjectReference Include="..\Carts.Infrastructure\Carts.Infrastructure.csproj" />
+    </ItemGroup> 
+</Project>

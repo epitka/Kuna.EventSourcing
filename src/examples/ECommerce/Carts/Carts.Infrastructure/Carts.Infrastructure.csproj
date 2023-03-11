@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>default</LangVersion>
+        <CodeAnalysisRuleSet>../../../../../stylecop.ruleset</CodeAnalysisRuleSet>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <AdditionalFiles Include="../../../../../stylecop.json" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\..\core\Kuna.EventSourcing.EventStore\Kuna.EventSourcing.EventStore.csproj" />
+      <ProjectReference Include="..\Carts.Application\Carts.Application.csproj" />
+      <ProjectReference Include="..\Carts.Domain\Carts.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

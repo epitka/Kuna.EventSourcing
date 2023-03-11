@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>net6.0</TargetFrameworks>
+        <Nullable>enable</Nullable>
+        <CodeAnalysisRuleSet>../../../../../stylecop.ruleset</CodeAnalysisRuleSet>
+        <NoWarn>$(NoWarn);1591</NoWarn>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <LangVersion>default</LangVersion>
+        <TargetFramework>net6.0</TargetFramework>
+        <RootNamespace>Carts.Application</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\..\core\Kuna.EventSourcing.Core\Kuna.EventSourcing.Core.csproj" />
+      <ProjectReference Include="..\Carts.Domain\Carts.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="../../../../../stylecop.json" />
+    </ItemGroup>
+</Project>

@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <CodeAnalysisRuleSet>../../../stylecop.ruleset</CodeAnalysisRuleSet>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
+        <LangVersion>default</LangVersion>
+        <TargetFramework>net6.0</TargetFramework>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <Optimize>true</Optimize>
+      <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+      <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="../../../stylecop.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoFixture" />
+        <PackageReference Include="AutoFixture.AutoFakeItEasy" />
+        <PackageReference Include="AutoFixture.Xunit2" />
+        <PackageReference Include="DeepEqual" />
+        <PackageReference Include="FakeItEasy" />
+        <PackageReference Include="FluentAssertions" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" />
+        <PackageReference Include="xunit" />
+        <PackageReference Include="xunit.runner.visualstudio">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="coverlet.collector">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+    <ItemGroup>
+        <Using Include="Xunit" />
+        <Using Include="FluentAssertions" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Kuna.EventSourcing.Core\Kuna.EventSourcing.Core.csproj" />
+    </ItemGroup>
+</Project>
