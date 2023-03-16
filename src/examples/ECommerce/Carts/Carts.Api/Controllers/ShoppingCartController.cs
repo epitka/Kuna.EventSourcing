@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Carts.Api.Requests;
@@ -93,37 +93,4 @@ public class ShoppingCartsController : Controller
 
          return this.Ok();
      }
-
-    // [HttpGet("{id}")]
-    // public async Task<ShoppingCartDetails> Get(Guid id)
-    // {
-    //     var result = await queryBus.Send<GetCartById, ShoppingCartDetails>(GetCartById.Create(id));
-    //
-    //     Response.TrySetETagResponseHeader(result.Version);
-    //
-    //     return result;
-    // }
-    //
-    // [HttpGet]
-    // public async Task<PagedListResponse<ShoppingCartShortInfo>> Get([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 20)
-    // {
-    //     var pagedList = await queryBus.Send<GetCarts, IPagedList<ShoppingCartShortInfo>>(GetCarts.Create(pageNumber, pageSize));
-    //
-    //     return pagedList.ToResponse();
-    // }
-    //
-    //
-    // [HttpGet("{id}/history")]
-    // public async Task<PagedListResponse<ShoppingCartHistory>> GetHistory(Guid id)
-    // {
-    //     var pagedList = await queryBus.Send<GetCartHistory, IPagedList<ShoppingCartHistory>>(GetCartHistory.Create(id));
-    //
-    //     return pagedList.ToResponse();
-    // }
-    //
-    // [HttpGet("{id}/versions")]
-    // public Task<ShoppingCartDetails> GetVersion(Guid id, [FromQuery] GetCartAtVersionRequest? query)
-    // {
-    //     return queryBus.Send<GetCartAtVersion, ShoppingCartDetails>(GetCartAtVersion.Create(id, query?.Version));
-    // }
 }

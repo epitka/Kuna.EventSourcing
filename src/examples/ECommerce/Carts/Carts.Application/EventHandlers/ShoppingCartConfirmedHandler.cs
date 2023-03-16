@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Carts.Domain.Aggregate;
 using Carts.Domain.Aggregate.Events;

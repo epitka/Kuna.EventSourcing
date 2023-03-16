@@ -1,5 +1,4 @@
-﻿
-namespace Kuna.EventSourcing.Core.Aggregates;
+﻿namespace Kuna.EventSourcing.Core.Aggregates;
 
 public interface IAggregateRepository<in TKey, TAggregate>
     where TAggregate : class, IAggregate<TKey>, new()
