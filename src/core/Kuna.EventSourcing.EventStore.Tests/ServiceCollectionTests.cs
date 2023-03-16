@@ -54,6 +54,7 @@ public class ServiceCollectionTests
             configuration: cfg,
             eventStoreConnectionStringName: "EventStore",
             assembliesWithAggregateEvents: new[] { typeof(TestAggregate).Assembly },
+            aggregateEventsDiscoverFunc:  assemblies =>  new []{typeof(TestAggregateEvent)},
             subscriptionSettings: new[]
             {
                 new StreamSubscriptionSettings(

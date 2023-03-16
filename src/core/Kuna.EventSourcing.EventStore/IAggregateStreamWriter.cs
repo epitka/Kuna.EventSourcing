@@ -9,7 +9,7 @@ public interface IAggregateStreamWriter
     Task Write(
         string streamId,
         StreamRevision expectedVersion,
-        IEnumerable<IAggregateEvent> events,
+        IEnumerable<object> events,
         CancellationToken ct);
 }
 
@@ -30,7 +30,7 @@ public class AggregateStreamWriter
     public async Task Write(
         string streamId,
         StreamRevision expectedVersion,
-        IEnumerable<IAggregateEvent> events,
+        IEnumerable<object> events,
         CancellationToken ct)
     {
         var eventData = events.Select(@event => this.eventDataFactory.From(@event));

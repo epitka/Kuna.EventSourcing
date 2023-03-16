@@ -46,6 +46,7 @@ public class PersistentSubscriptionTests
             this.Configuration.Build(),
             "EventStore",
             new[] { this.GetType().Assembly },
+            assemblies =>  new []{typeof(TestAggregateEvent)},
             new[]
             {
                 new StreamSubscriptionSettings(

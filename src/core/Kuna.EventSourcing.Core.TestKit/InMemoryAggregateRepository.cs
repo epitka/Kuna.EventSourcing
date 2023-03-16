@@ -31,7 +31,7 @@ public class InMemoryAggregateRepository<Guid, TAggregate> : IAggregateRepositor
         var instanceStream = this.eventsStream[id];
 
         var events = instanceStream
-                     .Select(eventInfo => (IAggregateEvent)JsonConvert.DeserializeObject(eventInfo.Data, eventInfo.Type)!)
+                     .Select(eventInfo => JsonConvert.DeserializeObject(eventInfo.Data, eventInfo.Type)!)
                      .ToList();
 
         aggregate.InitWith(events);

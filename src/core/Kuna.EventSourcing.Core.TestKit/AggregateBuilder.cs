@@ -8,16 +8,16 @@ public class AggregateBuilder<TAggregate, TState, TKey>
     where TKey : IEquatable<TKey>
 {
     private const string RaiseEvent = "RaiseEvent";
-    private Queue<IAggregateEvent> queuedEvents = default!;
+    private Queue<object> queuedEvents = default!;
 
     public TState aggregateState = default!;
 
-    public static AggregateBuilder<TAggregate, TState, TKey> Init(TState state, IAggregateEvent createEvent)
+    public static AggregateBuilder<TAggregate, TState, TKey> Init(TState state, object createEvent)
     {
         var builder = new AggregateBuilder<TAggregate, TState, TKey>
         {
             aggregateState = state,
-            queuedEvents = new Queue<IAggregateEvent>(4),
+            queuedEvents = new Queue<object>(4),
         };
 
         builder.aggregateState.ApplyEvent(createEvent);
@@ -32,13 +32,13 @@ public class AggregateBuilder<TAggregate, TState, TKey>
         var builder = new AggregateBuilder<TAggregate, TState, TKey>
         {
             aggregateState = instance.GetState(),
-            queuedEvents = new Queue<IAggregateEvent>(4),
+            queuedEvents = new Queue<object>(4),
         };
 
         return builder;
     }
 
-    public AggregateBuilder<TAggregate, TState, TKey> With(IEnumerable<IAggregateEvent> events)
+    public AggregateBuilder<TAggregate, TState, TKey> With(IEnumerable<object> events)
     {
         foreach (var @event in events)
         {
@@ -49,7 +49,7 @@ public class AggregateBuilder<TAggregate, TState, TKey>
         return this;
     }
 
-    public AggregateBuilder<TAggregate, TState, TKey> With(IAggregateEvent @event)
+    public AggregateBuilder<TAggregate, TState, TKey> With(object @event)
     {
         this.aggregateState.ApplyEvent(@event);
         this.queuedEvents.Enqueue(@event);

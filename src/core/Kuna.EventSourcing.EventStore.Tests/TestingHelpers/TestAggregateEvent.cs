@@ -2,6 +2,6 @@
 
 namespace Kuna.EventSourcing.EventStore.Tests.TestingHelpers;
 
-public record TestAggregateEvent(Guid Id, string Value) : IAggregateEvent
+public record TestAggregateEvent(Guid Id, string Value)
 {
 }

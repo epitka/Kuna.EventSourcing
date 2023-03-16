@@ -30,7 +30,8 @@ public class AggregateStreamWriterTests
         sc.AddEventStore(
             cfg.Build(),
             "EventStore",
-            new[] { this.GetType().Assembly });
+            new[] { this.GetType().Assembly },
+            assemblies =>  new []{typeof(TestAggregateEvent)});
 
         this.ServiceProvider = sc.BuildServiceProvider();
     }

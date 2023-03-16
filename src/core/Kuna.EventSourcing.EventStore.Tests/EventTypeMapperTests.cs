@@ -8,7 +8,10 @@ public class EventTypeMapperTests
 
     public EventTypeMapperTests()
     {
-        this.mapper= new EventTypeMapper(new[] { this.GetType().Assembly });
+        this.mapper= new EventTypeMapper(
+            new[] { this.GetType().Assembly },
+            assemblies =>  new []{typeof(TestAggregateEvent)}
+        );
     }
 
     [Fact]

@@ -10,9 +10,9 @@ public interface IAggregate<TKey>
 
     int Version { get; }
 
-    IAggregateEvent[] GetPendingEvents();
+    object[] GetPendingEvents();
 
-    IAggregateEvent[] DequeuePendingEvents();
+    object[] DequeuePendingEvents();
 
     void InitWith(IEnumerable<object> events);
 }
