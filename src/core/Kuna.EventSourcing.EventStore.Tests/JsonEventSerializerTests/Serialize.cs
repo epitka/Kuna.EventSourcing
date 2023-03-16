@@ -6,7 +6,7 @@ namespace Kuna.EventSourcing.EventStore.Tests.JsonEventSerializerTests;
 
 public class Serialize
 {
-    private sealed record Serialized(Guid Id, string Name) : IAggregateEvent
+    private sealed record Serialized(Guid Id, string Name)
     {
     }
 

@@ -11,6 +11,6 @@ namespace Kuna.EventSourcing.Core.Tests.Events
     /// <param name="Name"></param>
     public sealed record TestAggregateCreated(
         Guid Id,
-        string Name) : IAggregateEvent {}
+        string Name);
 
 }

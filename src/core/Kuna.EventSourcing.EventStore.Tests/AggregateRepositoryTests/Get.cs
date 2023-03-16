@@ -13,7 +13,7 @@ public class Get
         var fakeReader = A.Fake<IAggregateStreamReader>(opt => opt.Strict());
 
         A.CallTo(() => fakeReader.GetEvents(A<string>._, default))
-         .ReturnsLazily(Enumerable.Empty<IAggregateEvent>);
+         .ReturnsLazily(Enumerable.Empty<object>);
 
         var repository = new TestAggregateRepository(fakeReader, A.Fake<IAggregateStreamWriter>());
 
@@ -26,7 +26,7 @@ public class Get
         var fakeReader = A.Fake<IAggregateStreamReader>(opt => opt.Strict());
         var aggregateId = Guid.NewGuid();
 
-        var events = new List<IAggregateEvent>()
+        var events = new List<object>()
         {
             new TestAggregate.TestAggregateCreated(aggregateId, "Initial"),
             new TestAggregate.TestAggregateNameChanged(aggregateId, "Changed"),

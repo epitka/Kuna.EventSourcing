@@ -1,4 +1,7 @@
-﻿using Carts.Application;
+﻿using System;
+using System.Linq;
+using System.Reflection;
+using Carts.Application;
 using Carts.Application.CommandHandlers;
 using Carts.Application.EventHandlers;
 using Carts.Application.Services;
@@ -37,10 +40,22 @@ public class ServicesConfigurator : IServicesConfigurator
                 })
             .AddControllers();
 
+        Func<Assembly[], Type[]> eventsDiscoveryFunc = assemblies =>
+        {
+            var interfaceType = typeof(IAggregateEvent);
+            var eventTypes = assemblies
+                             .SelectMany(i => i.GetTypes())
+                             .Where(x => interfaceType.IsAssignableFrom(x))
+                             .ToArray();
+
+            return eventTypes;
+        };
+
         services.AddEventStore(
             configuration: this.Configuration,
             eventStoreConnectionStringName: "EventStore",
             assembliesWithAggregateEvents: new[] { typeof(ShoppingCart).Assembly },
+            aggregateEventsDiscoverFunc: eventsDiscoveryFunc,
             subscriptionSettings: new[]
             {
                 new StreamSubscriptionSettings(

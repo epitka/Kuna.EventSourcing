@@ -76,17 +76,12 @@ public class JsonEventStoreSerializer : IEventStoreSerializer
         return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(obj, SerializerSettings));
     }
 
-    private static IAggregateEvent? DeserializeEvent(ResolvedEvent resolvedEvent, Type eventType)
+    private static object? DeserializeEvent(ResolvedEvent resolvedEvent, Type eventType)
     {
-        if (JsonConvert.DeserializeObject(
-                Encoding.UTF8.GetString(resolvedEvent.Event.Data.Span),
-                eventType,
-                SerializerSettings
-            ) is not IAggregateEvent @event)
-        {
-            return null;
-        }
-
-        return @event;
+        return JsonConvert.DeserializeObject(
+            Encoding.UTF8.GetString(resolvedEvent.Event.Data.Span),
+            eventType,
+            SerializerSettings
+        );
     }
 }

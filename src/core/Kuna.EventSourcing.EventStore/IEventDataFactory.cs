@@ -6,7 +6,7 @@ namespace Kuna.EventSourcing.EventStore;
 public interface IEventDataFactory
 {
     public EventData From(
-        IAggregateEvent aggregateEvent);
+        object aggregateEvent);
 }
 
 public class EventDataFactory : IEventDataFactory
@@ -23,7 +23,7 @@ public class EventDataFactory : IEventDataFactory
     }
 
     public EventData From(
-        IAggregateEvent aggregateEvent)
+        object aggregateEvent)
     {
         var eventId = Uuid.NewUuid();
 

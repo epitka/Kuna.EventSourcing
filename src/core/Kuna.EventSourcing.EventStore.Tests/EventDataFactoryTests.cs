@@ -6,7 +6,7 @@ namespace Kuna.EventSourcing.EventStore.Tests;
 
 public class EventDataFactoryTests
 {
-    private record DummyAggregateEvent(Guid Id, string Name) : IAggregateEvent
+    private record DummyAggregateEvent(Guid Id, string Name)
     {
     }
 

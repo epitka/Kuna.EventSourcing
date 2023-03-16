@@ -1,6 +1,5 @@
 ﻿using System.Collections.Concurrent;
 using System.Reflection;
-using Kuna.EventSourcing.Core.Aggregates;
 
 namespace Kuna.EventSourcing.EventStore;
 
@@ -9,16 +8,23 @@ public interface IEventTypeMapper
     Type MapFrom(string name);
 }
 
+//TODO: implement as singleton using Lazy
+
 public class EventTypeMapper : IEventTypeMapper
 {
     private static readonly ConcurrentDictionary<string, Type> TypeMap = new();
 
     /// <summary>
-    /// Type registered as singleton that contains map event types
+    /// Collects all events from assemblies provided and builds map that allows
+    /// mapping of the event name to event type.
     /// </summary>
-    /// <param name="assembliesToScan"></param>
-    public EventTypeMapper(IEnumerable<Assembly> assembliesToScan)
+    /// <param name="eventDiscoveryFunc">Provides a way to discover events in assemblies provided.
+    /// This can be based for example or marker interface (IAggregateEvent), folder name (Events) or event name convention (...Event), or some other way </param>
+    public  EventTypeMapper(
+        Assembly[] assembliesToScan,
+        Func<Assembly[], Type[]> eventDiscoveryFunc)
     {
+
         if (assembliesToScan == null
             || !assembliesToScan.Any())
         {
@@ -27,11 +33,7 @@ public class EventTypeMapper : IEventTypeMapper
                 "No assemblies to scan for IAggregateEvent implmentations found.");
         }
 
-        var interfaceType = typeof(IAggregateEvent);
-
-        var eventTypes = assembliesToScan
-                         .SelectMany(i => i.GetTypes())
-                         .Where(x => interfaceType.IsAssignableFrom(x));
+        var eventTypes = eventDiscoveryFunc.Invoke(assembliesToScan);
 
         foreach (var eventType in eventTypes)
         {

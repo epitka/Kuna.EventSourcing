@@ -8,7 +8,7 @@ public abstract class Aggregate<TKey, TState>
     where TState : AggregateState<TKey>, new()
     where TKey : IEquatable<TKey>
 {
-    private readonly Queue<IAggregateEvent> pendingEvents = new();
+    private readonly Queue<object> pendingEvents = new();
 
     public int OriginalVersion => this.CurrentState.OriginalVersion;
 
@@ -52,12 +52,12 @@ public abstract class Aggregate<TKey, TState>
     /// returns copy of the pending events in internal queue
     /// </summary>
     /// <returns></returns>
-    public IAggregateEvent[] GetPendingEvents()
+    public object[] GetPendingEvents()
     {
         return this.pendingEvents.ToArray();
     }
 
-    public IAggregateEvent[] DequeuePendingEvents()
+    public object[] DequeuePendingEvents()
     {
         var toReturn = this.pendingEvents.ToArray();
 
@@ -66,7 +66,7 @@ public abstract class Aggregate<TKey, TState>
         return toReturn;
     }
 
-    protected void RaiseEvent(IAggregateEvent aggregateEvent)
+    protected void RaiseEvent(object aggregateEvent)
     {
         this.CurrentState.ApplyEvent(aggregateEvent);
 

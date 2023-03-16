@@ -16,9 +16,10 @@ public static class ConfigurationExtensions
         IConfiguration configuration,
         string eventStoreConnectionStringName,
         Assembly[] assembliesWithAggregateEvents,
+        Func<Assembly[], Type[]> aggregateEventsDiscoverFunc,
         StreamSubscriptionSettings[]? subscriptionSettings = null)
     {
-        services.AddSingleton<IEventTypeMapper>(sp => new EventTypeMapper(assembliesWithAggregateEvents))
+        services.AddSingleton<IEventTypeMapper>(sp => new EventTypeMapper(assembliesWithAggregateEvents, aggregateEventsDiscoverFunc))
                 .AddSingleton<IEventStoreSerializer, JsonEventStoreSerializer>()
                 .AddSingleton<IEventMetadataFactory, EventMetadataFactory>()
                 .AddSingleton<IEventDataFactory, EventDataFactory>()

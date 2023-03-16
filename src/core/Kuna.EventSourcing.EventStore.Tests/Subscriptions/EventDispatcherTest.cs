@@ -5,11 +5,11 @@ namespace Kuna.EventSourcing.EventStore.Tests.Subscriptions;
 
 public class EventDispatcherTest
 {
-    public record Created(Guid Id) : IAggregateEvent;
+    public record Created(Guid Id);
 
-    public record Updated(Guid Id) : IAggregateEvent;
+    public record Updated(Guid Id);
 
-    public record Deleted(Guid Id) : IAggregateEvent;
+    public record Deleted(Guid Id);
 
     [Fact]
     public async Task Should_Invoke_Correct_Handler()

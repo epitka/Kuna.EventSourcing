@@ -37,7 +37,7 @@ public sealed class AggregateStreamReader
 
         if (events.ReadState.Result == ReadState.StreamNotFound)
         {
-            return Enumerable.Empty<IAggregateEvent>();
+            return Enumerable.Empty<object>();
         }
 
         var toReturn = new List<object>();

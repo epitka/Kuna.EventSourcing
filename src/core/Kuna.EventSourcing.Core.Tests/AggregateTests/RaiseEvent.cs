@@ -63,7 +63,7 @@ public class RaiseEvent
         // Act
         var aggregate = new TestAggregate();
 
-        var events = new List<IAggregateEvent>()
+        var events = new List<object>()
         {
             new TestAggregateCreated(Id: aggregateId, Name: name),
             new TestAggregateChanged(Id: aggregateId, ChangedValue: "Value1"),
