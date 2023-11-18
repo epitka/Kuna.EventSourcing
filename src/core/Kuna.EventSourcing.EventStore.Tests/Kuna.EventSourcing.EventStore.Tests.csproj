@@ -4,12 +4,9 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <CodeAnalysisRuleSet>../../../stylecop.ruleset</CodeAnalysisRuleSet>
         <Nullable>enable</Nullable>
-
         <IsPackable>false</IsPackable>
-
         <LangVersion>default</LangVersion>
-
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
