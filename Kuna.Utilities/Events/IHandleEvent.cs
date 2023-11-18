@@ -1,4 +1,4 @@
-﻿namespace Kuna.EventSourcing.Core.Events;
+namespace Kuna.Utilities.Events;
 
 /// <summary>
 /// Marker interface used to identify handlers of events.

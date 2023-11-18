@@ -1,8 +1,8 @@
-﻿namespace Kuna.EventSourcing.Core.TestKit;
+namespace Kuna.EventSourcing.Core.TestKit;
 
 public class ContainerDrivenTest
 {
-    private IServiceCollection? OriginalServices;
+    private IServiceCollection? originalServices;
 
     private readonly object syncRoot = new object();
 
@@ -14,16 +14,16 @@ public class ContainerDrivenTest
     {
         lock (this.syncRoot)
         {
-            if (this.OriginalServices != null)
+            if (this.originalServices != null)
             {
                 return;
             }
 
-            this.OriginalServices = servicesFactory.Invoke();
+            this.originalServices = servicesFactory.Invoke();
 
             this.Services = new ServiceCollection();
 
-            foreach (var descriptor in this.OriginalServices!)
+            foreach (var descriptor in this.originalServices!)
             {
                 this.Services.Add(descriptor);
             }

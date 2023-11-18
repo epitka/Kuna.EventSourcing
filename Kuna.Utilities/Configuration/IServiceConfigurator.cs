@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Kuna.EventSourcing.Core.Configuration;
+namespace Kuna.Utilities.Configuration;
 
 public interface IServicesConfigurator
 {

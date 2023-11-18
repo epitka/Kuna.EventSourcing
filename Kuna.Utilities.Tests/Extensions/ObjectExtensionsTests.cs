@@ -1,7 +1,7 @@
-﻿using DeepEqual.Syntax;
-using Kuna.EventSourcing.Core.Extensions;
+using DeepEqual.Syntax;
+using Kuna.Utilities.Extensions;
 
-namespace Kuna.EventSourcing.Core.Tests.Extensions;
+namespace Kuna.Utilities.Tests.Extensions;
 
 public class ObjectExtensionsTests
 {

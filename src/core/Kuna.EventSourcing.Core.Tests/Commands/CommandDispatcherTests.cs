@@ -1,6 +1,6 @@
-﻿using Kuna.EventSourcing.Core.Commands;
+using Kuna.Utilities.Commands;
 
-namespace Kuna.EventSourcing.Core.Tests.Commands;
+namespace Kuna.Utilities.Tests.Commands;
 
 public class CommandDispatcherTests
 {
@@ -24,8 +24,8 @@ public class CommandDispatcherTests
 
         var sc = new ServiceCollection();
 
-        sc.AddScoped<IHandleCommand<Create>>(sp => fakeCreateHandler);
-        sc.AddScoped<IHandleCommand<Update>>(sp => fakeUpdateHandler);
+        sc.AddScoped(sp => fakeCreateHandler);
+        sc.AddScoped(sp => fakeUpdateHandler);
         sc.AddScoped<ICommandDispatcher, CommandDispatcher>();
 
         var sp = sc.BuildServiceProvider();

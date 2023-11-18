@@ -1,4 +1,4 @@
-﻿using Kuna.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.Core.Aggregates;
 using Kuna.EventSourcing.EventStore.Configuration;
 using Kuna.EventSourcing.EventStore.Tests.TestingHelpers;
 using Kuna.EventSourcing.EventStore.Tests.TestingHelpers.DockerFixtures;
@@ -12,8 +12,8 @@ namespace Kuna.EventSourcing.EventStore.Tests;
 [Collection("EventStore collection")]
 public class AggregateStreamReaderTests
 {
-    private static readonly string streamPrefix = "readTest-";
-    private static readonly Guid aggregateId = Guid.NewGuid();
+    private static readonly string StreamPrefix = "readTest-";
+    private static readonly Guid AggregateId = Guid.NewGuid();
 
 
     public AggregateStreamReaderTests(EventStoreContainerFixture eventStoreDatabaseFixture)
@@ -45,8 +45,8 @@ public class AggregateStreamReaderTests
         var writer = scope.ServiceProvider.GetRequiredService<IAggregateStreamWriter>();
         var reader = scope.ServiceProvider.GetRequiredService<IAggregateStreamReader>();
 
-        var streamId = Concat(streamPrefix, aggregateId);
-        var events = GetEvents(aggregateId, 10);
+        var streamId = Concat(StreamPrefix, AggregateId);
+        var events = GetEvents(AggregateId, 10);
 
         await writer.Write(streamId, (-1).ToStreamRevision(), events, default);
 
@@ -70,7 +70,7 @@ public class AggregateStreamReaderTests
         using var scope = this.ServiceProvider.CreateScope();
         var reader = scope.ServiceProvider.GetRequiredService<IAggregateStreamReader>();
 
-        var streamId = Concat(streamPrefix, Guid.NewGuid());
+        var streamId = Concat(StreamPrefix, Guid.NewGuid());
 
         var result = await reader.GetEvents(streamId, default);
 

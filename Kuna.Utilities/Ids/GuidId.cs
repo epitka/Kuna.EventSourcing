@@ -1,6 +1,5 @@
-﻿using Newtonsoft.Json;
 
-namespace Kuna.EventSourcing.Core.Ids;
+namespace Kuna.Utilities.Ids;
 
 public sealed class GuidId
     : IEquatable<GuidId>,

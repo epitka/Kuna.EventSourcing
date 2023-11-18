@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Carts.Api.Requests;
 using Carts.Domain.Commands;
 using Carts.Domain.Model;
-using Kuna.EventSourcing.Core.Commands;
+using Kuna.Utilities.Commands;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Carts.Api.Controllers;
@@ -38,10 +38,15 @@ public class ShoppingCartsController : Controller
         AddProductRequest? request,
         CancellationToken ct)
     {
+        if (request == null)
+        {
+            return this.BadRequest("Missing request");
+        }
+
         var command = new AddProduct(
             id,
             ProductItem.From(
-                request?.ProductItem?.ProductId,
+                request.ProductItem.ProductId,
                 request?.ProductItem?.Quantity
             )
         );

@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Kuna.EventSourcing.Core.Commands;
+namespace Kuna.Utilities.Commands;
 
 public interface ICommandDispatcher
 {
@@ -40,7 +40,7 @@ public class CommandDispatcher : ICommandDispatcher
     {
         using var scope = this.serviceProvider.CreateScope();
 
-        var (handlerType, methodInfo) = GetHandlerTypeFor(command, ref this.cmdToHandlerMap);
+        var (handlerType, methodInfo) = GetHandlerTypeFor(command, this.cmdToHandlerMap);
 
         var handler = scope.ServiceProvider.GetRequiredService(handlerType);
 
@@ -53,12 +53,12 @@ public class CommandDispatcher : ICommandDispatcher
                 ct,
             });
 #nullable restore
-        return result;
+        return result!;
     }
 
     private static (Type handlerType, MethodInfo methodInfo) GetHandlerTypeFor<TReturn>(
         ICommand<TReturn> command,
-        ref ConcurrentDictionary<Type, (Type, MethodInfo)> map)
+        ConcurrentDictionary<Type, (Type, MethodInfo)> map)
     {
         var t = command.GetType();
 

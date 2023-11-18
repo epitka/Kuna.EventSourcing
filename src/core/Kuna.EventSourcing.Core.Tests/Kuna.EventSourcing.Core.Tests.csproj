@@ -6,7 +6,7 @@
         <Nullable>enable</Nullable>
         <IsPackable>false</IsPackable>
         <LangVersion>default</LangVersion>
-        <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+        <TargetFrameworks>net8.0</TargetFrameworks>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -44,6 +44,7 @@
         <Using Include="FluentAssertions" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Kuna.Utilities\Kuna.Utilities.csproj" />
       <ProjectReference Include="..\Kuna.EventSourcing.Core\Kuna.EventSourcing.Core.csproj" />
     </ItemGroup>
 </Project>

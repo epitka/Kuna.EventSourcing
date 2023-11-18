@@ -1,10 +1,10 @@
-﻿using EventStore.Client;
+using EventStore.Client;
 using Kuna.EventSourcing.Core.Aggregates;
-using Kuna.EventSourcing.Core.Events;
 using Kuna.EventSourcing.EventStore.Configuration;
 using Kuna.EventSourcing.EventStore.Subscriptions;
 using Kuna.EventSourcing.EventStore.Tests.TestingHelpers;
 using Kuna.EventSourcing.EventStore.Tests.TestingHelpers.DockerFixtures;
+using Kuna.Utilities.Events;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -86,7 +86,7 @@ public class PersistentSubscriptionTests
         await WriteEvents(writer, "test-", aggregateId, numberOfEvents);
 
         await Task.Run(
-            () => { hostedService.StartAsync(ct).ConfigureAwait(false); },
+            () => { hostedService.StartAsync(ct); },
             ct);
 
         // let's give handlers some time to process

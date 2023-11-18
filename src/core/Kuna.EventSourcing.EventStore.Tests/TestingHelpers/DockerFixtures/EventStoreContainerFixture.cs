@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
 
@@ -9,12 +9,15 @@ public class EventStoreContainerFixture
 {
     public EventStoreContainerFixture()
     {
+
+
         this.EventStoreDockerContainer = EventStoreContainer()
                                          .WithAutoRemove(true)
                                          .WithCleanUp(true)
                                          .Build();
     }
-    public TestcontainersContainer EventStoreDockerContainer { get; }
+    public IContainer EventStoreDockerContainer { get; }
+
 
     public async Task InitializeAsync()
     {
@@ -23,7 +26,7 @@ public class EventStoreContainerFixture
 
     public async Task DisposeAsync()
     {
-        await this.EventStoreDockerContainer.CleanUpAsync();
+        await this.EventStoreDockerContainer.StopAsync();
         await this.EventStoreDockerContainer.DisposeAsync();
     }
 
@@ -31,9 +34,9 @@ public class EventStoreContainerFixture
     /// Configures EventStore container with latest version of EventStore, that will have docker container and resources automatically
     /// removed.
     /// </summary>
-    public static ITestcontainersBuilder<TestcontainersContainer> EventStoreContainer()
+    public static ContainerBuilder EventStoreContainer()
     {
-        var builder = new TestcontainersBuilder<TestcontainersContainer>()
+        var builder = new ContainerBuilder()
                       .WithImage("eventstore/eventstore:latest")
                       .WithName("eventstore-test-" + Guid.NewGuid().ToString("N"))
                       .WithEnvironment("EVENTSTORE_CLUSTER_SIZE", "1")

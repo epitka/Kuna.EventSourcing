@@ -1,9 +1,9 @@
-﻿using Carts.Application;
+using Carts.Application;
 using Carts.Application.CommandHandlers;
 using Carts.Domain.Commands;
 using Carts.TestingInfrastructure;
-using Kuna.EventSourcing.Core.Commands;
 using Kuna.EventSourcing.Core.TestKit;
+using Kuna.Utilities.Commands;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Carts.Tests;

@@ -1,5 +1,4 @@
 using Carts.Domain.Model;
-using Kuna.EventSourcing.Core.Commands;
 
 namespace Carts.Domain.Commands;
 

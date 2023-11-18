@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Carts.Domain.Aggregate;
 using Carts.Domain.Aggregate.Events;
 using Carts.Domain.Model;
 using Kuna.EventSourcing.Core.Aggregates;
-using Kuna.EventSourcing.Core.Events;
-using Kuna.EventSourcing.Core.Ids;
+using Kuna.Utilities.Events;
+using Kuna.Utilities.Ids;
 
 namespace Carts.Application.EventHandlers;
 

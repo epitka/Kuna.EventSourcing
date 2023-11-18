@@ -1,5 +1,3 @@
-using Kuna.EventSourcing.Core.Aggregates;
-
 namespace Carts.Domain.Aggregate.Events;
 
 public sealed record ShoppingCartProductAdded(

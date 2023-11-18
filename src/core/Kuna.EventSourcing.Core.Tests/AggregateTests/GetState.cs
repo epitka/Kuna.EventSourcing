@@ -1,4 +1,4 @@
-﻿using DeepEqual.Syntax;
+using DeepEqual.Syntax;
 using Kuna.EventSourcing.Core.Tests.Events;
 
 namespace Kuna.EventSourcing.Core.Tests.AggregateTests;
@@ -24,7 +24,7 @@ public class GetState
             Name = created.Name,
             ChangedValue = changed.ChangedValue,
             Version = 1,
-            OriginalVersion = -1,
+            OriginalVersion = -1    
         };
         expectedState.SetId(aggregateId);
 

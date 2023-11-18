@@ -1,11 +1,11 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 using Carts.Application;
 using Carts.Application.CommandHandlers;
 using Carts.Domain.Commands;
 using Carts.TestingInfrastructure;
 using FluentAssertions;
-using Kuna.EventSourcing.Core.Ids;
+using Kuna.Utilities.Ids;
 using Xunit;
 using static Carts.TestingInfrastructure.StateTestingExtensions;
 

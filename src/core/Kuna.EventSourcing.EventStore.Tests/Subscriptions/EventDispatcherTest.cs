@@ -1,5 +1,5 @@
 ﻿using Kuna.EventSourcing.Core.Aggregates;
-using Kuna.EventSourcing.Core.Events;
+using Kuna.Utilities.Events;
 
 namespace Kuna.EventSourcing.EventStore.Tests.Subscriptions;
 

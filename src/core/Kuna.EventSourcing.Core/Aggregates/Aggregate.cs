@@ -1,5 +1,5 @@
-using Kuna.EventSourcing.Core.Events;
-using Kuna.EventSourcing.Core.Extensions;
+
+using Kuna.Utilities.Extensions;
 
 namespace Kuna.EventSourcing.Core.Aggregates;
 

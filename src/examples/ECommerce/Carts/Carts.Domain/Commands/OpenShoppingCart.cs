@@ -1,5 +1,5 @@
-using Kuna.EventSourcing.Core.Commands;
-using Kuna.EventSourcing.Core.Ids;
+
+using Kuna.Utilities.Ids;
 
 namespace Carts.Domain.Commands;
 

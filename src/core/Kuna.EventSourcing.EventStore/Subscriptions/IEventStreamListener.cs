@@ -1,8 +1,8 @@
-﻿using System.Reflection;
+using System.Reflection;
 using EventStore.Client;
 using Grpc.Core;
-using Kuna.EventSourcing.Core.Events;
 using Kuna.EventSourcing.Core.Exceptions;
+using Kuna.Utilities.Events;
 using Microsoft.Extensions.Logging;
 
 namespace Kuna.EventSourcing.EventStore.Subscriptions;
@@ -26,7 +26,7 @@ public class EventStreamListener : IEventStreamListener
     private bool started;
     private CancellationTokenSource cts = default!;
     private int resubscribeAttempts = 0;
-    private static readonly object obj = new();
+    private static readonly object Obj = new();
 
     private string SubscriptionGroupName { get; }
 
@@ -49,7 +49,7 @@ public class EventStreamListener : IEventStreamListener
         StreamSubscriptionSettings subscriptionSettings,
         CancellationToken ct)
     {
-        lock (obj)
+        lock (Obj)
         {
             Task.Run(
                 async () =>

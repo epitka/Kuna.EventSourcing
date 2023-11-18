@@ -1,5 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34309.116
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{15DA8E71-6B7D-4D0D-97B5-DA4CD201AE0E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ecommerce", "Ecommerce", "{DF3AA52C-523B-4483-8A4D-528554EA914D}"
@@ -8,33 +11,37 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Carts", "Carts", "{9B67D0A5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{D1203789-B217-4D51-BD1D-2171A1414D20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kuna.EventSourcing.Core", "src\core\Kuna.EventSourcing.Core\Kuna.EventSourcing.Core.csproj", "{CA962AA0-C026-4DDF-8057-67E12345891F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kuna.EventSourcing.Core", "src\core\Kuna.EventSourcing.Core\Kuna.EventSourcing.Core.csproj", "{CA962AA0-C026-4DDF-8057-67E12345891F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kuna.EventSourcing.Core.TestKit", "src\core\Kuna.EventSourcing.Core.TestKit\Kuna.EventSourcing.Core.TestKit.csproj", "{BAC67103-BE01-40B8-8EE4-5A4521D295D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kuna.EventSourcing.Core.TestKit", "src\core\Kuna.EventSourcing.Core.TestKit\Kuna.EventSourcing.Core.TestKit.csproj", "{BAC67103-BE01-40B8-8EE4-5A4521D295D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kuna.EventSourcing.Core.Tests", "src\core\Kuna.EventSourcing.Core.Tests\Kuna.EventSourcing.Core.Tests.csproj", "{21144493-A13B-400A-873C-C3ABABD7AE5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kuna.EventSourcing.Core.Tests", "src\core\Kuna.EventSourcing.Core.Tests\Kuna.EventSourcing.Core.Tests.csproj", "{21144493-A13B-400A-873C-C3ABABD7AE5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kuna.EventSourcing.EventStore", "src\core\Kuna.EventSourcing.EventStore\Kuna.EventSourcing.EventStore.csproj", "{B053A537-62ED-421E-BE94-2C19E722C4DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kuna.EventSourcing.EventStore", "src\core\Kuna.EventSourcing.EventStore\Kuna.EventSourcing.EventStore.csproj", "{B053A537-62ED-421E-BE94-2C19E722C4DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kuna.EventSourcing.EventStore.Tests", "src\core\Kuna.EventSourcing.EventStore.Tests\Kuna.EventSourcing.EventStore.Tests.csproj", "{AFACA05C-355B-4832-85B5-3FF3B65A1F16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kuna.EventSourcing.EventStore.Tests", "src\core\Kuna.EventSourcing.EventStore.Tests\Kuna.EventSourcing.EventStore.Tests.csproj", "{AFACA05C-355B-4832-85B5-3FF3B65A1F16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carts.Domain", "src\examples\ECommerce\Carts\Carts.Domain\Carts.Domain.csproj", "{346BA673-BDF5-447B-8CA5-B73CB7468DC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carts.Domain", "src\examples\ECommerce\Carts\Carts.Domain\Carts.Domain.csproj", "{346BA673-BDF5-447B-8CA5-B73CB7468DC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carts.Application", "src\examples\ECommerce\Carts\Carts.Application\Carts.Application.csproj", "{9FD58617-2418-44CC-A8CF-C6676100B913}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carts.Application", "src\examples\ECommerce\Carts\Carts.Application\Carts.Application.csproj", "{9FD58617-2418-44CC-A8CF-C6676100B913}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carts.Api", "src\examples\ECommerce\Carts\Carts.Api\Carts.Api.csproj", "{3E298236-9629-4C18-9562-DCBD9C65E089}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carts.Api", "src\examples\ECommerce\Carts\Carts.Api\Carts.Api.csproj", "{3E298236-9629-4C18-9562-DCBD9C65E089}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carts.Api.Tests", "src\examples\ECommerce\Carts\Carts.Api.Tests\Carts.Api.Tests.csproj", "{FF39064A-38D3-47F2-8C3B-F558ECA7AF2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carts.Api.Tests", "src\examples\ECommerce\Carts\Carts.Api.Tests\Carts.Api.Tests.csproj", "{FF39064A-38D3-47F2-8C3B-F558ECA7AF2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carts.Application.Test", "src\examples\ECommerce\Carts\Carts.Application.Test\Carts.Application.Test.csproj", "{D3634CB4-6531-4ADD-ADF8-BBF073FA7F1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carts.Application.Test", "src\examples\ECommerce\Carts\Carts.Application.Test\Carts.Application.Test.csproj", "{D3634CB4-6531-4ADD-ADF8-BBF073FA7F1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carts.Domain.Tests", "src\examples\ECommerce\Carts\Carts.Domain.Tests\Carts.Domain.Tests.csproj", "{00D19F32-54EB-44E6-AC4D-D893D94946B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carts.Domain.Tests", "src\examples\ECommerce\Carts\Carts.Domain.Tests\Carts.Domain.Tests.csproj", "{00D19F32-54EB-44E6-AC4D-D893D94946B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carts.Infrastructure", "src\examples\ECommerce\Carts\Carts.Infrastructure\Carts.Infrastructure.csproj", "{8D19D2FA-9722-41F1-84D6-8E35020FCED1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carts.Infrastructure", "src\examples\ECommerce\Carts\Carts.Infrastructure\Carts.Infrastructure.csproj", "{8D19D2FA-9722-41F1-84D6-8E35020FCED1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carts.Infrastructure.Test", "src\examples\ECommerce\Carts\Carts.Infrastructure.Test\Carts.Infrastructure.Test.csproj", "{991BA09A-4CF3-4FF4-9297-1A457FCC6167}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carts.Infrastructure.Test", "src\examples\ECommerce\Carts\Carts.Infrastructure.Test\Carts.Infrastructure.Test.csproj", "{991BA09A-4CF3-4FF4-9297-1A457FCC6167}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carts.TestingInfrastructure", "src\examples\ECommerce\Carts\Carts.TestingInfrastructure\Carts.TestingInfrastructure.csproj", "{C056CDE1-4692-48CE-AB62-0B8B35B684C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carts.TestingInfrastructure", "src\examples\ECommerce\Carts\Carts.TestingInfrastructure\Carts.TestingInfrastructure.csproj", "{C056CDE1-4692-48CE-AB62-0B8B35B684C0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kuna.Utilities", "Kuna.Utilities\Kuna.Utilities.csproj", "{30B3D2B0-A055-4462-AE3D-8BAAB4062E54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kuna.Utilities.Tests", "Kuna.Utilities.Tests\Kuna.Utilities.Tests.csproj", "{66B31704-CF76-489C-95C7-5C3425501B22}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -98,6 +105,17 @@ Global
 		{C056CDE1-4692-48CE-AB62-0B8B35B684C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C056CDE1-4692-48CE-AB62-0B8B35B684C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C056CDE1-4692-48CE-AB62-0B8B35B684C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30B3D2B0-A055-4462-AE3D-8BAAB4062E54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30B3D2B0-A055-4462-AE3D-8BAAB4062E54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30B3D2B0-A055-4462-AE3D-8BAAB4062E54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30B3D2B0-A055-4462-AE3D-8BAAB4062E54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66B31704-CF76-489C-95C7-5C3425501B22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66B31704-CF76-489C-95C7-5C3425501B22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66B31704-CF76-489C-95C7-5C3425501B22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66B31704-CF76-489C-95C7-5C3425501B22}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DF3AA52C-523B-4483-8A4D-528554EA914D} = {15DA8E71-6B7D-4D0D-97B5-DA4CD201AE0E}
@@ -116,6 +134,11 @@ Global
 		{8D19D2FA-9722-41F1-84D6-8E35020FCED1} = {9B67D0A5-F457-48D1-97E7-F40A6B362D2D}
 		{991BA09A-4CF3-4FF4-9297-1A457FCC6167} = {9B67D0A5-F457-48D1-97E7-F40A6B362D2D}
 		{C056CDE1-4692-48CE-AB62-0B8B35B684C0} = {9B67D0A5-F457-48D1-97E7-F40A6B362D2D}
+		{30B3D2B0-A055-4462-AE3D-8BAAB4062E54} = {D1203789-B217-4D51-BD1D-2171A1414D20}
+		{66B31704-CF76-489C-95C7-5C3425501B22} = {D1203789-B217-4D51-BD1D-2171A1414D20}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CCEAC7BD-D233-451D-AB39-4D6094157363}
 	EndGlobalSection
 	GlobalSection(RiderSharedRunConfigurations) = postSolution
 	EndGlobalSection

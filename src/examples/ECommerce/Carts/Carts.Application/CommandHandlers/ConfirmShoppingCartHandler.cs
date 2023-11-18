@@ -1,6 +1,4 @@
 
-using Kuna.EventSourcing.Core.Commands;
-
 namespace Carts.Application.CommandHandlers;
 
 public class ConfirmShoppingCartHandler: IHandleCommand<ConfirmShoppingCart>

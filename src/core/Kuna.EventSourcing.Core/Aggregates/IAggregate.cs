@@ -1,4 +1,4 @@
-using Kuna.EventSourcing.Core.Events;
+
 
 namespace Kuna.EventSourcing.Core.Aggregates;
 

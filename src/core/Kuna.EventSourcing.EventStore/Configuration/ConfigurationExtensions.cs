@@ -1,8 +1,8 @@
-﻿using System.Reflection;
+using System.Reflection;
 using EventStore.Client;
 using Kuna.EventSourcing.Core.Aggregates;
-using Kuna.EventSourcing.Core.Events;
 using Kuna.EventSourcing.EventStore.Subscriptions;
+using Kuna.Utilities.Events;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -30,7 +30,7 @@ public static class ConfigurationExtensions
             sp =>
             {
                 var settings = EventStoreClientSettings
-                    .Create(configuration.GetConnectionString(eventStoreConnectionStringName));
+                    .Create(configuration.GetConnectionString(eventStoreConnectionStringName)!);
 
                 settings.ConnectionName = "test-" + Guid.NewGuid();
 
@@ -63,7 +63,7 @@ public static class ConfigurationExtensions
             sp =>
             {
                 var esSettings = EventStoreClientSettings
-                    .Create(configuration.GetConnectionString(eventStoreConnectionStringName));
+                    .Create(configuration.GetConnectionString(eventStoreConnectionStringName)!);
 
                 esSettings.ConnectionName = "persistentSubscriptions-" + Assembly.GetEntryAssembly()!.GetName()!.Name!;
 

@@ -1,5 +1,3 @@
-using Kuna.EventSourcing.Core.Commands;
-
 namespace Carts.Application.CommandHandlers;
 
 public class AddProductHandler : IHandleCommand<AddProduct>

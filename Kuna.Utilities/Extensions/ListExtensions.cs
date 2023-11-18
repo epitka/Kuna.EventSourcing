@@ -1,4 +1,4 @@
-﻿namespace Kuna.EventSourcing.Core.Extensions;
+namespace Kuna.Utilities.Extensions;
 
 public static class ListExtensions
 {

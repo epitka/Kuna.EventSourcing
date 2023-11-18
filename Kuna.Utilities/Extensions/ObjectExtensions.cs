@@ -1,7 +1,6 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
-namespace Kuna.EventSourcing.Core.Extensions;
+
+namespace Kuna.Utilities.Extensions;
 
 public static class ObjectExtensions
 {

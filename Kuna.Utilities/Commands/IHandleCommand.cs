@@ -1,6 +1,6 @@
 ﻿using System.Reflection.Metadata;
 
-namespace Kuna.EventSourcing.Core.Commands;
+namespace Kuna.Utilities.Commands;
 
 /// <summary>
 /// Marker interface used to identify handlers of commands

@@ -1,4 +1,4 @@
-﻿namespace Kuna.EventSourcing.Core.Commands;
+namespace Kuna.Utilities.Commands;
 
 // marker interface for domain commands
 public interface ICommand

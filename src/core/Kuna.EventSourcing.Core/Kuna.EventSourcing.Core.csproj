@@ -28,10 +28,15 @@
 
     <ItemGroup>
       <PackageReference Include="AutoFixture.Xunit2" />
+      <PackageReference Include="FluentAssertions" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
       <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
       <PackageReference Include="Newtonsoft.Json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Kuna.Utilities\Kuna.Utilities.csproj" />
     </ItemGroup>
 </Project>

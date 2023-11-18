@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Kuna.EventSourcing.Core.Events;
+namespace Kuna.Utilities.Events;
 
 public interface IEventDispatcher
 {

@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+        <TargetFrameworks>net8.0</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <CodeAnalysisRuleSet>../../../../../stylecop.ruleset</CodeAnalysisRuleSet>
@@ -15,10 +15,6 @@
       <ProjectReference Include="..\..\..\..\core\Kuna.EventSourcing.Core.TestKit\Kuna.EventSourcing.Core.TestKit.csproj" />
       <ProjectReference Include="..\Carts.Application\Carts.Application.csproj" />
       <ProjectReference Include="..\Carts.Domain\Carts.Domain.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="DeepEqual" />
     </ItemGroup>
 
 </Project>

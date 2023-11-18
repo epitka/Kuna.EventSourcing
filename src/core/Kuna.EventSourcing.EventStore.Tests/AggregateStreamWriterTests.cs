@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using EventStore.Client;
 using Kuna.EventSourcing.Core.Exceptions;
 using Kuna.EventSourcing.EventStore.Configuration;
@@ -15,8 +15,8 @@ namespace Kuna.EventSourcing.EventStore.Tests;
 [TestCaseOrderer("Kuna.EventSourcing.EventStore.Tests.TestingHelpers.XUnitHelpers.PriorityOrderer", "Kuna.EventSourcing.EventStore.Tests")]
 public class AggregateStreamWriterTests
 {
-    private static readonly string streamPrefix = "writeTest-";
-    private static readonly Guid aggregateId = Guid.NewGuid();
+    private static readonly string StreamPrefix = "writeTest-";
+    private static readonly Guid AggregateId = Guid.NewGuid();
 
     public AggregateStreamWriterTests(EventStoreContainerFixture eventStoreDatabaseFixture)
     {
@@ -45,8 +45,8 @@ public class AggregateStreamWriterTests
         using var scope = this.ServiceProvider.CreateScope();
         var writer = scope.ServiceProvider.GetRequiredService<IAggregateStreamWriter>();
 
-        var streamId = GetStreamId(streamPrefix, aggregateId);
-        var events = GetEvents(aggregateId, 10);
+        var streamId = GetStreamId(StreamPrefix, AggregateId);
+        var events = GetEvents(AggregateId, 10);
 
         await writer.Write(streamId, (-1).ToStreamRevision(), events, default);
 
@@ -83,8 +83,8 @@ public class AggregateStreamWriterTests
         var writer = scope.ServiceProvider.GetRequiredService<IAggregateStreamWriter>();
         var client = this.ServiceProvider.GetRequiredService<EventStoreClient>();
 
-        var events = GetEvents(aggregateId, 10);
-        var streamId = GetStreamId(streamPrefix, aggregateId);
+        var events = GetEvents(AggregateId, 10);
+        var streamId = GetStreamId(StreamPrefix, AggregateId);
 
         // let's first fetch events from the stream so we can get the position of last event
         var expectedVersion = await GetExpectedVersion(client, streamId);
@@ -108,8 +108,8 @@ public class AggregateStreamWriterTests
         var writer = scope.ServiceProvider.GetRequiredService<IAggregateStreamWriter>();
         var client = this.ServiceProvider.GetRequiredService<EventStoreClient>();
 
-        var events = GetEvents(aggregateId, 1);
-        var streamId = GetStreamId(streamPrefix, aggregateId);
+        var events = GetEvents(AggregateId, 1);
+        var streamId = GetStreamId(StreamPrefix, AggregateId);
 
         // let's first fetch events from the stream so we can get the position of last event
         var expectedVersion = await GetExpectedVersion(client, streamId);
