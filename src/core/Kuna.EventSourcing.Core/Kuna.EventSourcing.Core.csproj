@@ -37,6 +37,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Kuna.Utilities\Kuna.Utilities.csproj" />
+      <ProjectReference Include="..\Kuna.Utilities\Kuna.Utilities.csproj" />
     </ItemGroup>
 </Project>

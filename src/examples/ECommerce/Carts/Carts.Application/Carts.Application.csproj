@@ -12,7 +12,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\..\..\Kuna.Utilities\Kuna.Utilities.csproj" />
       <ProjectReference Include="..\..\..\..\core\Kuna.EventSourcing.Core\Kuna.EventSourcing.Core.csproj" />
       <ProjectReference Include="..\Carts.Domain\Carts.Domain.csproj" />
     </ItemGroup>
