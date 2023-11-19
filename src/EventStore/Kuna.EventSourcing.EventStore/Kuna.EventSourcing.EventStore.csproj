@@ -32,7 +32,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Kuna.EventSourcing.Core\Kuna.EventSourcing.Core.csproj" />
+      <ProjectReference Include="..\..\core\Kuna.EventSourcing.Core\Kuna.EventSourcing.Core.csproj" />
     </ItemGroup>
 
 </Project>

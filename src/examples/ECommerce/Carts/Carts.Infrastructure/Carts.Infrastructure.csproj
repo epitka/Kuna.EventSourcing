@@ -12,7 +12,7 @@
     </ItemGroup>
     
     <ItemGroup>
-      <ProjectReference Include="..\..\..\..\core\Kuna.EventSourcing.EventStore\Kuna.EventSourcing.EventStore.csproj" />
+      <ProjectReference Include="..\..\..\..\EventStore\Kuna.EventSourcing.EventStore\Kuna.EventSourcing.EventStore.csproj" />
       <ProjectReference Include="..\Carts.Application\Carts.Application.csproj" />
       <ProjectReference Include="..\Carts.Domain\Carts.Domain.csproj" />
     </ItemGroup>
