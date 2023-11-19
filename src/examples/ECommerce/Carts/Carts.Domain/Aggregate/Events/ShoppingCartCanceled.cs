@@ -1,5 +1,5 @@
 namespace Carts.Domain.Aggregate.Events;
 
-public record ShoppingCartCanceled(Guid CartId, DateTime CanceledAt) : IAggregateEvent;
+public readonly record struct ShoppingCartCanceled(Guid CartId, DateTime CanceledAt) : IAggregateEvent;
 
 

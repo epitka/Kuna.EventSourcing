@@ -5,7 +5,6 @@ namespace Kuna.Utilities.Events;
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public interface IHandleEvent<TEvent>
-where TEvent : class
 {
     Task Handle(TEvent @event, CancellationToken ct);
 }

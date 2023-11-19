@@ -1,3 +1,3 @@
 namespace Carts.Domain.Aggregate.Events;
 
-public record ShoppingCartConfirmed(Guid CartId, DateTime ConfirmedAt) : IAggregateEvent;
+public readonly record struct ShoppingCartConfirmed(Guid CartId, DateTime ConfirmedAt) : IAggregateEvent;

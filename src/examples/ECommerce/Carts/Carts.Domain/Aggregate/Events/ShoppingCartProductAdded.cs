@@ -1,6 +1,6 @@
 namespace Carts.Domain.Aggregate.Events;
 
-public sealed record ShoppingCartProductAdded(
+public readonly record struct ShoppingCartProductAdded(
     Guid CartId,
     Guid ProductId,
     int Quantity,
