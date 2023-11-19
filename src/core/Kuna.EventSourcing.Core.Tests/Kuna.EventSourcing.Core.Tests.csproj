@@ -46,4 +46,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Kuna.EventSourcing.Core\Kuna.EventSourcing.Core.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Events\" />
+    </ItemGroup>
 </Project>

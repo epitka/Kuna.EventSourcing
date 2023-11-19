@@ -1,8 +1,12 @@
 #nullable disable
+using Kuna;
+
+
+#nullable disable
 using Kuna.EventSourcing.Core.Aggregates;
 
 
-namespace Kuna.EventSourcing.Core.Tests.Events
+namespace Kuna.EventSourcing.Core.Tests
 {
     /// <summary>
     ///

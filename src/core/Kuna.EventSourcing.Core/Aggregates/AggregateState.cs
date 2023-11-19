@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Logging;
-using static Kuna.EventSourcing.Core.StateMutator;
+using static Kuna.EventSourcing.Core.Projections.StateMutator;
 
 
 namespace Kuna.EventSourcing.Core.Aggregates;

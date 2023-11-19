@@ -1,5 +1,4 @@
-﻿using DeepEqual.Syntax;
-using Kuna.EventSourcing.Core.Tests.Events;
+using DeepEqual.Syntax;
 
 namespace Kuna.EventSourcing.Core.Tests.AggregateStateTests;
 

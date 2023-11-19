@@ -4,28 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kuna.EventSourcing.Core
+namespace Kuna.EventSourcing.Core.Projections
 {
     public static class StateMutator
     {
         /// <summary>
-        /// Used to initialize state with events. It will sequentially apply events and mutate state.
+        /// Used to initialize state with events. State can be any arbitrary model, as long as it follow convention of
+        /// naming mutation methods as Apply. It will sequentially apply events and mutate state.
         /// </summary>
         /// <param name="events"></param>
-       /// <returns>Returns version of the state after applying events</returns>
+        /// <returns>Returns version of the state after applying events</returns>
         public static void Mutate(object state, ref int currentVersion, IEnumerable<object> events)
         {
-/*          if (this.Version > -1)
-            {
-                throw new InvalidOperationException("State is already initialized");
-            }*/
 
             foreach (var @event in events)
             {
-               Mutate(state, ref currentVersion, @event);
+                Mutate(state, ref currentVersion, @event);
             }
-
-            // this.OriginalVersion = this.Version;
         }
 
 
@@ -36,9 +31,9 @@ namespace Kuna.EventSourcing.Core
         /// <param name="event"></param>
         /// <exception cref="InvalidOperationException"></exception>
         /// <returns>Returns version of the state after applying event</returns>
-        public static void Mutate(object state, ref int currentVersion, object @event)
+        public static void Mutate(dynamic state, ref int currentVersion, object @event)
         {
-            ((dynamic)state).Apply((dynamic)@event);
+            state.Apply((dynamic)@event);
 
             currentVersion++;
         }
