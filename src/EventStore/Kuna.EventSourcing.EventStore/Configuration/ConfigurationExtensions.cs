@@ -1,6 +1,5 @@
 using System.Reflection;
 using EventStore.Client;
-using Kuna.EventSourcing.Core.Aggregates;
 using Kuna.EventSourcing.EventStore.Subscriptions;
 using Kuna.Utilities.Events;
 using Microsoft.Extensions.Configuration;
@@ -23,8 +22,8 @@ public static class ConfigurationExtensions
                 .AddSingleton<IEventStoreSerializer, JsonEventStoreSerializer>()
                 .AddSingleton<IEventMetadataFactory, EventMetadataFactory>()
                 .AddSingleton<IEventDataFactory, EventDataFactory>()
-                .AddSingleton<IAggregateStreamWriter, AggregateStreamWriter>()
-                .AddSingleton<IAggregateStreamReader, AggregateStreamReader>();
+                .AddSingleton<IStreamWriter, AggregateStreamWriter>()
+                .AddSingleton<IStreamReader, AggregateStreamReader>();
 
         services.AddSingleton<EventStoreClient>(
             sp =>

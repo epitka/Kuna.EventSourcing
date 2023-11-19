@@ -1,6 +1,6 @@
-﻿namespace Kuna.EventSourcing.Core.Aggregates;
+namespace Kuna.EventSourcing.EventStore;
 
-public interface IAggregateStreamReader
+public interface IStreamReader
 {
     /// <summary>
     /// Reads stream of aggregate events and deserializes them to instances of the mapped event type

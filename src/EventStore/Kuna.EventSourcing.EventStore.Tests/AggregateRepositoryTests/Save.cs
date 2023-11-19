@@ -1,6 +1,5 @@
 ﻿using EventStore.Client;
 using FakeItEasy.Configuration;
-using Kuna.EventSourcing.Core.Aggregates;
 using Kuna.EventSourcing.EventStore.Tests.TestingHelpers;
 
 namespace Kuna.EventSourcing.EventStore.Tests.AggregateRepositoryTests;
@@ -10,8 +9,8 @@ public class Save
     [Fact]
     public async Task Should_Dequeue_Pending_Events_On_Aggregate()
     {
-        var fakeWriter = A.Fake<IAggregateStreamWriter>();
-        var repository = new TestAggregateRepository(A.Fake<IAggregateStreamReader>(), fakeWriter);
+        var fakeWriter = A.Fake<IStreamWriter>();
+        var repository = new TestAggregateRepository(A.Fake<IStreamReader>(), fakeWriter);
         var aggregateId = Guid.NewGuid();
 
         var aggregate = TestAggregate.Create(aggregateId, "test");
@@ -27,9 +26,9 @@ public class Save
     [Fact]
     public async Task When_No_Pending_Events_Should_Not_Attempt_Write()
     {
-        var fakeWriter = A.Fake<IAggregateStreamWriter>(opt => opt.Strict());
+        var fakeWriter = A.Fake<IStreamWriter>(opt => opt.Strict());
 
-        var repository = new TestAggregateRepository(A.Fake<IAggregateStreamReader>(), fakeWriter);
+        var repository = new TestAggregateRepository(A.Fake<IStreamReader>(), fakeWriter);
         var aggregateId = Guid.NewGuid();
 
         var aggregate = TestAggregate.Create(aggregateId, "test");
@@ -60,7 +59,7 @@ public class Save
         var pendingEvents = aggregate.GetPendingEvents();
 
         ArgumentCollection? callArguments = null;
-        var fakeWriter = A.Fake<IAggregateStreamWriter>();
+        var fakeWriter = A.Fake<IStreamWriter>();
 
         // check pre-condition
         pendingEvents .Length.Should().Be(2);
@@ -71,7 +70,7 @@ public class Save
          .WithAnyArguments()
          .Invokes(x => callArguments = x.Arguments);
 
-        var repository = new TestAggregateRepository(A.Fake<IAggregateStreamReader>(), fakeWriter);
+        var repository = new TestAggregateRepository(A.Fake<IStreamReader>(), fakeWriter);
         await repository.Save(aggregate, default);
 
         callArguments.Should().NotBeNull();

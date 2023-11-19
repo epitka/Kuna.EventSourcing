@@ -1,6 +1,5 @@
-﻿using Carts.Application;
+using Carts.Application;
 using Carts.Domain.Aggregate;
-using Kuna.EventSourcing.Core.Aggregates;
 using Kuna.EventSourcing.EventStore;
 
 namespace Carts.Infrastructure;
@@ -10,8 +9,8 @@ public sealed class ShoppingCartRepository
       IShoppingCartRepository
 {
     public ShoppingCartRepository(
-        IAggregateStreamReader streamReader,
-        IAggregateStreamWriter streamWriter)
+        IStreamReader streamReader,
+        IStreamWriter streamWriter)
         : base(streamReader, streamWriter)
     {
     }

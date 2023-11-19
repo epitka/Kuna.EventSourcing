@@ -1,4 +1,3 @@
-using Kuna.EventSourcing.Core.Aggregates;
 using Kuna.EventSourcing.EventStore.Configuration;
 using Kuna.EventSourcing.EventStore.Tests.TestingHelpers;
 using Kuna.EventSourcing.EventStore.Tests.TestingHelpers.DockerFixtures;
@@ -42,8 +41,8 @@ public class AggregateStreamReaderTests
     {
         using var scope = this.ServiceProvider.CreateScope();
 
-        var writer = scope.ServiceProvider.GetRequiredService<IAggregateStreamWriter>();
-        var reader = scope.ServiceProvider.GetRequiredService<IAggregateStreamReader>();
+        var writer = scope.ServiceProvider.GetRequiredService<IStreamWriter>();
+        var reader = scope.ServiceProvider.GetRequiredService<IStreamReader>();
 
         var streamId = Concat(StreamPrefix, AggregateId);
         var events = GetEvents(AggregateId, 10);
@@ -68,7 +67,7 @@ public class AggregateStreamReaderTests
     public async Task When_Aggregate_Stream_Does_Not_Exist_Should_Return_Empty_Enumerable()
     {
         using var scope = this.ServiceProvider.CreateScope();
-        var reader = scope.ServiceProvider.GetRequiredService<IAggregateStreamReader>();
+        var reader = scope.ServiceProvider.GetRequiredService<IStreamReader>();
 
         var streamId = Concat(StreamPrefix, Guid.NewGuid());
 

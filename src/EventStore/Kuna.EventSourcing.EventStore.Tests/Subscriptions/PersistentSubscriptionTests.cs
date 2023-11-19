@@ -1,5 +1,4 @@
 using EventStore.Client;
-using Kuna.EventSourcing.Core.Aggregates;
 using Kuna.EventSourcing.EventStore.Configuration;
 using Kuna.EventSourcing.EventStore.Subscriptions;
 using Kuna.EventSourcing.EventStore.Tests.TestingHelpers;
@@ -79,7 +78,7 @@ public class PersistentSubscriptionTests
 
         var ct = new CancellationToken();
 
-        var writer = scope.ServiceProvider.GetRequiredService<IAggregateStreamWriter>();
+        var writer = scope.ServiceProvider.GetRequiredService<IStreamWriter>();
 
         var aggregateId = Guid.NewGuid();
 
@@ -95,7 +94,7 @@ public class PersistentSubscriptionTests
         // since there is only one consumer, this process
         // events should be applied in the order they were added to ES
 
-        var reader = scope.ServiceProvider.GetRequiredService<IAggregateStreamReader>();
+        var reader = scope.ServiceProvider.GetRequiredService<IStreamReader>();
 
         var events = (await reader.GetEvents("test-" + aggregateId, ct))
             .ToArray();
@@ -113,7 +112,7 @@ public class PersistentSubscriptionTests
     }
 
     private static async Task WriteEvents(
-        IAggregateStreamWriter writer,
+        IStreamWriter writer,
         string streamPrefix,
         Guid aggregateId,
         int numberOfEvents)

@@ -1,10 +1,9 @@
-﻿using EventStore.Client;
-using Kuna.EventSourcing.Core.Aggregates;
+using EventStore.Client;
 
 namespace Kuna.EventSourcing.EventStore;
 
 public sealed class AggregateStreamReader
-    : IAggregateStreamReader
+    : IStreamReader
 {
     private readonly EventStoreClient client;
     private readonly IEventStoreSerializer eventStoreSerializer;

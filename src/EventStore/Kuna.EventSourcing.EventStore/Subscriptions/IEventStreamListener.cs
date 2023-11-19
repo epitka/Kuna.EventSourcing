@@ -42,7 +42,6 @@ public class EventStreamListener : IEventStreamListener
         this.eventDispatcher = eventDispatcher;
         this.logger = logger;
 
-        // each microservice will be a separate subscription group
         this.SubscriptionGroupName = Assembly.GetEntryAssembly()!.GetName()!.Name!;
     }
 
@@ -222,7 +221,6 @@ public class EventStreamListener : IEventStreamListener
         if (this.subscriptionSettings.MaxResubscribeAttempts == this.resubscribeAttempts)
         {
             // this sucks to throw and log, but it will do for now
-            // TODO: add interpolated string handler
             var ex = new Exception("Max subscribe retry count reached");
             this.logger.LogError(ex, "{RetryCount}, {SubscriptionSettings}", this.resubscribeAttempts, this.subscriptionSettings);
             throw ex;

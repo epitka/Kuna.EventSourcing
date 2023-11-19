@@ -7,8 +7,8 @@ public abstract class AggregateRepository<TKey, TAggregate> : IAggregateReposito
     where TAggregate : class, IAggregate<TKey>, new()
     where TKey : IEquatable<TKey>
 {
-    private readonly IAggregateStreamReader streamReader;
-    private readonly IAggregateStreamWriter streamWriter;
+    private readonly IStreamReader streamReader;
+    private readonly IStreamWriter streamWriter;
 
     /// <summary>
     /// name of the aggregate following camel case notation, such as "order-"
@@ -16,8 +16,8 @@ public abstract class AggregateRepository<TKey, TAggregate> : IAggregateReposito
     public abstract string StreamPrefix { get; }
 
     protected AggregateRepository(
-        IAggregateStreamReader streamReader,
-        IAggregateStreamWriter streamWriter)
+        IStreamReader streamReader,
+        IStreamWriter streamWriter)
     {
         this.streamReader = streamReader;
         this.streamWriter = streamWriter;

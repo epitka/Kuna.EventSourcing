@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 
 namespace Kuna.EventSourcing.EventStore.Tests;
 
@@ -23,7 +23,7 @@ public class EventMetadataFactoryTests
     [Fact]
     public void When_No_Activity_Exists_Should_Not_Have_Entry_For_CorrelationId()
     {
-        var factory = new EventMetadataFactory();
+        IEventMetadataFactory factory = new EventMetadataFactory();
 
         var result = factory.Get();
 

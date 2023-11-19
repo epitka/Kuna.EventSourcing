@@ -1,5 +1,4 @@
 ﻿using EventStore.Client;
-using Kuna.EventSourcing.Core.Aggregates;
 using Kuna.EventSourcing.EventStore.Configuration;
 using Kuna.EventSourcing.EventStore.Subscriptions;
 using Kuna.EventSourcing.EventStore.Tests.TestingHelpers;
@@ -69,8 +68,8 @@ public class ServiceCollectionTests
         var toResolve = new[]
         {
             typeof(IEventStreamListener),
-            typeof(IAggregateStreamWriter),
-            typeof(IAggregateStreamReader),
+            typeof(IStreamWriter),
+            typeof(IStreamReader),
             typeof(IEventDataFactory),
             typeof(IEventMetadataFactory),
             typeof(IEventStoreSerializer),

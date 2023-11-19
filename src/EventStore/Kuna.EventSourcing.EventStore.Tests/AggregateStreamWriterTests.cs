@@ -43,7 +43,7 @@ public class AggregateStreamWriterTests
     public async Task Can_Write_Events_To_New_Stream()
     {
         using var scope = this.ServiceProvider.CreateScope();
-        var writer = scope.ServiceProvider.GetRequiredService<IAggregateStreamWriter>();
+        var writer = scope.ServiceProvider.GetRequiredService<IStreamWriter>();
 
         var streamId = GetStreamId(StreamPrefix, AggregateId);
         var events = GetEvents(AggregateId, 10);
@@ -80,7 +80,7 @@ public class AggregateStreamWriterTests
     public async Task Can_Write_Events_To_Existing_Stream()
     {
         using var scope = this.ServiceProvider.CreateScope();
-        var writer = scope.ServiceProvider.GetRequiredService<IAggregateStreamWriter>();
+        var writer = scope.ServiceProvider.GetRequiredService<IStreamWriter>();
         var client = this.ServiceProvider.GetRequiredService<EventStoreClient>();
 
         var events = GetEvents(AggregateId, 10);
@@ -105,7 +105,7 @@ public class AggregateStreamWriterTests
     public async Task When_Invalid_Expected_Version_Is_Supplied_Throws_InvalidExpectedVersionException()
     {
         using var scope = this.ServiceProvider.CreateScope();
-        var writer = scope.ServiceProvider.GetRequiredService<IAggregateStreamWriter>();
+        var writer = scope.ServiceProvider.GetRequiredService<IStreamWriter>();
         var client = this.ServiceProvider.GetRequiredService<EventStoreClient>();
 
         var events = GetEvents(AggregateId, 1);

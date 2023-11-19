@@ -4,6 +4,7 @@ using Carts.Domain.Aggregate;
 using Carts.Domain.Aggregate.Events;
 using Carts.Domain.Model;
 using Kuna.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.EventStore;
 using Kuna.Utilities.Events;
 using Kuna.Utilities.Ids;
 
@@ -29,9 +30,9 @@ public record CartFinalized(
 
 public class ShoppingCartConfirmedHandler : IHandleEvent<ShoppingCartConfirmed>
 {
-    private readonly IAggregateStreamReader streamReader;
+    private readonly IStreamReader streamReader;
 
-    public ShoppingCartConfirmedHandler(IAggregateStreamReader streamReader)
+    public ShoppingCartConfirmedHandler(IStreamReader streamReader)
     {
         this.streamReader = streamReader;
     }

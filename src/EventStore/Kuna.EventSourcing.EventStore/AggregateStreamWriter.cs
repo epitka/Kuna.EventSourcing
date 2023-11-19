@@ -1,20 +1,10 @@
 using EventStore.Client;
-using Kuna.EventSourcing.Core.Aggregates;
 using Kuna.EventSourcing.Core.Exceptions;
 
 namespace Kuna.EventSourcing.EventStore;
 
-public interface IAggregateStreamWriter
-{
-    Task Write(
-        string streamId,
-        StreamRevision expectedVersion,
-        IEnumerable<object> events,
-        CancellationToken ct);
-}
-
 public class AggregateStreamWriter
-    : IAggregateStreamWriter
+    : IStreamWriter
 {
     private readonly EventStoreClient client;
     private readonly IEventDataFactory eventDataFactory;

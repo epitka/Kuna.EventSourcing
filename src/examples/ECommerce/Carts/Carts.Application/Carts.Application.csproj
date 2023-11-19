@@ -13,6 +13,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\..\core\Kuna.EventSourcing.Core\Kuna.EventSourcing.Core.csproj" />
+      <ProjectReference Include="..\..\..\..\EventStore\Kuna.EventSourcing.EventStore\Kuna.EventSourcing.EventStore.csproj" />
       <ProjectReference Include="..\Carts.Domain\Carts.Domain.csproj" />
     </ItemGroup>
 
