@@ -1,3 +1,7 @@
+using Microsoft.Extensions.Logging;
+using static Kuna.EventSourcing.Core.Projections.StateMutator;
+
+
 namespace Kuna.EventSourcing.Core.Aggregates;
 
 /// <summary>
@@ -51,11 +55,11 @@ where TKey : IEquatable<TKey>
             throw new InvalidOperationException("State is already initialized");
         }
 
-        foreach (var @event in events)
-        {
-            this.ApplyEvent(@event);
-        }
+        var v = this.Version;
 
+        Mutate(this, ref v, events);
+
+        this.Version = v;
         this.OriginalVersion = this.Version;
     }
 
@@ -67,8 +71,10 @@ where TKey : IEquatable<TKey>
     /// <exception cref="InvalidOperationException"></exception>
     public void ApplyEvent(object @event)
     {
-        ((dynamic)this).Apply((dynamic)@event);
+        var v = this.Version;
 
-        this.Version++;
+        Mutate(this, ref v, @event);
+
+        this.Version = v;
     }
 }

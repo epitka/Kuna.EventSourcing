@@ -16,8 +16,6 @@ namespace Kuna.EventSourcing.EventStore.Tests.Subscriptions;
 [Collection("EventStore collection")]
 public class PersistentSubscriptionTests
 {
-    //// private readonly EventStoreContainerFixture eventStoreDatabaseFixture;
-
     private IConfigurationBuilder Configuration { get; set; }
 
     private ServiceCollection Services { get; set; }
@@ -26,8 +24,6 @@ public class PersistentSubscriptionTests
 
     public PersistentSubscriptionTests(EventStoreContainerFixture eventStoreDatabaseFixture)
     {
-        //// this.eventStoreDatabaseFixture = eventStoreDatabaseFixture;
-
         this.Configuration =
             new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", false);

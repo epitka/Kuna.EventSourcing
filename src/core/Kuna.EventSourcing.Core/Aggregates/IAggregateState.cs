@@ -1,12 +1,10 @@
 namespace Kuna.EventSourcing.Core.Aggregates;
 
-public interface IAggregateState<TKey>
+public interface IAggregateState<TKey> : IHaveVersion
 {
     public Id<TKey> Id { get; }
 
     public void SetId(TKey aggregateId);
 
-    public int Version { get; }
-
-    public int OriginalVersion { get; }
+    public int OriginalVersion { get; set; }
 }
