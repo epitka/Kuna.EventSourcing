@@ -328,3 +328,6 @@ appsettings.Local.json
 .ionide
 
 tilt-build/
+/src/core/Kuna.EventSourcing.Core/TODO.cs
+/src/core/Kuna.EventSourcing.Core/TODO.txt
+/src/core/Kuna.EventSourcing.Core/TODO.txt
