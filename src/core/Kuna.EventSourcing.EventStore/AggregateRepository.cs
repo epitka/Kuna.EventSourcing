@@ -1,4 +1,4 @@
-﻿using Kuna.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.Core.Aggregates;
 using Kuna.EventSourcing.Core.Exceptions;
 
 namespace Kuna.EventSourcing.EventStore;
@@ -25,6 +25,8 @@ public abstract class AggregateRepository<TKey, TAggregate> : IAggregateReposito
 
     public virtual async Task<TAggregate> Get(TKey id, CancellationToken ct)
     {
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
+       
         ct.ThrowIfCancellationRequested();
 
         var streamId = this.GetStreamId(id);
@@ -34,7 +36,8 @@ public abstract class AggregateRepository<TKey, TAggregate> : IAggregateReposito
 
         if (events == Enumerable.Empty<object>())
         {
-            throw new AggregateBaseNotFoundException(id, typeof(TAggregate));
+            // Q: why is this reproting nullability warning?
+            throw new AggregateNotFoundException<TAggregate>(id:id.ToString()!);
         }
 
         ct.ThrowIfCancellationRequested();

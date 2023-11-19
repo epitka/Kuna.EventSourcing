@@ -1,7 +1,7 @@
-﻿namespace Kuna.EventSourcing.Core.Aggregates;
+namespace Kuna.EventSourcing.Core.Aggregates;
 
 /// <summary>
-/// interface that can be used in conjunction with IRepository as hooks to be invoked
+/// Interface that can be used in conjunction with IRepository as hooks to be invoked
 /// on the aggregate.
 /// </summary>
 public interface IAggregateLifecycle

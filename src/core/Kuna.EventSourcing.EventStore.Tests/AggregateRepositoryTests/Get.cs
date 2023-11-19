@@ -1,4 +1,4 @@
-﻿using DeepEqual.Syntax;
+using DeepEqual.Syntax;
 using Kuna.EventSourcing.Core.Aggregates;
 using Kuna.EventSourcing.Core.Exceptions;
 using Kuna.EventSourcing.EventStore.Tests.TestingHelpers;
@@ -17,7 +17,7 @@ public class Get
 
         var repository = new TestAggregateRepository(fakeReader, A.Fake<IAggregateStreamWriter>());
 
-        Assert.ThrowsAsync<AggregateBaseNotFoundException>(async () => await repository.Get(Guid.NewGuid(), default));
+        Assert.ThrowsAsync<AggregateNotFoundException<object>>(async () => await repository.Get(Guid.NewGuid(), default));
     }
 
     [Fact]

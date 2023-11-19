@@ -1,16 +1,8 @@
-﻿namespace Kuna.EventSourcing.Core.Aggregates;
+namespace Kuna.EventSourcing.Core;
 
-public sealed class Id<T> : IEquatable<T>
+public sealed class Id<T>(T value) : IEquatable<T>
 {
-    public Id(T value)
-    {
-        this.Value = value;
-    }
-
-    public T Value
-    {
-        get;
-    }
+    public T Value { get; } = value;
 
     public bool Equals(Id<T> other)
     {
@@ -24,7 +16,7 @@ public sealed class Id<T> : IEquatable<T>
 
     public override bool Equals(object? obj)
     {
-        if (ReferenceEquals(null, obj))
+        if (obj is null)
         {
             return false;
         }
@@ -52,5 +44,16 @@ public sealed class Id<T> : IEquatable<T>
         return obj == null
             ? null
             : new Id<T>(obj);
+    }
+
+    public override string ToString()
+    {
+        if (this.Value == null)
+        {
+            return "N/A";
+        }
+
+        // Q: why is this reporting a nullability warning?
+        return this.Value.ToString()!;
     }
 }

@@ -114,10 +114,10 @@ public class AggregateStreamWriterTests
         // let's first fetch events from the stream so we can get the position of last event
         var expectedVersion = await GetExpectedVersion(client, streamId);
 
-        await Assert.ThrowsAsync<InvalidExpectedVersionException>(
+        await Assert.ThrowsAsync<AggregateInvalidExpectedVersionException>(
             async () => await writer.Write(streamId, (expectedVersion + 1).ToStreamRevision(), events, default));
 
-        await Assert.ThrowsAsync<InvalidExpectedVersionException>(
+        await Assert.ThrowsAsync<AggregateInvalidExpectedVersionException>(
             async () => await writer.Write(streamId, (expectedVersion - 1).ToStreamRevision(), events, default));
     }
 }

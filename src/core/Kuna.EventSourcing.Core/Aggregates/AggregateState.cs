@@ -1,5 +1,9 @@
 namespace Kuna.EventSourcing.Core.Aggregates;
 
+/// <summary>
+/// Holds internal state of the aggregate typed by the generic parameter representing type of the aggregate Id, such as Guid, string, int
+/// </summary>
+/// <typeparam name="TKey"></typeparam>
 public abstract class AggregateState<TKey> : IAggregateState<TKey>
 where TKey : IEquatable<TKey>
 
@@ -8,6 +12,7 @@ where TKey : IEquatable<TKey>
 
     /// <summary>
     /// Each state is identified by Id. Id is immutable and can be set only once. Operation is idempotent.
+    /// This is usually called when applying first event to the state.
     /// </summary>
     /// <param name="aggregateId"></param>
     /// <exception cref="InvalidOperationException"></exception>

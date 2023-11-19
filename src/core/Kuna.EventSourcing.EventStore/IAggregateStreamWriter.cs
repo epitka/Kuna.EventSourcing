@@ -1,4 +1,4 @@
-﻿using EventStore.Client;
+using EventStore.Client;
 using Kuna.EventSourcing.Core.Aggregates;
 using Kuna.EventSourcing.Core.Exceptions;
 
@@ -43,7 +43,8 @@ public class AggregateStreamWriter
         }
         catch (WrongExpectedVersionException ex)
         {
-            throw new InvalidExpectedVersionException(
+            throw new AggregateInvalidExpectedVersionException(
+                streamId,
                 $"Invalid version, stream: {streamId}, expected: {expectedVersion}, actual: {ex.ActualVersion} ",
                 ex);
         }

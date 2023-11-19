@@ -1,4 +1,4 @@
-﻿using Kuna.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.Core.Aggregates;
 using Kuna.EventSourcing.Core.Exceptions;
 
 namespace Kuna.EventSourcing.Core.TestKit;
@@ -16,19 +16,16 @@ public class InMemoryAggregateRepository<Guid, TAggregate> : IAggregateRepositor
 
     public Task<TAggregate> Get(Guid id, CancellationToken ct)
     {
-        var _ = id
-                ?? throw new ArgumentNullException(
-                    nameof(id),
-                    "id cannot be null");
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
 
         var aggregate = new TAggregate();
 
-        if (!this.eventsStream.ContainsKey(id))
+        if (!this.eventsStream.TryGetValue(id, out var value))
         {
-            throw new AggregateBaseNotFoundException(id!, typeof(TAggregate));
+            throw new AggregateNotFoundException<TAggregate>(id.ToString());
         }
 
-        var instanceStream = this.eventsStream[id];
+        var instanceStream = value;
 
         var events = instanceStream
                      .Select(eventInfo => JsonConvert.DeserializeObject(eventInfo.Data, eventInfo.Type)!)

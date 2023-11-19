@@ -1,5 +1,3 @@
-
-
 namespace Kuna.Utilities.Extensions;
 
 public static class ObjectExtensions
