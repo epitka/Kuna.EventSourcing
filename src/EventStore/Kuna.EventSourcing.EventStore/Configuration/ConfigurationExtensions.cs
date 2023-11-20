@@ -22,8 +22,8 @@ public static class ConfigurationExtensions
                 .AddSingleton<IEventStoreSerializer, JsonEventStoreSerializer>()
                 .AddSingleton<IEventMetadataFactory, EventMetadataFactory>()
                 .AddSingleton<IEventDataFactory, EventDataFactory>()
-                .AddSingleton<IStreamWriter, AggregateStreamWriter>()
-                .AddSingleton<IStreamReader, AggregateStreamReader>();
+                .AddSingleton<IStreamWriter, StreamWriter>()
+                .AddSingleton<IStreamReader, StreamReader>();
 
         services.AddSingleton<EventStoreClient>(
             sp =>
