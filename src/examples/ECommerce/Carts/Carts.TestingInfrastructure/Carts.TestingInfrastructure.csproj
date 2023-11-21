@@ -13,8 +13,7 @@
     
     <ItemGroup>
       <ProjectReference Include="..\..\..\..\core\Kuna.EventSourcing.Core.TestKit\Kuna.EventSourcing.Core.TestKit.csproj" />
-      <ProjectReference Include="..\Carts.Application\Carts.Application.csproj" />
-      <ProjectReference Include="..\Carts.Domain\Carts.Domain.csproj" />
+      <ProjectReference Include="..\Carts.Api\Carts.csproj" />
     </ItemGroup>
 
 </Project>

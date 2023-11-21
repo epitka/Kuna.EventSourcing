@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Carts.Api.Tests;
+namespace Carts.Tests;
 
 public class ServicesConfigurationTest
 {
