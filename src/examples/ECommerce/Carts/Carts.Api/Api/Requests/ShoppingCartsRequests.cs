@@ -1,5 +1,3 @@
-﻿using System;
-
 namespace Carts.Api.Requests;
 
 public sealed record OpenShoppingCartRequest(

@@ -1,10 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFrameworks>net8.0</TargetFrameworks>
         <LangVersion>default</LangVersion>
         <Nullable>enable</Nullable>
         <CodeAnalysisRuleSet>../../../../../stylecop.ruleset</CodeAnalysisRuleSet>
+        <EnforceCodeStyleInBuild>False</EnforceCodeStyleInBuild>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|AnyCPU'">
+      <Optimize>False</Optimize>
     </PropertyGroup>
 
     <ItemGroup>
@@ -21,8 +26,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\..\core\Kuna.EventSourcing.Core\Kuna.EventSourcing.Core.csproj" />
-      <ProjectReference Include="..\Carts.Application\Carts.Application.csproj" />
-      <ProjectReference Include="..\Carts.Domain\Carts.Domain.csproj" />
-      <ProjectReference Include="..\Carts.Infrastructure\Carts.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\..\..\core\Kuna.Utilities\Kuna.Utilities.csproj" />
+      <ProjectReference Include="..\..\..\..\EventStore\Kuna.EventSourcing.EventStore\Kuna.EventSourcing.EventStore.csproj" />
     </ItemGroup> 
 </Project>

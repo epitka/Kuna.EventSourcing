@@ -1,5 +1,5 @@
 using System;
-using Carts.Api;
+using Carts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Serilog;
@@ -61,7 +61,7 @@ finally
     Log.CloseAndFlush();
 }
 
-namespace Carts.Api
+namespace Carts
 {
     public partial class Program
     {

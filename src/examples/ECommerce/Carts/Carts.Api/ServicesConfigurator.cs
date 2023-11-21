@@ -21,7 +21,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
-namespace Carts.Api;
+namespace Carts;
 
 public class ServicesConfigurator : IServicesConfigurator
 {

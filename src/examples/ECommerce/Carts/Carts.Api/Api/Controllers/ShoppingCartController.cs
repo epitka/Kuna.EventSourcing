@@ -1,10 +1,6 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Carts.Api.Requests;
 using Carts.Domain.Commands;
 using Carts.Domain.Model;
-using Kuna.Utilities.Commands;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Carts.Api.Controllers;
@@ -57,45 +53,45 @@ public class ShoppingCartsController : Controller
     }
 
 
-     [HttpDelete("{id:guid}/products/{productId:guid}")]
-     public async Task<IActionResult> RemoveProduct(
-         Guid id,
-         [FromRoute]Guid? productId,
-         [FromQuery]int? quantity,
-         [FromQuery]decimal? unitPrice,
-         CancellationToken ct)
-     {
-         var command = new RemoveProduct(
-             id,
-             PricedProductItem.Create(
-                 productId,
-                 quantity,
-                 unitPrice
-             )
-         );
+    [HttpDelete("{id:guid}/products/{productId:guid}")]
+    public async Task<IActionResult> RemoveProduct(
+        Guid id,
+        [FromRoute] Guid? productId,
+        [FromQuery] int? quantity,
+        [FromQuery] decimal? unitPrice,
+        CancellationToken ct)
+    {
+        var command = new RemoveProduct(
+            id,
+            PricedProductItem.Create(
+                productId,
+                quantity,
+                unitPrice
+            )
+        );
 
-         await this.commandDispatcher.Send(command, ct);
+        await this.commandDispatcher.Send(command, ct);
 
-         return this.NoContent();
-     }
+        return this.NoContent();
+    }
 
-     [HttpPut("{id:guid}/confirmation")]
-     public async Task<IActionResult> ConfirmCart(Guid id, CancellationToken ct)
-     {
-         var command = new ConfirmShoppingCart(id);
+    [HttpPut("{id:guid}/confirmation")]
+    public async Task<IActionResult> ConfirmCart(Guid id, CancellationToken ct)
+    {
+        var command = new ConfirmShoppingCart(id);
 
-         await this.commandDispatcher.Send(command, ct);
+        await this.commandDispatcher.Send(command, ct);
 
-         return this.Ok();
-     }
+        return this.Ok();
+    }
 
     [HttpDelete("{id}")]
-     public async Task<IActionResult> CancelCart(Guid id, CancellationToken ct)
-     {
-         var command = CancelShoppingCart.Create(id);
+    public async Task<IActionResult> CancelCart(Guid id, CancellationToken ct)
+    {
+        var command = CancelShoppingCart.Create(id);
 
-         await this.commandDispatcher.Send(command, ct);
+        await this.commandDispatcher.Send(command, ct);
 
-         return this.Ok();
-     }
+        return this.Ok();
+    }
 }

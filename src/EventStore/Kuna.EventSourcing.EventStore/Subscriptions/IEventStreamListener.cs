@@ -8,6 +8,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Kuna.EventSourcing.EventStore.Subscriptions;
 
+/// <summary>
+/// Subscribes to a stream and dispatches events to the event dispatcher
+/// </summary>
 public interface IEventStreamListener
 {
     void Start(
@@ -17,6 +20,7 @@ public interface IEventStreamListener
     void Stop(TimeSpan delay);
 }
 
+/// <inheritdoc/>
 public class EventStreamListener : IEventStreamListener
 {
     private readonly EventStorePersistentSubscriptionsClient client;
