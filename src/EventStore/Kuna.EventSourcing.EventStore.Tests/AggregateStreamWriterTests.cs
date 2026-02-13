@@ -48,16 +48,21 @@ public class AggregateStreamWriterTests
         var streamId = GetStreamId(StreamPrefix, AggregateId);
         var events = GetEvents(AggregateId, 10);
 
-        await writer.Write(streamId, (-1).ToStreamRevision(), events, default);
+        await writer.Write(streamId, (-1).ToStreamRevision(), events, CancellationToken.None);
 
         // verify they have been written
         var client = this.ServiceProvider.GetRequiredService<EventStoreClient>();
 
         var result = client.ReadStreamAsync(Direction.Forwards, streamId, StreamPosition.Start);
 
-        var fetchedEvents = await result.Select(x => x).ToArrayAsync();
+        var fetchedEvents = new List<ResolvedEvent>();
 
-        fetchedEvents.Length.Should().Be(events.Length);
+        await foreach (var ev in result)
+        {
+            fetchedEvents.Add(ev);
+        }
+
+        fetchedEvents.Count.Should().Be(events.Length);
 
         var serializer = this.ServiceProvider.GetRequiredService<IEventStoreSerializer>();
 
@@ -95,9 +100,14 @@ public class AggregateStreamWriterTests
         // verify they have been written
         var result = client.ReadStreamAsync(Direction.Forwards, streamId, StreamPosition.Start);
 
-        var fetchedEvents = await result.Select(x => x).ToArrayAsync();
+        var fetchedEvents = new List<ResolvedEvent>();
 
-        fetchedEvents.Length.Should().Be(events.Length + (expectedVersion + 1));
+        await foreach (var ev in result)
+        {
+            fetchedEvents.Add(ev);
+        }
+
+        fetchedEvents.Count.Should().Be(events.Length + (expectedVersion + 1));
     }
 
     [Fact]

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net8.0</TargetFrameworks>
+        <TargetFramework>net10.0</TargetFramework>
         <Nullable>enable</Nullable>
         <CodeAnalysisRuleSet>../../../stylecop.ruleset</CodeAnalysisRuleSet>
         <NoWarn>$(NoWarn);1591</NoWarn>

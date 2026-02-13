@@ -7,7 +7,7 @@ namespace Kuna.EventSourcing.EventStore.Tests.AggregateRepositoryTests;
 public class Get
 {
     [Fact]
-    public void When_Aggregate_Does_Not_Exist_Should_Throw()
+    public async Task When_Aggregate_Does_Not_Exist_Should_Throw()
     {
         var fakeReader = A.Fake<IStreamReader>(opt => opt.Strict());
 
@@ -16,7 +16,7 @@ public class Get
 
         var repository = new TestAggregateRepository(fakeReader, A.Fake<IStreamWriter>());
 
-        Assert.ThrowsAsync<AggregateNotFoundException<object>>(async () => await repository.Get(Guid.NewGuid(), default));
+        await Assert.ThrowsAsync<AggregateNotFoundException<object>>(async () => await repository.Get(Guid.NewGuid(), default));
     }
 
     [Fact]

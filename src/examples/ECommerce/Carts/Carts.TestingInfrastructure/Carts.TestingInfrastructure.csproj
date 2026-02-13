@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net8.0</TargetFrameworks>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <CodeAnalysisRuleSet>../../../../../stylecop.ruleset</CodeAnalysisRuleSet>
@@ -10,7 +10,7 @@
     <ItemGroup>
         <AdditionalFiles Include="../../../../../stylecop.json" />
     </ItemGroup>
-    
+
     <ItemGroup>
       <ProjectReference Include="..\..\..\..\core\Kuna.EventSourcing.Core.TestKit\Kuna.EventSourcing.Core.TestKit.csproj" />
       <ProjectReference Include="..\Carts.Api\Carts.csproj" />

@@ -1,10 +1,5 @@
 using EventStore.Client;
 using Kuna.EventSourcing.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Kuna.EventSourcing.Core.Projections.StateMutator;
 
 namespace Kuna.EventSourcing.EventStore
@@ -16,13 +11,13 @@ namespace Kuna.EventSourcing.EventStore
     {
         public async Task<object[]> LoadEvents(string streamId, CancellationToken ct)
         {
-           var events = await reader.GetEvents(streamId, ct);
+            var events = await reader.GetEvents(streamId, ct);
             return events.ToArray();
         }
 
-        public async Task SaveEvents(string streamId,object[] events, int expectedVersion, CancellationToken ct)
+        public async Task SaveEvents(string streamId, object[] events, int expectedVersion, CancellationToken ct)
         {
-           await writer.Write(streamId, StreamRevision.FromInt64(expectedVersion), events, ct);
+            await writer.Write(streamId, StreamRevision.FromInt64(expectedVersion), events, ct);
         }
 
         public async Task<TState> Project<TState>(string streamId, CancellationToken ct)
@@ -41,10 +36,10 @@ namespace Kuna.EventSourcing.EventStore
         public TState Project<TState>(TState state, ref int version, object[] events)
         {
             ArgumentNullException.ThrowIfNull(state, nameof(state));
-         
+
             Mutate(state, ref version, events);
 
-            return state; ;
+            return state;
         }
     }
 }
