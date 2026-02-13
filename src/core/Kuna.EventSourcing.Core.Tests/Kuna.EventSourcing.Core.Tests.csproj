@@ -6,47 +6,44 @@
         <Nullable>enable</Nullable>
         <IsPackable>false</IsPackable>
         <LangVersion>default</LangVersion>
-        <TargetFrameworks>net8.0</TargetFrameworks>
+        <TargetFramework>net10.0</TargetFramework>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <Optimize>true</Optimize>
-      <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-      <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <Optimize>true</Optimize>
+        <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <NoWarn>$(NoWarn);NU1903</NoWarn>
+        
     </PropertyGroup>
 
     <ItemGroup>
-        <AdditionalFiles Include="../../../stylecop.json" />
+        <AdditionalFiles Include="../../../stylecop.json"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoFixture" />
-        <PackageReference Include="AutoFixture.AutoFakeItEasy" />
-        <PackageReference Include="AutoFixture.Xunit2" />
-        <PackageReference Include="DeepEqual" />
-        <PackageReference Include="FakeItEasy" />
-        <PackageReference Include="FluentAssertions" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" />
-        <PackageReference Include="xunit" />
+        <PackageReference Include="AutoFixture"/>
+        <PackageReference Include="AutoFixture.AutoFakeItEasy"/>
+        <PackageReference Include="AutoFixture.Xunit2"/>
+        <PackageReference Include="DeepEqual"/>
+        <PackageReference Include="FakeItEasy"/>
+        <PackageReference Include="FluentAssertions"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions"/>
+        <PackageReference Include="xunit.assert" />
         <PackageReference Include="xunit.runner.visualstudio">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
-        <PackageReference Include="coverlet.collector">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
     </ItemGroup>
     <ItemGroup>
-        <Using Include="Xunit" />
-        <Using Include="FluentAssertions" />
+        <Using Include="Xunit"/>
+        <Using Include="FluentAssertions"/>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Kuna.EventSourcing.Core\Kuna.EventSourcing.Core.csproj" />
+        <ProjectReference Include="..\Kuna.EventSourcing.Core\Kuna.EventSourcing.Core.csproj"/>
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Events\" />
+        <Folder Include="Events\"/>
     </ItemGroup>
 </Project>

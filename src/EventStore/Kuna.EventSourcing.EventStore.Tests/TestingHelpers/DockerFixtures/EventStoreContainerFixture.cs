@@ -53,7 +53,7 @@ public class EventStoreContainerFixture
                       .WithExposedPort(1117)
                       .WithExposedPort(2117)
                       .WithHostname(Dns.GetHostName())
-                      .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(1117))
+                      .WithWaitStrategy(Wait.ForUnixContainer().UntilExternalTcpPortIsAvailable(1117))
                       .WithAutoRemove(true)
                       .WithCleanUp(true);
 

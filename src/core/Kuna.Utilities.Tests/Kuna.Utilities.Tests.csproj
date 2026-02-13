@@ -1,18 +1,28 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <NoWarn>$(NoWarn);NU1903</NoWarn>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AutoFixture.AutoFakeItEasy" />
-    <PackageReference Include="FakeItEasy" />
-    <PackageReference Include="FluentAssertions" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="AutoFixture.AutoFakeItEasy"/>
+        <PackageReference Include="DeepEqual"/>
+        <PackageReference Include="FakeItEasy"/>
+        <PackageReference Include="FluentAssertions"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" />
+        <PackageReference Include="System.Net.Http" />
+        <PackageReference Include="xunit"/>
+        <PackageReference Include="xunit.runner.visualstudio">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Kuna.Utilities\Kuna.Utilities.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Kuna.Utilities\Kuna.Utilities.csproj"/>
+    </ItemGroup>
 
 </Project>

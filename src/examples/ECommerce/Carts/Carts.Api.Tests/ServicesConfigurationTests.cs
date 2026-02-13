@@ -5,7 +5,6 @@ using Kuna.Extensions.DependencyInjection.Validation.Exceptions;
 using Kuna.Utilities.Commands;
 using Kuna.Utilities.Events;
 using Microsoft.AspNetCore.Mvc;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace Carts.Tests;

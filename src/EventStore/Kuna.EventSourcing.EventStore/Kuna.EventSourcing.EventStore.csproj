@@ -4,35 +4,35 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>default</LangVersion>
-        <TargetFrameworks>net8.0</TargetFrameworks>
+        <TargetFramework>net10.0</TargetFramework>
         <CodeAnalysisRuleSet>../../../stylecop.ruleset</CodeAnalysisRuleSet>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <Optimize>true</Optimize>
-      <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-      <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <Optimize>true</Optimize>
+        <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-      <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 
     <ItemGroup>
-        <AdditionalFiles Include="../../../stylecop.json" />
+        <AdditionalFiles Include="../../../stylecop.json"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="EventStore.Client.Grpc" />
-      <PackageReference Include="EventStore.Client.Grpc.PersistentSubscriptions" />
-      <PackageReference Include="EventStore.Client.Grpc.Streams" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
-      <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
+        <PackageReference Include="EventStore.Client.Grpc"/>
+        <PackageReference Include="EventStore.Client.Grpc.PersistentSubscriptions"/>
+        <PackageReference Include="EventStore.Client.Grpc.Streams"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\core\Kuna.EventSourcing.Core\Kuna.EventSourcing.Core.csproj" />
+        <ProjectReference Include="..\..\core\Kuna.EventSourcing.Core\Kuna.EventSourcing.Core.csproj"/>
     </ItemGroup>
 
 </Project>
