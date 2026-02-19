@@ -1,7 +1,7 @@
 using System.Reflection;
 using EventStore.Client;
 using Kuna.EventSourcing.EventStore.Subscriptions;
-using Kuna.Utilities.Events;
+// using Kuna.Utilities.Events;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -56,7 +56,7 @@ public static class ConfigurationExtensions
         StreamSubscriptionSettings[] settings)
     {
         services.AddTransient<IEventStreamListener, EventStreamListener>();
-        services.AddTransient<IEventDispatcher, EventDispatcher>();
+        //// services.AddTransient<IEventDispatcher, EventDispatcher>();
 
         services.AddSingleton(
             sp =>

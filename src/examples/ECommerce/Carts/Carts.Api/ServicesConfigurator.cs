@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using System.Reflection;
 using Carts.Application;
 using Carts.Application.CommandHandlers;
@@ -10,12 +8,12 @@ using Carts.Domain.Aggregate.Events;
 using Carts.Domain.Commands;
 using Carts.Domain.Services;
 using Carts.Infrastructure;
+using Carts.Infrastructure.Commands;
 using EventStore.Client;
+using Kuna.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.EventStore;
 using Kuna.EventSourcing.EventStore.Configuration;
 using Kuna.EventSourcing.EventStore.Subscriptions;
-using Kuna.Utilities.Commands;
-using Kuna.Utilities.Configuration;
-using Kuna.Utilities.Events;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,7 +21,7 @@ using Microsoft.OpenApi.Models;
 
 namespace Carts;
 
-public class ServicesConfigurator : IServicesConfigurator
+public class ServicesConfigurator
 {
     public IConfiguration Configuration { get; set; } = default!;
 

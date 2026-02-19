@@ -3,7 +3,6 @@ using Kuna.EventSourcing.EventStore.Configuration;
 using Kuna.EventSourcing.EventStore.Subscriptions;
 using Kuna.EventSourcing.EventStore.Tests.TestingHelpers;
 using Kuna.EventSourcing.EventStore.Tests.TestingHelpers.DockerFixtures;
-using Kuna.Utilities.Events;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;

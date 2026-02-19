@@ -22,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Kuna.Utilities\Kuna.Utilities.csproj"/>
+      <Folder Include="Extensions\" />
     </ItemGroup>
 
 </Project>

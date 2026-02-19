@@ -1,6 +1,4 @@
 
-using Kuna.Utilities.Ids;
-
 namespace Carts.Domain.Commands;
 
 public record ConfirmShoppingCart(GuidId CartId)

@@ -1,7 +1,6 @@
 using Carts.Domain.Aggregate.Events;
 using Carts.Domain.Model;
 using Kuna.EventSourcing.Core.Aggregates;
-using Kuna.Utilities.Extensions;
 
 namespace Carts.Domain.Aggregate;
 

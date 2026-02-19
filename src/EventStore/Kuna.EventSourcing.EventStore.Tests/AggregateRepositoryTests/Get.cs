@@ -7,16 +7,18 @@ namespace Kuna.EventSourcing.EventStore.Tests.AggregateRepositoryTests;
 public class Get
 {
     [Fact]
-    public async Task When_Aggregate_Does_Not_Exist_Should_Throw()
+    public async Task When_Aggregate_Does_Not_Exist_Should_Return_Null()
     {
         var fakeReader = A.Fake<IStreamReader>(opt => opt.Strict());
 
-        A.CallTo(() => fakeReader.GetEvents(A<string>._, default))
+        A.CallTo(() => fakeReader.GetEvents(A<string>._, CancellationToken.None))
          .ReturnsLazily(Enumerable.Empty<object>);
 
         var repository = new TestAggregateRepository(fakeReader, A.Fake<IStreamWriter>());
 
-        await Assert.ThrowsAsync<AggregateNotFoundException<object>>(async () => await repository.Get(Guid.NewGuid(), default));
+        var instance = await repository.Get(Guid.NewGuid(), CancellationToken.None);
+
+        instance.Should().BeNull();
     }
 
     [Fact]
@@ -36,9 +38,9 @@ public class Get
 
         var repository = new TestAggregateRepository(fakeReader, A.Fake<IStreamWriter>());
 
-        var instance = await repository.Get(aggregateId, default);
+        var instance = await repository.Get(aggregateId, CancellationToken.None);
 
-        var instanceState = instance.GetState();
+        var instanceState = instance!.GetState();
 
         var expectedState = new TestAggregate.State()
         {

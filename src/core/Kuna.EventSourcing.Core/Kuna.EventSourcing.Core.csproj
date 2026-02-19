@@ -33,8 +33,4 @@
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
       <PackageReference Include="Newtonsoft.Json" />
     </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Kuna.Utilities\Kuna.Utilities.csproj" />
-    </ItemGroup>
 </Project>

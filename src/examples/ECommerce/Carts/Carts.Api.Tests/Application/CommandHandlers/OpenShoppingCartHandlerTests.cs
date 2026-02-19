@@ -5,7 +5,6 @@ using Carts.Application.CommandHandlers;
 using Carts.Domain.Commands;
 using Carts.TestingInfrastructure;
 using FluentAssertions;
-using Kuna.Utilities.Ids;
 using Xunit;
 
 namespace Carts.Tests.Application.CommandHandlers;
@@ -25,6 +24,7 @@ public class OpenShoppingCartHandlerTests
 
         var cart = await fakeRepository.Get(cmd.CartId, CancellationToken.None);
 
+        cart.Should().NotBeNull();
         cart.VerifyStateAfter(cmd);
     }
 }
@@ -48,6 +48,7 @@ public class OpenShoppingCartHandlerTests2 : CommandHandlerTest
 
         var cart = await repository.Get(cmd.CartId, CancellationToken.None);
 
+        cart.Should().NotBeNull();
         cart.VerifyStateAfter(cmd);
     }
 }

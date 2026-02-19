@@ -2,8 +2,6 @@ using System.Reflection;
 using EventStore.Client;
 using Grpc.Core;
 using Kuna.EventSourcing.Core.Exceptions;
-using Kuna.Utilities.Events;
-using Kuna.Utilities.Exceptions;
 using Microsoft.Extensions.Logging;
 
 namespace Kuna.EventSourcing.EventStore.Subscriptions;

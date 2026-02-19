@@ -1,6 +1,7 @@
 using Carts.Api.Requests;
 using Carts.Domain.Commands;
 using Carts.Domain.Model;
+using Carts.Infrastructure.Commands;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Carts.Api.Controllers;
@@ -43,7 +44,7 @@ public class ShoppingCartsController : Controller
             id,
             ProductItem.From(
                 request.ProductItem.ProductId,
-                request?.ProductItem?.Quantity
+                request.ProductItem?.Quantity
             )
         );
 

@@ -40,13 +40,11 @@ public class TestAggregate : Aggregate<Guid, TestAggregate.State>
 
     #region 'Events'
 
-    public record TestAggregateCreated (Guid Id, string Name)
-    {
-    }
+    public record TestAggregateCreated(Guid Id, string Name) : IAggregateEvent;
 
-    public record TestAggregateNameChanged (Guid Id, string Name)
-    {
-    }
+
+    public record TestAggregateNameChanged(Guid Id, string Name) : IAggregateEvent;
+
 
     #endregion
 }

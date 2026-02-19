@@ -1,4 +1,3 @@
-using Kuna.Utilities.Extensions;
 
 namespace Kuna.EventSourcing.Core.Aggregates;
 
@@ -54,16 +53,13 @@ public abstract class Aggregate<TKey, TState>
     }
 
     /// <summary>
-    /// Returns deep clone of the internal aggregate state
-    /// This is expensive operation as it serializes internal state, so do not overuse.
-    /// Ideally, one should never have to fetch whole state or expose internal state. If you need to expose some
-    /// information, then create pass trhough getter to state. Make sure to DeepClone complex objects so as not to expose mutable state.
-    /// This is used extensively when writing aggregate tests
+    /// Returns internal aggregate state. DO NOT mutate state directly.
+    /// Used extensively in tests to assert mutation.
     /// </summary>
     /// <returns></returns>
     public TState GetState()
     {
-        return this.CurrentState.DeepClone();
+        return this.CurrentState;
     }
 
     /// <summary>
@@ -77,7 +73,7 @@ public abstract class Aggregate<TKey, TState>
 
     /// <summary>
     /// Dequeues pending events and returns them as array, basically clearing the pending events queue.
-    /// This is used to save events to the backing store. 
+    /// This is used to save events to the backing store.
     public object[] DequeuePendingEvents()
     {
         var toReturn = this.pendingEvents.ToArray();
@@ -92,7 +88,7 @@ public abstract class Aggregate<TKey, TState>
     /// </summary>
     /// <param name="aggregateEvent"></param>
 
-    protected void RaiseEvent(object aggregateEvent)
+    protected void RaiseEvent(IAggregateEvent aggregateEvent)
     {
         this.CurrentState.ApplyEvent(aggregateEvent);
 

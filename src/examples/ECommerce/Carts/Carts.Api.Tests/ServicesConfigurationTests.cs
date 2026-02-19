@@ -1,9 +1,9 @@
 using Carts.Api.Controllers;
 using Carts.Application;
+using Carts.Tests.Exceptions;
+using Kuna.EventSourcing.EventStore;
 using Kuna.Extensions.DependencyInjection.Validation;
-using Kuna.Extensions.DependencyInjection.Validation.Exceptions;
 using Kuna.Utilities.Commands;
-using Kuna.Utilities.Events;
 using Microsoft.AspNetCore.Mvc;
 using Xunit.Abstractions;
 

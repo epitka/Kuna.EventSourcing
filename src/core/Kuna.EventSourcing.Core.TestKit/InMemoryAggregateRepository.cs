@@ -3,26 +3,22 @@ using Kuna.EventSourcing.Core.Exceptions;
 
 namespace Kuna.EventSourcing.Core.TestKit;
 
-public class InMemoryAggregateRepository<Guid, TAggregate> : IAggregateRepository<Guid, TAggregate>
+public class InMemoryAggregateRepository<TAggregate> : IAggregateRepository<Guid, TAggregate>
     where TAggregate : class, IAggregate<Guid>, new()
-    where Guid : notnull
 {
-    private readonly Dictionary<Guid, List<EventInfo>> eventsStream;
+    private readonly Dictionary<Guid, List<EventInfo>> eventsStream = new();
 
-    public InMemoryAggregateRepository()
+    public Task<TAggregate?> Get(Guid id, CancellationToken ct)
     {
-        this.eventsStream = new Dictionary<Guid, List<EventInfo>>();
-    }
-
-    public Task<TAggregate> Get(Guid id, CancellationToken ct)
-    {
-        ArgumentNullException.ThrowIfNull(id, nameof(id));
+        ArgumentOutOfRangeException.ThrowIfEqual(Guid.Empty, id);
 
         var aggregate = new TAggregate();
 
-        if (!this.eventsStream.TryGetValue(id, out var value))
+        this.eventsStream.TryGetValue(id, out var value);
+
+        if (value == null)
         {
-            throw new AggregateNotFoundException<TAggregate>(id.ToString());
+            return Task.FromResult<TAggregate?>(null);
         }
 
         var instanceStream = value;
@@ -33,7 +29,7 @@ public class InMemoryAggregateRepository<Guid, TAggregate> : IAggregateRepositor
 
         aggregate.InitWith(events);
 
-        return Task.FromResult(aggregate);
+        return Task.FromResult(aggregate)!;
     }
 
     public async Task Save(TAggregate aggregate, CancellationToken ct)

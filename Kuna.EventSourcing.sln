@@ -8,6 +8,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ecommerce", "Ecommerce", "{DF3AA52C-523B-4483-8A4D-528554EA914D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Carts", "Carts", "{9B67D0A5-F457-48D1-97E7-F40A6B362D2D}"
+	ProjectSection(SolutionItems) = preProject
+		IServiceConfigurator.cs = IServiceConfigurator.cs
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{D1203789-B217-4D51-BD1D-2171A1414D20}"
 EndProject
@@ -23,8 +26,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carts.Tests", "src\examples
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carts.TestingInfrastructure", "src\examples\ECommerce\Carts\Carts.TestingInfrastructure\Carts.TestingInfrastructure.csproj", "{C056CDE1-4692-48CE-AB62-0B8B35B684C0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kuna.Utilities", "src\core\Kuna.Utilities\Kuna.Utilities.csproj", "{0552A169-ED45-442F-8DDE-9ED84220EBB4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kuna.Utilities.Tests", "src\core\Kuna.Utilities.Tests\Kuna.Utilities.Tests.csproj", "{984F95E1-1FE6-4328-BB27-EB97FE7CE40C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventStore", "EventStore", "{BA52D632-E60E-46C9-BBDB-CA851F8BC23F}"
@@ -34,9 +35,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kuna.EventSourcing.EventStore.Tests", "src\EventStore\Kuna.EventSourcing.EventStore.Tests\Kuna.EventSourcing.EventStore.Tests.csproj", "{457CFEE1-4B4B-42B8-AB43-CFE43DEFB027}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F624C483-448C-44B8-A3C6-9E7517D57968}"
-	ProjectSection(SolutionItems) = preProject
-		TODO.txt = TODO.txt
-	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carts", "src\examples\eventsourcing-book\Carts\Carts.csproj", "{4C7E161A-2EA6-42A8-8F8C-8443E1EE7AE8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "eventsourcing-book", "eventsourcing-book", "{37002257-D335-4C7E-8EC2-9D45DCF8D474}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,10 +70,6 @@ Global
 		{C056CDE1-4692-48CE-AB62-0B8B35B684C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C056CDE1-4692-48CE-AB62-0B8B35B684C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C056CDE1-4692-48CE-AB62-0B8B35B684C0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0552A169-ED45-442F-8DDE-9ED84220EBB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0552A169-ED45-442F-8DDE-9ED84220EBB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0552A169-ED45-442F-8DDE-9ED84220EBB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0552A169-ED45-442F-8DDE-9ED84220EBB4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{984F95E1-1FE6-4328-BB27-EB97FE7CE40C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{984F95E1-1FE6-4328-BB27-EB97FE7CE40C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{984F95E1-1FE6-4328-BB27-EB97FE7CE40C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -84,6 +82,10 @@ Global
 		{457CFEE1-4B4B-42B8-AB43-CFE43DEFB027}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{457CFEE1-4B4B-42B8-AB43-CFE43DEFB027}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{457CFEE1-4B4B-42B8-AB43-CFE43DEFB027}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C7E161A-2EA6-42A8-8F8C-8443E1EE7AE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C7E161A-2EA6-42A8-8F8C-8443E1EE7AE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C7E161A-2EA6-42A8-8F8C-8443E1EE7AE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C7E161A-2EA6-42A8-8F8C-8443E1EE7AE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,10 +99,11 @@ Global
 		{3E298236-9629-4C18-9562-DCBD9C65E089} = {9B67D0A5-F457-48D1-97E7-F40A6B362D2D}
 		{FF39064A-38D3-47F2-8C3B-F558ECA7AF2B} = {9B67D0A5-F457-48D1-97E7-F40A6B362D2D}
 		{C056CDE1-4692-48CE-AB62-0B8B35B684C0} = {9B67D0A5-F457-48D1-97E7-F40A6B362D2D}
-		{0552A169-ED45-442F-8DDE-9ED84220EBB4} = {D1203789-B217-4D51-BD1D-2171A1414D20}
 		{984F95E1-1FE6-4328-BB27-EB97FE7CE40C} = {D1203789-B217-4D51-BD1D-2171A1414D20}
 		{47272C70-8904-45E6-BE2B-3E4F5EA061A5} = {BA52D632-E60E-46C9-BBDB-CA851F8BC23F}
 		{457CFEE1-4B4B-42B8-AB43-CFE43DEFB027} = {BA52D632-E60E-46C9-BBDB-CA851F8BC23F}
+		{37002257-D335-4C7E-8EC2-9D45DCF8D474} = {15DA8E71-6B7D-4D0D-97B5-DA4CD201AE0E}
+		{4C7E161A-2EA6-42A8-8F8C-8443E1EE7AE8} = {37002257-D335-4C7E-8EC2-9D45DCF8D474}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CCEAC7BD-D233-451D-AB39-4D6094157363}

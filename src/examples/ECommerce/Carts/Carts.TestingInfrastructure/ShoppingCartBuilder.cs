@@ -2,7 +2,6 @@ using Carts.Domain.Aggregate;
 using Carts.Domain.Aggregate.Events;
 using Carts.Domain.Model;
 using Kuna.EventSourcing.Core.TestKit;
-using Kuna.Utilities.Ids;
 
 namespace Carts.TestingInfrastructure;
 

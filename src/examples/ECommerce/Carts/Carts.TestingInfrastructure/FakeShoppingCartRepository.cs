@@ -5,7 +5,7 @@ using Kuna.EventSourcing.Core.TestKit;
 namespace Carts.TestingInfrastructure;
 
 public class FakeShoppingCartRepository
-    : InMemoryAggregateRepository<Guid, ShoppingCart>,
+    : InMemoryAggregateRepository<ShoppingCart>,
       IShoppingCartRepository
 {
 }

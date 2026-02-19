@@ -23,10 +23,10 @@ public abstract class AggregateRepository<TKey, TAggregate> : IAggregateReposito
         this.streamWriter = streamWriter;
     }
 
-    public virtual async Task<TAggregate> Get(TKey id, CancellationToken ct)
+    public virtual async Task<TAggregate?> Get(TKey id, CancellationToken ct)
     {
-        ArgumentNullException.ThrowIfNull(id, nameof(id));
-       
+        ArgumentNullException.ThrowIfNull(id);
+
         ct.ThrowIfCancellationRequested();
 
         var streamId = this.GetStreamId(id);
@@ -34,10 +34,9 @@ public abstract class AggregateRepository<TKey, TAggregate> : IAggregateReposito
         var events = await this.streamReader.GetEvents(streamId, ct)
                                .ConfigureAwait(false);
 
-        if (events == Enumerable.Empty<object>())
+        if (Equals(events, Enumerable.Empty<object>()))
         {
-            // Q: why is this reproting nullability warning?
-            throw new AggregateNotFoundException<TAggregate>(id:id.ToString()!);
+            return null;
         }
 
         ct.ThrowIfCancellationRequested();
