@@ -12,7 +12,7 @@ public abstract class AggregateState<TKey> : IAggregateState<TKey>
 where TKey : IEquatable<TKey>
 
 {
-    public Id<TKey> Id { get; private set; } = default!;
+    public Id<TKey> Id { get; private set; } = null!;
 
     /// <summary>
     /// Each state is identified by Id. Id is immutable and can be set only once. Operation is idempotent.
@@ -24,10 +24,9 @@ where TKey : IEquatable<TKey>
     {
         var id = new Id<TKey>(aggregateId);
 
-        if (this.Id != null
-            && !this.Id.Equals(id))
+        if (!this.Id.Equals(id))
         {
-            throw new InvalidOperationException("Id already set, cannot change identity of the aggreate");
+            throw new InvalidOperationException("Id already set, cannot change identity of the aggregate");
         }
 
         this.Id = id;

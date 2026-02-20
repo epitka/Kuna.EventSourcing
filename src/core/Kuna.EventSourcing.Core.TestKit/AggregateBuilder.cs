@@ -8,9 +8,9 @@ public class AggregateBuilder<TAggregate, TState, TKey>
     where TKey : IEquatable<TKey>
 {
     private const string RaiseEvent = "RaiseEvent";
-    private Queue<object> queuedEvents = default!;
+    private Queue<object> queuedEvents = null!;
 
-    public TState aggregateState = default!;
+    public TState aggregateState = null!;
 
     public static AggregateBuilder<TAggregate, TState, TKey> Init(TState state, object createEvent)
     {

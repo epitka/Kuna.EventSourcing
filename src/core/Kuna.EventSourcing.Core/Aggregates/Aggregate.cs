@@ -74,6 +74,7 @@ public abstract class Aggregate<TKey, TState>
     /// <summary>
     /// Dequeues pending events and returns them as array, basically clearing the pending events queue.
     /// This is used to save events to the backing store.
+    /// </summary>
     public object[] DequeuePendingEvents()
     {
         var toReturn = this.pendingEvents.ToArray();

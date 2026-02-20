@@ -8,7 +8,7 @@ public class InMemoryAggregateRepository<TAggregate> : IAggregateRepository<Guid
 {
     private readonly Dictionary<Guid, List<EventInfo>> eventsStream = new();
 
-    public Task<TAggregate?> Get(Guid id, CancellationToken ct)
+    public Task<TAggregate> Get(Guid id, CancellationToken ct)
     {
         ArgumentOutOfRangeException.ThrowIfEqual(Guid.Empty, id);
 
@@ -18,7 +18,7 @@ public class InMemoryAggregateRepository<TAggregate> : IAggregateRepository<Guid
 
         if (value == null)
         {
-            return Task.FromResult<TAggregate?>(null);
+            throw new AggregateNotFoundException<TAggregate>(id.ToString());
         }
 
         var instanceStream = value;

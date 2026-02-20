@@ -35,7 +35,7 @@ namespace Kuna.EventSourcing.EventStore
 
         public TState Project<TState>(TState state, ref int version, object[] events)
         {
-            ArgumentNullException.ThrowIfNull(state, nameof(state));
+            ArgumentNullException.ThrowIfNull(state);
 
             Mutate(state, ref version, events);
 

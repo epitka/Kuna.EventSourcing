@@ -18,7 +18,7 @@ public class Save
         // check pre-condition
         aggregate.GetPendingEvents().Length.Should().Be(1);
 
-        await repository.Save(aggregate, default);
+        await repository.Save(aggregate, CancellationToken.None);
 
         aggregate.GetPendingEvents().Should().BeEmpty();
     }
@@ -39,7 +39,7 @@ public class Save
         // check pre-condition
         aggregate.GetPendingEvents().Length.Should().Be(0);
 
-        await repository.Save(aggregate, default);
+        await repository.Save(aggregate, CancellationToken.None);
 
         // since we use Strict option on fake and we did not specify
         // any calls to any method on fake would fail test but just for explicitness
@@ -71,7 +71,7 @@ public class Save
          .Invokes(x => callArguments = x.Arguments);
 
         var repository = new TestAggregateRepository(A.Fake<IStreamReader>(), fakeWriter);
-        await repository.Save(aggregate, default);
+        await repository.Save(aggregate, CancellationToken.None);
 
         callArguments.Should().NotBeNull();
         callArguments!.Count.Should().Be(4);

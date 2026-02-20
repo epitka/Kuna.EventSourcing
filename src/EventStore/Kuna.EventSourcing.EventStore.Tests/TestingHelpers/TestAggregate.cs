@@ -22,7 +22,7 @@ public class TestAggregate : Aggregate<Guid, TestAggregate.State>
 
     public class State : AggregateState<Guid>
     {
-        public string Name { get; set; } = default!;
+        public string Name { get; set; } = null!;
 
         public void Apply(TestAggregateCreated @event)
         {

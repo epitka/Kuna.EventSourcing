@@ -22,7 +22,7 @@ namespace Kuna.EventSourcing.Core
         Task SaveEvents(string streamId, object[] events, int expectedVersion, CancellationToken ct);
 
         /// <summary>
-        /// Loads events from the strea, creates new instance of TState and applies events to it
+        /// Loads events from the stream, creates new instance of TState and applies events to it
         /// </summary>
         /// <typeparam name="TState"></typeparam>
         /// <param name="streamId"></param>

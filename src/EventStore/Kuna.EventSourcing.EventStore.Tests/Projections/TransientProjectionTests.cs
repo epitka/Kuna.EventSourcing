@@ -56,12 +56,12 @@ namespace Kuna.EventSourcing.EventStore.Tests.Projections
             };
 
 
-            A.CallTo(() => fakeReader.GetEvents(A<string>._, default))
+            A.CallTo(() => fakeReader.GetEvents(A<string>._, CancellationToken.None))
                 .ReturnsLazily(() => events);
 
             var projection = new TransientProjection<TestState>(fakeReader);
 
-            var result = await projection.GetFor(aggregateId.ToString(), default);
+            var result = await projection.GetFor(aggregateId.ToString(), CancellationToken.None);
 
             result.ShouldDeepEqual(expectedState);
 

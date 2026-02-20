@@ -47,9 +47,9 @@ public class AggregateStreamReaderTests
         var streamId = Concat(StreamPrefix, AggregateId);
         var events = GetEvents(AggregateId, 10);
 
-        await writer.Write(streamId, (-1).ToStreamRevision(), events, default);
+        await writer.Write(streamId, (-1).ToStreamRevision(), events, CancellationToken.None);
 
-        var fetchedEvents = (await reader.GetEvents(streamId, default)).ToArray();
+        var fetchedEvents = (await reader.GetEvents(streamId, CancellationToken.None)).ToArray();
 
         fetchedEvents.Should().NotBeNull();
         fetchedEvents.Length.Should().Be(events.Length);
@@ -71,7 +71,7 @@ public class AggregateStreamReaderTests
 
         var streamId = Concat(StreamPrefix, Guid.NewGuid());
 
-        var result = await reader.GetEvents(streamId, default);
+        var result = await reader.GetEvents(streamId, CancellationToken.None);
 
         result.Any().Should().Be(false);
     }

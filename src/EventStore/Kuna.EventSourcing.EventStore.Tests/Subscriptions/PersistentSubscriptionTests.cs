@@ -19,7 +19,7 @@ public class PersistentSubscriptionTests
 
     private ServiceCollection Services { get; set; }
 
-    private ServiceProvider ServiceProvider { get; set; } = default!;
+    private ServiceProvider ServiceProvider { get; set; } = null!;
 
     public PersistentSubscriptionTests(EventStoreContainerFixture eventStoreDatabaseFixture)
     {
@@ -71,7 +71,7 @@ public class PersistentSubscriptionTests
 
         var hostedService = serviceProvider.GetRequiredService<IHostedService>();
 
-        var ct = new CancellationToken();
+        var ct = CancellationToken.None;
 
         var writer = scope.ServiceProvider.GetRequiredService<IStreamWriter>();
 
@@ -114,6 +114,6 @@ public class PersistentSubscriptionTests
     {
         var streamId = GetStreamId(streamPrefix, aggregateId);
         var events = GetEvents(aggregateId, numberOfEvents);
-        await writer.Write(streamId, (-1).ToStreamRevision(), events, default);
+        await writer.Write(streamId, (-1).ToStreamRevision(), events, CancellationToken.None);
     }
 }

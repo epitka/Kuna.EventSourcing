@@ -7,7 +7,7 @@ namespace Carts.TestingInfrastructure;
 
 public class ShoppingCartBuilder
 {
-    private AggregateBuilder<ShoppingCart, ShoppingCart.State, Guid> builder = default!;
+    private AggregateBuilder<ShoppingCart, ShoppingCart.State, Guid> builder = null!;
 
     public static ShoppingCartBuilder With_ShoppingCartOpened(GuidId? cartId, GuidId? clientId)
     {

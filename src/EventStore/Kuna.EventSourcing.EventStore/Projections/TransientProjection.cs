@@ -4,7 +4,7 @@ using static Kuna.EventSourcing.Core.Projections.StateMutator;
 namespace Kuna.EventSourcing.EventStore.Projections
 {
     /// <summary>
-    /// Used to project events to aribtrary transient read model.
+    /// Used to project events to arbitrary transient read model.
     /// Most likely usage is to quickly create read models on the fly without need to create separate persistent projection.
     /// </summary>
     /// <typeparam name="TState"></typeparam>

@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Carts.Domain.Commands;
 using Carts.Domain.Models;
+using FakeItEasy.Sdk;
 using Kuna.EventSourcing.Core.Aggregates;
 
 namespace Carts.Domain;
@@ -16,11 +17,16 @@ public partial class CartAggregate : Aggregate<Guid, CartAggregate.State>
     {
     }
 
-    // original book implementation does not have CreateCart command
-    // method that "creates" aggregate is always static
-    public static CartAggregate Process(CreateCart command)
+    public static CartAggregate Create(Guid cartId)
     {
-        return new CartAggregate(command.CartId);
+        return new CartAggregate(cartId);
+    }
+
+    private CartAggregate(Guid cartId)
+    {
+        var @event = new CartEvents.CartCreated(cartId);
+
+        this.RaiseEvent(@event);
     }
 
     // TODO: we should have Fody based check here to see if command belongs to this aggregate
@@ -135,10 +141,5 @@ public partial class CartAggregate : Aggregate<Guid, CartAggregate.State>
         AggregateLifecycle.apply(CartPublicationFailedEvent(this.aggregateId!!))
     }*/
 
-    private CartAggregate(Guid cartId)
-    {
-        var @event = new CartEvents.CartCreated(cartId);
 
-        this.RaiseEvent(@event);
-    }
 }

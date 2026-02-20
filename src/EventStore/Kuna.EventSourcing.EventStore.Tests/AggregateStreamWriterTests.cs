@@ -95,7 +95,7 @@ public class AggregateStreamWriterTests
         var expectedVersion = await GetExpectedVersion(client, streamId);
 
         // now lets write new events
-        await writer.Write(streamId, expectedVersion.ToStreamRevision(), events, default);
+        await writer.Write(streamId, expectedVersion.ToStreamRevision(), events, CancellationToken.None);
 
         // verify they have been written
         var result = client.ReadStreamAsync(Direction.Forwards, streamId, StreamPosition.Start);
@@ -125,9 +125,9 @@ public class AggregateStreamWriterTests
         var expectedVersion = await GetExpectedVersion(client, streamId);
 
         await Assert.ThrowsAsync<AggregateInvalidExpectedVersionException>(
-            async () => await writer.Write(streamId, (expectedVersion + 1).ToStreamRevision(), events, default));
+            async () => await writer.Write(streamId, (expectedVersion + 1).ToStreamRevision(), events, CancellationToken.None));
 
         await Assert.ThrowsAsync<AggregateInvalidExpectedVersionException>(
-            async () => await writer.Write(streamId, (expectedVersion - 1).ToStreamRevision(), events, default));
+            async () => await writer.Write(streamId, (expectedVersion - 1).ToStreamRevision(), events, CancellationToken.None));
     }
 }

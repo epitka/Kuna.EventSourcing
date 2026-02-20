@@ -16,7 +16,6 @@ namespace Kuna.EventSourcing.Core.Projections
         /// <returns>Returns version of the state after applying events</returns>
         public static void Mutate(object state, ref int currentVersion, IEnumerable<object> events)
         {
-
             foreach (var @event in events)
             {
                 Mutate(state, ref currentVersion, @event);

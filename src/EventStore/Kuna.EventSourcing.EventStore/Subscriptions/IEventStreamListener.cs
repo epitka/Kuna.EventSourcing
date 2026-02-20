@@ -25,9 +25,9 @@ public class EventStreamListener : IEventStreamListener
     private readonly IEventStoreSerializer eventStoreSerializer;
     private readonly IEventDispatcher eventDispatcher;
     private readonly ILogger logger;
-    private StreamSubscriptionSettings subscriptionSettings = default!;
+    private StreamSubscriptionSettings subscriptionSettings = null!;
     private bool started;
-    private CancellationTokenSource cts = default!;
+    private CancellationTokenSource cts = null!;
     private int resubscribeAttempts = 0;
     private static readonly object Obj = new();
 

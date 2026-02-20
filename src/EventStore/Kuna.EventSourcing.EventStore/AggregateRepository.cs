@@ -23,9 +23,9 @@ public abstract class AggregateRepository<TKey, TAggregate> : IAggregateReposito
         this.streamWriter = streamWriter;
     }
 
-    public virtual async Task<TAggregate?> Get(TKey id, CancellationToken ct)
+    public virtual async Task<TAggregate> Get(TKey id, CancellationToken ct)
     {
-        ArgumentNullException.ThrowIfNull(id);
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
 
         ct.ThrowIfCancellationRequested();
 
@@ -36,7 +36,7 @@ public abstract class AggregateRepository<TKey, TAggregate> : IAggregateReposito
 
         if (Equals(events, Enumerable.Empty<object>()))
         {
-            return null;
+            throw new AggregateNotFoundException<TAggregate>(id:id.ToString()!);
         }
 
         ct.ThrowIfCancellationRequested();

@@ -23,9 +23,9 @@ namespace Carts;
 
 public class ServicesConfigurator
 {
-    public IConfiguration Configuration { get; set; } = default!;
+    public IConfiguration Configuration { get; set; } = null!;
 
-    public IHostEnvironment Environment { get; set; } = default!;
+    public IHostEnvironment Environment { get; set; } = null!;
 
     public IServiceCollection ConfigureServices(IServiceCollection services)
     {

@@ -6,7 +6,7 @@ public class ContainerDrivenTest
 
     private readonly object syncRoot = new object();
 
-    protected IServiceCollection Services { get; private set; } = default!;
+    protected IServiceCollection Services { get; private set; } = null!;
 
     private IServiceScope? Scope { get; set; }
 
