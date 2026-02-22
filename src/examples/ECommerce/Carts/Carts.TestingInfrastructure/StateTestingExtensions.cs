@@ -9,7 +9,7 @@ public static class StateTestingExtensions
 {
     public static void VerifyStateAfter(this ShoppingCart sut, OpenShoppingCart command)
     {
-        var currentState = sut.GetState();
+        var currentState = sut.CurrentState.DeepClone();
 
         var expectedState = new ShoppingCart.State()
         {
@@ -24,7 +24,7 @@ public static class StateTestingExtensions
 
     public static void VerifyStateAfter(this ShoppingCart sut, AddProduct command, ShoppingCart.State beforeState, PricedProductItem pricedProductItem)
     {
-        var currentState = sut.GetState();
+        var currentState = sut.CurrentState.DeepClone();
 
         var expectedState = beforeState;
 

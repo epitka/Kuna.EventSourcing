@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using System.Reflection;
 using Carts.Application;
 using Carts.Application.CommandHandlers;
@@ -10,12 +8,12 @@ using Carts.Domain.Aggregate.Events;
 using Carts.Domain.Commands;
 using Carts.Domain.Services;
 using Carts.Infrastructure;
-using EventStore.Client;
-using Kuna.EventSourcing.EventStore.Configuration;
-using Kuna.EventSourcing.EventStore.Subscriptions;
-using Kuna.Utilities.Commands;
-using Kuna.Utilities.Configuration;
-using Kuna.Utilities.Events;
+using Carts.Infrastructure.Commands;
+using Kuna.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.Kurrent;
+using Kuna.EventSourcing.Kurrent.Configuration;
+using Kuna.EventSourcing.Kurrent.Subscriptions;
+using KurrentDB.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,11 +21,11 @@ using Microsoft.OpenApi.Models;
 
 namespace Carts;
 
-public class ServicesConfigurator : IServicesConfigurator
+public class ServicesConfigurator
 {
-    public IConfiguration Configuration { get; set; } = default!;
+    public IConfiguration Configuration { get; set; } = null!;
 
-    public IHostEnvironment Environment { get; set; } = default!;
+    public IHostEnvironment Environment { get; set; } = null!;
 
     public IServiceCollection ConfigureServices(IServiceCollection services)
     {
@@ -51,17 +49,17 @@ public class ServicesConfigurator : IServicesConfigurator
             return eventTypes;
         };
 
-        services.AddEventStore(
+        services.AddKurrentDB(
             configuration: this.Configuration,
-            eventStoreConnectionStringName: "EventStore",
-            assembliesWithAggregateEvents: new[] { typeof(ShoppingCart).Assembly },
+            kurrentDBConnectionStringName: "KurrentDB",
+            assembliesWithAggregateEvents: [typeof(ShoppingCart).Assembly],
             aggregateEventsDiscoverFunc: eventsDiscoveryFunc,
-            subscriptionSettings: new[]
-            {
+            subscriptionSettings:
+            [
                 new StreamSubscriptionSettings(
                     "$ce-cart",
                     StreamPosition.Start),
-            });
+            ]);
 
         services.AddSingleton<ICommandDispatcher, CommandDispatcher>();
         services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();

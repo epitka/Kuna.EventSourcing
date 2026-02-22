@@ -12,7 +12,6 @@ namespace Kuna.EventSourcing.Core.Tests
 {
     public sealed record TestAggregateChanged(
         Guid Id,
-        string ChangedValue)
-    {
-    }
+        string ChangedValue) : IAggregateEvent;
+
 }

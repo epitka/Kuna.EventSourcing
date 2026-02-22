@@ -2,6 +2,7 @@ using Carts.Domain.Aggregate.Events;
 using Carts.Domain.Commands;
 using Carts.Domain.Model;
 using Carts.Domain.Services;
+using Kuna.EventSourcing.Core.TestKit;
 
 
 namespace Carts.Tests.Domain.Aggregate;
@@ -27,7 +28,7 @@ public class AddProductTests
         var pricedProductItem = productPriceCalculator.Calculate(command.ProductItem).First();
 
         // capture state before applying command
-        var beforeState = sut.GetState();
+        var beforeState = sut.CurrentState.DeepClone();
 
         sut.Process(command, productPriceCalculator);
 

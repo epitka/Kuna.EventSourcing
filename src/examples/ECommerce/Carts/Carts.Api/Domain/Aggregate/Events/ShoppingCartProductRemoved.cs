@@ -1,3 +1,5 @@
+using Kuna.EventSourcing.Core.Aggregates;
+
 namespace Carts.Domain.Aggregate.Events;
 
 public readonly record struct ShoppingCartProductRemoved(
