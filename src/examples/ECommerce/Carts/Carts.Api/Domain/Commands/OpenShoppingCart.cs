@@ -1,4 +1,6 @@
 
+using Carts.Infrastructure.Commands;
+
 namespace Carts.Domain.Commands;
 
 public sealed record OpenShoppingCart(GuidId CartId, GuidId ClientId)

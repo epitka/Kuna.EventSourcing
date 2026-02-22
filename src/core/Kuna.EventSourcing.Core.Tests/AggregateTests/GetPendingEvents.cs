@@ -10,7 +10,7 @@ public class GetPendingEvents
         var aggregate = new TestAggregate();
         var aggregateId = Guid.NewGuid();
 
-        var events = new List<object>()
+        var events = new List<IAggregateEvent>()
         {
             new TestAggregateCreated(Id: aggregateId, Name: "asdf"),
             new TestAggregateChanged(Id: aggregateId, ChangedValue: "Value1"),

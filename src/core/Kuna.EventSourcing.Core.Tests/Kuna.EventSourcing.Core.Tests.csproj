@@ -41,4 +41,7 @@
         <ProjectReference Include="..\Kuna.EventSourcing.Core\Kuna.EventSourcing.Core.csproj"/>
         <ProjectReference Include="..\Kuna.Utilities.Tests\Kuna.Utilities.Tests.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <None Remove="appsettings.json" />
+    </ItemGroup>
 </Project>
