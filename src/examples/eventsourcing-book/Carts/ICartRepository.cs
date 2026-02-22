@@ -1,7 +1,7 @@
 using System;
 using Carts.Domain;
 using Kuna.EventSourcing.Core.Aggregates;
-using Kuna.EventSourcing.EventStore;
+using Kuna.EventSourcing.Kurrent;
 
 namespace Carts;
 

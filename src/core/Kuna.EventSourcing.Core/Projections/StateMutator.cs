@@ -14,7 +14,7 @@ namespace Kuna.EventSourcing.Core.Projections
         /// </summary>
         /// <param name="events"></param>
         /// <returns>Returns version of the state after applying events</returns>
-        public static void Mutate(object state, ref int currentVersion, IEnumerable<object> events)
+        public static void Mutate(object state, ref ulong? currentVersion, IEnumerable<object> events)
         {
             foreach (var @event in events)
             {
@@ -30,11 +30,18 @@ namespace Kuna.EventSourcing.Core.Projections
         /// <param name="event"></param>
         /// <exception cref="InvalidOperationException"></exception>
         /// <returns>Returns version of the state after applying event</returns>
-        public static void Mutate(dynamic state, ref int currentVersion, object @event)
+        public static void Mutate(dynamic state, ref ulong? currentVersion, object @event)
         {
             state.Apply((dynamic)@event);
 
-            currentVersion++;
+            if (currentVersion.HasValue)
+            {
+                currentVersion++;
+            }
+            else
+            {
+                currentVersion = 0;
+            }
         }
     }
 }

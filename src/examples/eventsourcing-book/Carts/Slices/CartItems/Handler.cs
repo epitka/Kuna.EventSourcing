@@ -18,7 +18,7 @@ public class Handler : ICommandHandler<Query, ReadModel>
 
     public async Task<ReadModel> ExecuteAsync(Query command, CancellationToken ct)
     {
-        // maybe not the best way, need to think about this, this is too EventStore centric
+        // maybe not the best way, need to think about this, this is too KurrentDB centric
         var streamId = "cart-" + command.CartId;
         var toReturn = await this.session.Project<ReadModel>(streamId, ct);
         return toReturn;
