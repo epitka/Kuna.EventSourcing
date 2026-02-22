@@ -1,10 +1,12 @@
-﻿namespace Kuna.EventSourcing.Core.Aggregates;
+﻿using Kuna.EventSourcing.Core.Exceptions;
+
+namespace Kuna.EventSourcing.Core.Aggregates;
 
 public interface IAggregateRepository<in TKey, TAggregate>
     where TAggregate : class, IAggregate<TKey>, new()
 {
     ///<summary>Fetches aggregate from the persistent store.
-    /// Throws <see cref="AggregateNotFoundException"/> if aggregate is not found.
+    /// Throws <see cref="AggregateNotFoundException{TAggregate}"/> if aggregate is not found.
     /// <exception cref="AggregateNotFoundException"> Should be thrown by implementer </exception>
     Task<TAggregate> Get(TKey id, CancellationToken cancellationToken);
 

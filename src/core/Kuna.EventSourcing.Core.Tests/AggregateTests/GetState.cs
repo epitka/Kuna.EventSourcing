@@ -1,11 +1,12 @@
 using DeepEqual.Syntax;
+using Kuna.EventSourcing.Core.TestKit;
 
 namespace Kuna.EventSourcing.Core.Tests.AggregateTests;
 
 public class GetState
 {
     [Fact]
-    public void Should_Return_Cloned_Internal_State()
+    public void Should_Return_Internal_State()
     {
         var aggregate = new TestAggregate();
 
@@ -23,11 +24,11 @@ public class GetState
             Name = created.Name,
             ChangedValue = changed.ChangedValue,
             Version = 1,
-            OriginalVersion = -1    
+            OriginalVersion = null,
         };
         expectedState.SetId(aggregateId);
 
-        var currentState = aggregate.GetState();
+        var currentState = aggregate.CurrentState.DeepClone();
 
         currentState.ShouldDeepEqual(expectedState);
     }
