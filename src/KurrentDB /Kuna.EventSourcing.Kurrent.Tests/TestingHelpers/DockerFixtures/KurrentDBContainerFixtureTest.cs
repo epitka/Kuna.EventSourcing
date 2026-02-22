@@ -1,4 +1,4 @@
-﻿using DotNet.Testcontainers.Containers;
+using DotNet.Testcontainers.Containers;
 
 namespace Kuna.EventSourcing.Kurrent.Tests.TestingHelpers.DockerFixtures;
 

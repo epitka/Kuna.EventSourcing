@@ -1,4 +1,4 @@
-﻿namespace Kuna.EventSourcing.Kurrent.Tests.TestingHelpers.DockerFixtures;
+namespace Kuna.EventSourcing.Kurrent.Tests.TestingHelpers.DockerFixtures;
 
 [CollectionDefinition("KurrentDB collection")]
 public class DatabaseCollection : ICollectionFixture<KurrentDBContainerFixture>

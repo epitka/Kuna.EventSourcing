@@ -1,4 +1,4 @@
-﻿namespace Kuna.EventSourcing.Kurrent.Tests.TestingHelpers.XUnitHelpers;
+namespace Kuna.EventSourcing.Kurrent.Tests.TestingHelpers.XUnitHelpers;
 
 using Xunit.Sdk;
 using Xunit.v3;

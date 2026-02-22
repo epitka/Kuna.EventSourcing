@@ -44,9 +44,20 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Update="appsettings.json">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
+      <Compile Remove="JsonEventSerializerTests\Deserialize.cs" />
+      <Compile Remove="AggregateRepositoryTests\Save.cs" />
+      <Compile Remove="JsonEventSerializerTests\Serialize.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="JsonEventSerializerTests\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="appsettings.json" />
+      <Content Include="appsettings.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>

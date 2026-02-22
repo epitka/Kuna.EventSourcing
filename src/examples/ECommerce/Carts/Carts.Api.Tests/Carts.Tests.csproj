@@ -29,4 +29,8 @@
       <ProjectReference Include="..\Carts.TestingInfrastructure\Carts.TestingInfrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Infrastructure\" />
+    </ItemGroup>
+
 </Project>

@@ -1,9 +1,9 @@
-﻿namespace Kuna.Utilities.Commands;
+﻿namespace Carts.Infrastructure.Commands;
 
 /// <summary>
 /// Marker interface used to identify handlers of commands
 /// </summary>
-/// <typeparam name="TCommand"></typeparam>
+/// <typeparam name="T"></typeparam>
 public interface IHandleCommand<in TCommand>
     where TCommand : ICommand
 {

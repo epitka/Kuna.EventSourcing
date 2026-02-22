@@ -1,4 +1,4 @@
-namespace Kuna.Utilities.Commands;
+namespace Carts.Infrastructure.Commands;
 
 // marker interface for domain commands
 public interface ICommand

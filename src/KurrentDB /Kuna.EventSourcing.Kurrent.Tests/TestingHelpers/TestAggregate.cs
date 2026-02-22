@@ -22,7 +22,7 @@ public class TestAggregate : Aggregate<Guid, TestAggregate.State>
 
     public class State : AggregateState<Guid>
     {
-        public string Name { get; set; } = null!;
+        public string Name { get; set; } = default!;
 
         public void Apply(TestAggregateCreated @event)
         {
@@ -43,7 +43,7 @@ public class TestAggregate : Aggregate<Guid, TestAggregate.State>
     public record TestAggregateCreated(Guid Id, string Name) : IAggregateEvent;
 
 
-    public record TestAggregateNameChanged(Guid Id, string Name) : IAggregateEvent;
+    public record TestAggregateNameChanged (Guid Id, string Name) : IAggregateEvent;
 
 
     #endregion

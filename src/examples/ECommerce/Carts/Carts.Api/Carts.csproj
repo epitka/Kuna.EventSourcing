@@ -26,6 +26,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\..\core\Kuna.EventSourcing.Core\Kuna.EventSourcing.Core.csproj" />
+      <ProjectReference Include="..\..\..\..\core\Kuna.Utilities\Kuna.Utilities.csproj" />
       <ProjectReference Include="..\..\..\..\KurrentDB \Kuna.EventSourcing.Kurrent\Kuna.EventSourcing.Kurrent.csproj" />
     </ItemGroup>
 </Project>

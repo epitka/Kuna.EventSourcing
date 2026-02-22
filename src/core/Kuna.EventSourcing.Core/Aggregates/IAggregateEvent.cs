@@ -1,4 +1,4 @@
-﻿namespace Kuna.EventSourcing.Core.Aggregates;
+namespace Kuna.EventSourcing.Core.Aggregates;
 
 /// <summary>
 /// Marker interface used to discover events.
