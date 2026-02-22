@@ -31,7 +31,7 @@ public class AggregateBuilder<TAggregate, TState, TKey>
     {
         var builder = new AggregateBuilder<TAggregate, TState, TKey>
         {
-            aggregateState = instance.GetState(),
+            aggregateState = instance.CurrentState.DeepClone(),
             queuedEvents = new Queue<object>(4),
         };
 

@@ -19,7 +19,7 @@ namespace Kuna.EventSourcing.Core
         /// </summary>
         /// <param name="streamId"></param>
         /// <param name="events"></param>
-        Task SaveEvents(string streamId, object[] events, int expectedVersion, CancellationToken ct);
+        Task SaveEvents(string streamId, object[] events, ulong? expectedVersion, CancellationToken ct);
 
         /// <summary>
         /// Loads events from the strea, creates new instance of TState and applies events to it
@@ -37,6 +37,6 @@ namespace Kuna.EventSourcing.Core
         /// <param name="state"></param>
         /// <param name="events"></param>
         /// <returns></returns>
-        TState Project<TState>(TState state, ref int version, object[] events);
+        TState Project<TState>(TState state, ref ulong? version, object[] events);
     }
 }
