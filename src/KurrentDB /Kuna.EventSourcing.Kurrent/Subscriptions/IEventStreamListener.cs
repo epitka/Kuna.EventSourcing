@@ -1,7 +1,6 @@
 using System.Reflection;
 using Grpc.Core;
 using Kuna.EventSourcing.Core.Exceptions;
-using Kuna.Utilities.Exceptions;
 using KurrentDB.Client;
 using Microsoft.Extensions.Logging;
 
