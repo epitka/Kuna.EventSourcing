@@ -1,4 +1,5 @@
 using DeepEqual.Syntax;
+using Kuna.EventSourcing.Core.TestKit;
 
 namespace Kuna.EventSourcing.Core.Tests.AggregateTests;
 
@@ -22,7 +23,7 @@ public class InitWithState
 
         aggregate.InitWithState(expectedState);
 
-        var currentState = aggregate.GetState();
+        var currentState = aggregate.CurrentState.DeepClone();
 
         expectedState.ShouldDeepEqual(currentState);
     }
@@ -44,7 +45,7 @@ public class InitWithState
         aggregate.RaiseEvent(new TestAggregateCreated(Guid.NewGuid(), string.Empty));
 
         // check pre-condition
-        aggregate.Version.Should().BeGreaterThan(-1);
+        aggregate.Version.HasValue.Should().BeTrue();
 
         Assert.Throws<InvalidOperationException>(() => aggregate.InitWithState(expectedState));
     }

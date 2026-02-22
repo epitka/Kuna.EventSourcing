@@ -26,6 +26,7 @@ public class SetId
         state.SetId(aggregateId);
         state.SetId(aggregateId);
 
+        state.Id.Should().NotBeNull();
         state.Id.Value.Should().Be(aggregateId);
     }
 }
