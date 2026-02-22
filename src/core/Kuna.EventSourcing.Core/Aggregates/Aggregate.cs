@@ -1,4 +1,6 @@
 
+using System.ComponentModel.Design.Serialization;
+
 namespace Kuna.EventSourcing.Core.Aggregates;
 
 public abstract class Aggregate<TKey, TState>
@@ -11,30 +13,33 @@ public abstract class Aggregate<TKey, TState>
     /// <summary>
     /// Original version of the aggregate state, before any events were applied
     /// </summary>
-    public int OriginalVersion => this.CurrentState.OriginalVersion;
+    public ulong? OriginalVersion => this.CurrentState.OriginalVersion;
 
     /// <summary>
     /// Version of the aggregate state, after all event(s) are applied
     /// </summary>
-    public int Version => this.CurrentState.Version;
+    public ulong? Version => this.CurrentState.Version;
 
     /// <summary>
     /// Id of the aggregate state
     /// </summary>
-    public Id<TKey> Id => this.CurrentState.Id;
+    public Id<TKey>? Id => this.CurrentState.Id;
 
     /// <summary>
-    /// Current state of the aggregate
+    /// Current state of the aggregate. DO NOT mutate state directly.
     /// </summary>
-    protected TState CurrentState { get; private set; } = new();
+    public TState CurrentState { get; private set; } = new();
 
     /// <summary>
-    /// Initializes aggregate with state. This is extensivelly used tests or when loading snapshot of the aggregate from the backing store/>
+    /// Initializes aggregate with state. This is extensively used tests or when loading snapshot of the aggregate from the backing store/>
+    ///</summary>
     public void InitWithState(TState state)
     {
-        _ = state ?? throw new InvalidOperationException("Cannot initialize aggreate with null state.");
+        _ = state ?? throw new InvalidOperationException("Cannot initialize aggregate with null state.");
 
-        if (this.Version > -1)
+        _ = state.Id ?? throw new InvalidOperationException("Cannot initialize aggregate with null id.");
+
+        if (this.Version.HasValue)
         {
             throw new InvalidOperationException("State is already initialized");
         }
@@ -44,7 +49,7 @@ public abstract class Aggregate<TKey, TState>
     }
 
     /// <summary>
-    /// Initilizet aggregate with events. This is used when loading aggregate from the backing store
+    /// Initializes aggregate with events. This is used when loading aggregate from the backing store
     /// </summary>
     /// <param name="events"></param>
     public void InitWith(IEnumerable<object> events)
@@ -52,7 +57,7 @@ public abstract class Aggregate<TKey, TState>
         this.CurrentState.InitWith(events);
     }
 
-    /// <summary>
+    /*/// <summary>
     /// Returns internal aggregate state. DO NOT mutate state directly.
     /// Used extensively in tests to assert mutation.
     /// </summary>
@@ -60,7 +65,7 @@ public abstract class Aggregate<TKey, TState>
     public TState GetState()
     {
         return this.CurrentState;
-    }
+    }*/
 
     /// <summary>
     /// Returns copy of the pending events in internal queue

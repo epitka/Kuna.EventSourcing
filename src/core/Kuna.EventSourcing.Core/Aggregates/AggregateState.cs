@@ -9,10 +9,10 @@ namespace Kuna.EventSourcing.Core.Aggregates;
 /// </summary>
 /// <typeparam name="TKey"></typeparam>
 public abstract class AggregateState<TKey> : IAggregateState<TKey>
-where TKey : IEquatable<TKey>
+    where TKey : IEquatable<TKey>
 
 {
-    public Id<TKey> Id { get; private set; } = null!;
+    public Id<TKey>? Id { get ; private set; } = null;
 
     /// <summary>
     /// Each state is identified by Id. Id is immutable and can be set only once. Operation is idempotent.
@@ -24,7 +24,7 @@ where TKey : IEquatable<TKey>
     {
         var id = new Id<TKey>(aggregateId);
 
-        if (!this.Id.Equals(id))
+        if (this.Id !=null && !this.Id.Equals(id))
         {
             throw new InvalidOperationException("Id already set, cannot change identity of the aggregate");
         }
@@ -35,12 +35,12 @@ where TKey : IEquatable<TKey>
     /// <summary>
     /// Current version of the state
     /// </summary>
-    public int Version { get; set; } = -1;
+    public ulong? Version { get; set; }
 
     /// <summary>
     /// Original version of the state when it was initialized or loaded from the backing store
     /// </summary>
-    public int OriginalVersion { get; set; } = -1;
+    public ulong? OriginalVersion { get; set; }
 
     /// <summary>
     /// Used to initialize state with events. It will sequentially apply events and mutate state.
@@ -49,7 +49,7 @@ where TKey : IEquatable<TKey>
     /// <exception cref="InvalidOperationException"></exception>
     public void InitWith(IEnumerable<object> events)
     {
-        if (this.Version > -1)
+        if (this.Version.HasValue)
         {
             throw new InvalidOperationException("State is already initialized");
         }

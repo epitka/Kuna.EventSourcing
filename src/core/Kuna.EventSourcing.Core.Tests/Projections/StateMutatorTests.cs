@@ -52,13 +52,13 @@ namespace Kuna.EventSourcing.Core.Tests.Projections
             };
 
             var state1 = new TestState();
-            var version1 = -1;
+            ulong? version1 = null;
 
             StateMutator.Mutate(state1, ref version1, events[0]);
             StateMutator.Mutate(state1, ref version1, events[1]);
 
             var state2 = new TestState();
-            var version2 = -1;
+            ulong? version2 = null;
 
             StateMutator.Mutate(state2, ref version2, events);
 

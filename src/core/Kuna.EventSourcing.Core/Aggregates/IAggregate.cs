@@ -2,16 +2,16 @@ namespace Kuna.EventSourcing.Core.Aggregates;
 
 /// <summary>
 /// Type of the aggregate root Id.
-/// This assumes that key will eiter be Guid, string, or number  
+/// This assumes that key will eiter be Guid, string, or number
 /// </summary>
 /// <typeparam name="TKey"></typeparam>
 public interface IAggregate<TKey>
 {
-    Id<TKey> Id { get; }
+    Id<TKey>? Id { get; }
 
-    int OriginalVersion { get; }
+    ulong? OriginalVersion { get; }
 
-    int Version { get; }
+    ulong? Version { get; }
 
     object[] GetPendingEvents();
 
@@ -23,7 +23,7 @@ public interface IAggregate<TKey>
 public interface IAggregate<TKey, TState> : IAggregate<TKey>
     where TState : IAggregateState<TKey>, new()
 {
-    TState GetState();
+    //// TState GetState();
 
     void InitWithState(TState state);
 }

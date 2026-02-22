@@ -9,11 +9,11 @@ using Carts.Domain.Commands;
 using Carts.Domain.Services;
 using Carts.Infrastructure;
 using Carts.Infrastructure.Commands;
-using EventStore.Client;
 using Kuna.EventSourcing.Core.Aggregates;
-using Kuna.EventSourcing.EventStore;
-using Kuna.EventSourcing.EventStore.Configuration;
-using Kuna.EventSourcing.EventStore.Subscriptions;
+using Kuna.EventSourcing.Kurrent;
+using Kuna.EventSourcing.Kurrent.Configuration;
+using Kuna.EventSourcing.Kurrent.Subscriptions;
+using KurrentDB.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -49,17 +49,17 @@ public class ServicesConfigurator
             return eventTypes;
         };
 
-        services.AddEventStore(
+        services.AddKurrentDB(
             configuration: this.Configuration,
-            eventStoreConnectionStringName: "EventStore",
-            assembliesWithAggregateEvents: new[] { typeof(ShoppingCart).Assembly },
+            kurrentDBConnectionStringName: "KurrentDB",
+            assembliesWithAggregateEvents: [typeof(ShoppingCart).Assembly],
             aggregateEventsDiscoverFunc: eventsDiscoveryFunc,
-            subscriptionSettings: new[]
-            {
+            subscriptionSettings:
+            [
                 new StreamSubscriptionSettings(
                     "$ce-cart",
                     StreamPosition.Start),
-            });
+            ]);
 
         services.AddSingleton<ICommandDispatcher, CommandDispatcher>();
         services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();

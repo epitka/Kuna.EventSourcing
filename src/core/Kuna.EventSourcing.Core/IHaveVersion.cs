@@ -2,6 +2,6 @@ namespace Kuna.EventSourcing.Core
 {
     public interface IHaveVersion
     {
-       int Version { get; set; }
+       ulong? Version { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 using DeepEqual.Syntax;
 using Kuna.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.Core.TestKit;
 
 namespace Kuna.EventSourcing.Core.Tests.AggregateTests;
 
@@ -39,7 +40,7 @@ public class RaiseEvent
         aggregate.RaiseEvent(new TestAggregateChanged(Id: aggregateId, ChangedValue: "Value2"));
 
         // Assert
-        var state = aggregate.GetState();
+        var state = aggregate.CurrentState.DeepClone();
 
         var expectedState = new TestAggregate.State();
         expectedState.Name = name;
