@@ -1,5 +1,6 @@
 using DeepEqual.Syntax;
 using Kuna.EventSourcing.Core.Aggregates;
+using Kuna.EventSourcing.Core.TestKit;
 
 namespace Kuna.EventSourcing.Core.Tests.AggregateTests;
 
@@ -32,10 +33,10 @@ public class InitWithEvents
         // from stream of events, after completion of initialization
         // version of the aggregate matches original version.
         // further changes to aggregate will increase version, and original version will not
-        expectedState.Version = events.Count - 1;
-        expectedState.OriginalVersion = events.Count - 1;
+        expectedState.Version = (ulong?)(events.Count - 1);
+        expectedState.OriginalVersion = (ulong?)(events.Count - 1);
 
-        var currentState = aggregate.GetState();
+        var currentState = aggregate.CurrentState.DeepClone();
 
         expectedState.ShouldDeepEqual(currentState);
     }
@@ -57,7 +58,7 @@ public class InitWithEvents
         aggregate.RaiseEvent(events[0]);
 
         // check pre-condition
-        aggregate.Version.Should().BeGreaterThan(-1);
+        aggregate.Version.HasValue.Should().BeTrue();
 
         Assert.Throws<InvalidOperationException>(() => aggregate.InitWith(events));
     }
